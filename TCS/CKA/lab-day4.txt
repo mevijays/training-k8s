@@ -1,0 +1,1212 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\vijay> ssh sfjbs@20.244.32.239
+PS C:\Users\vijay> ssh sfjbs@20.244.32.239
+PS C:\Users\vijay> ssh sfjbs@20.244.35.190
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:LpNjAx3+Khjf9Kxk9+cMvJXad/ADDpEyvkq739oRGds.
+Please contact your system administrator.
+Add correct host key in C:\\Users\\vijay/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in C:\\Users\\vijay/.ssh/known_hosts:42
+Host key for 20.244.35.190 has changed and you have requested strict checking.
+Host key verification failed.
+PS C:\Users\vijay>
+PS C:\Users\vijay> ssh vijay@192.168.1.13
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+Activate the web console with: systemctl enable --now cockpit.socket
+
+Last login: Tue Oct 11 14:44:56 2022
+Welcome to fish, the friendly interactive shell
+Type `help` for instructions on how to use fish
+vijay@fedora ~>
+vijay@fedora ~> top
+top - 10:24:00 up 22 days, 21:37,  2 users,  load average: 0.07, 0.13, 0.16
+Tasks: 434 total,   1 running, 433 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.1 us,  0.7 sy,  0.0 ni, 98.0 id,  0.0 wa,  0.2 hi,  0.0 si,  0.0 st
+MiB Mem :  31724.8 total,    344.3 free,  11616.9 used,  19763.7 buff/cache
+MiB Swap:   8192.0 total,   6119.0 free,   2073.0 used.  18350.6 avail Mem
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+ 120984 qemu      20   0 6381224   4.0g  18064 S   9.6  13.0 448:55.94 qemu-system-x86
+  96167 vijay     20   0   14.4g 264428  49412 S   1.0   0.8 491:27.48 teams
+  96083 vijay     20   0 1773848  38512  28052 S   0.7   0.1 264:28.22 teams
+  95146 vijay     20   0 1964652 113636  84708 S   0.3   0.3 216:47.22 Xorg
+  95293 vijay      9 -11  368792  21444   7976 S   0.3   0.1  95:04.20 pipewire
+  95334 vijay     20   0 6237952 173140  62760 S   0.3   0.5 422:57.93 gnome-shell
+  95386 vijay      9 -11  271184  31560   6644 S   0.3   0.1 119:10.19 pipewire-pulse
+ 120544 vijay     20   0 2269004 266880 149828 S   0.3   0.8  48:00.73 virt-manager
+ 324921 vijay     20   0 8392092 716308 141808 S   0.3   2.2 682:29.05 firefox
+1453803 root      20   0       0      0      0 I   0.3   0.0   0:00.03 kworker/u16:4-btrfs-endio-write
+1453939 vijay     20   0  227872   5420   4360 R   0.3   0.0   0:00.13 top
+3937057 vijay     20   0 3518984 491728  93184 S   0.3   1.5  15:41.37 Isolated Web Co
+      1 root      20   0  173676  15312  10164 S   0.0   0.0   0:19.55 systemd
+      2 root      20   0       0      0      0 S   0.0   0.0   0:00.85 kthreadd
+      3 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_gp
+      4 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 rcu_par_gp
+      5 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 netns
+      7 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 kworker/0:0H-events_highpri
+      9 root       0 -20       0      0      0 I   0.0   0.0   0:00.00 mm_percpu_wq
+     11 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_kthread
+     12 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_rude_kthread
+     13 root      20   0       0      0      0 I   0.0   0.0   0:00.00 rcu_tasks_trace_kthread
+     14 root      20   0       0      0      0 S   0.0   0.0   0:54.58 ksoftirqd/0
+vijay@fedora ~> ls
+azlab/    Documents/  Downloads/  mylab/   Pictures/  sa-kubeconfig.sh  terraform-lab/  vijayhome.ovpn
+Desktop/  docvol/     Music/      ospbkp/  Public/    tejas-work/       Videos/         vijay.ovpn
+vijay@fedora ~> cat sa-kubeconfig.sh
+#!/bin/bash
+set -e
+set -o pipefail
+
+# Add user to k8s using service account, no RBAC (must create RBAC after this script)
+if [[ -z "$1" ]] || [[ -z "$2" ]]; then
+ echo "usage: $0 <service_account_name> <namespace>"
+ exit 1
+fi
+
+SERVICE_ACCOUNT_NAME=$1
+NAMESPACE="$2"
+KUBECFG_FILE_NAME="/tmp/kube/k8s-${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-conf"
+TARGET_FOLDER="/tmp/kube"
+
+create_target_folder() {
+    echo -n "Creating target directory to hold files in ${TARGET_FOLDER}..."
+    mkdir -p "${TARGET_FOLDER}"
+    printf "done"
+}
+
+create_service_account() {
+    echo -e "\\nCreating a service account in ${NAMESPACE} namespace: ${SERVICE_ACCOUNT_NAME}"
+    kubectl create sa "${SERVICE_ACCOUNT_NAME}" --namespace "${NAMESPACE}"
+}
+
+get_secret_name_from_service_account() {
+    echo -e "\\nGetting secret of service account ${SERVICE_ACCOUNT_NAME} on ${NAMESPACE}"
+    SECRET_NAME=$(kubectl get sa "${SERVICE_ACCOUNT_NAME}" --namespace="${NAMESPACE}" -o json | jq -r .secrets[].name)
+    echo "Secret name: ${SECRET_NAME}"
+}
+
+extract_ca_crt_from_secret() {
+    echo -e -n "\\nExtracting ca.crt from secret..."
+    kubectl get secret --namespace "${NAMESPACE}" "${SECRET_NAME}" -o json | jq \
+    -r '.data["ca.crt"]' | base64 -D > "${TARGET_FOLDER}/ca.crt"
+    printf "done"
+}
+
+get_user_token_from_secret() {
+    echo -e -n "\\nGetting user token from secret..."
+    USER_TOKEN=$(kubectl get secret --namespace "${NAMESPACE}" "${SECRET_NAME}" -o json | jq -r '.data["token"]' | base64 -D)
+    printf "done"
+}
+
+set_kube_config_values() {
+    context=$(kubectl config current-context)
+    echo -e "\\nSetting current context to: $context"
+
+    CLUSTER_NAME=$(kubectl config get-contexts "$context" | awk '{print $3}' | tail -n 1)
+    echo "Cluster name: ${CLUSTER_NAME}"
+
+    ENDPOINT=$(kubectl config view \
+    -o jsonpath="{.clusters[?(@.name == \"${CLUSTER_NAME}\")].cluster.server}")
+    echo "Endpoint: ${ENDPOINT}"
+
+    # Set up the config
+    echo -e "\\nPreparing k8s-${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-conf"
+    echo -n "Setting a cluster entry in kubeconfig..."
+    kubectl config set-cluster "${CLUSTER_NAME}" \
+    --kubeconfig="${KUBECFG_FILE_NAME}" \
+    --server="${ENDPOINT}" \
+    --certificate-authority="${TARGET_FOLDER}/ca.crt" \
+    --embed-certs=true
+
+    echo -n "Setting token credentials entry in kubeconfig..."
+    kubectl config set-credentials \
+    "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
+    --kubeconfig="${KUBECFG_FILE_NAME}" \
+    --token="${USER_TOKEN}"
+
+    echo -n "Setting a context entry in kubeconfig..."
+    kubectl config set-context \
+    "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
+    --kubeconfig="${KUBECFG_FILE_NAME}" \
+    --cluster="${CLUSTER_NAME}" \
+    --user="${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
+    --namespace="${NAMESPACE}"
+
+    echo -n "Setting the current-context in the kubeconfig file..."
+    kubectl config use-context "${SERVICE_ACCOUNT_NAME}-${NAMESPACE}-${CLUSTER_NAME}" \
+    --kubeconfig="${KUBECFG_FILE_NAME}"
+}
+
+create_target_folder
+create_service_account
+get_secret_name_from_service_account
+extract_ca_crt_from_secret
+get_user_token_from_secret
+set_kube_config_values
+
+echo -e "\\nAll done! Test with:"
+echo "KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get pods"
+echo "you should not have any permissions by default - you have just created the authentication part"
+echo "You will need to create RBAC permissions"
+KUBECONFIG=${KUBECFG_FILE_NAME} kubectl get pods
+
+vijay@fedora ~>
+vijay@fedora ~> kubectl get ns
+NAME                      STATUS   AGE
+argocd                    Active   74d
+cert-manager              Active   74d
+consul                    Active   22d
+default                   Active   74d
+devworkspace-controller   Active   74d
+ingress-nginx             Active   74d
+kube-node-lease           Active   74d
+kube-public               Active   74d
+kube-system               Active   74d
+metallb-system            Active   44d
+public                    Active   74d
+test2                     Active   19d
+vijay@fedora ~> kubectl get namespaces
+NAME                      STATUS   AGE
+argocd                    Active   74d
+cert-manager              Active   74d
+consul                    Active   22d
+default                   Active   74d
+devworkspace-controller   Active   74d
+ingress-nginx             Active   74d
+kube-node-lease           Active   74d
+kube-public               Active   74d
+kube-system               Active   74d
+metallb-system            Active   44d
+public                    Active   74d
+test2                     Active   19d
+vijay@fedora ~> kubectl create ns tcssandbox
+namespace/tcssandbox created
+vijay@fedora ~> kubectl get ns
+NAME                      STATUS   AGE
+argocd                    Active   74d
+cert-manager              Active   74d
+consul                    Active   22d
+default                   Active   74d
+devworkspace-controller   Active   74d
+ingress-nginx             Active   74d
+kube-node-lease           Active   74d
+kube-public               Active   74d
+kube-system               Active   74d
+metallb-system            Active   44d
+public                    Active   74d
+tcssandbox                Active   14s
+test2                     Active   19d
+vijay@fedora ~> kubectl delete ns tcssabdbox
+Error from server (NotFound): namespaces "tcssabdbox" not found
+vijay@fedora ~ [1]> kubectl delete ns tcssanbdbox
+Error from server (NotFound): namespaces "tcssanbdbox" not found
+vijay@fedora ~ [1]> kubectl delete ns tcssandbox
+namespace "tcssandbox" deleted
+vijay@fedora ~> kubectl get pod -n kube-system
+NAME                                                   READY   STATUS    RESTARTS       AGE
+coredns-59499769fb-dpkv5                               1/1     Running   11 (38h ago)   74d
+coredns-59499769fb-tbpq8                               1/1     Running   11 (38h ago)   74d
+coredns-autoscaler-67cbd4599c-w2qdm                    1/1     Running   11 (38h ago)   74d
+metrics-server-585b7cc746-7s2xc                        1/1     Running   14             74d
+nfs-nfs-subdir-external-provisioner-575bcb78c6-9rw77   1/1     Running   12 (38h ago)   74d
+weave-net-62qs8                                        3/3     Running   34 (38h ago)   74d
+weave-net-bh6qb                                        3/3     Running   34 (38h ago)   74d
+weave-net-bqsh9                                        3/3     Running   34 (38h ago)   74d
+weave-net-wvv4r                                        3/3     Running   34 (38h ago)   74d
+vijay@fedora ~> kubectl get pod -n ingress-nginx
+NAME                             READY   STATUS    RESTARTS       AGE
+nginx-ingress-controller-74zkk   1/1     Running   16 (38h ago)   74d
+nginx-ingress-controller-87gb5   1/1     Running   14 (38h ago)   74d
+nginx-ingress-controller-z2gfk   1/1     Running   15 (38h ago)   74d
+vijay@fedora ~> kubectl get po -A
+NAMESPACE                 NAME                                                   READY   STATUS                  RESTARTS        AGE
+argocd                    argocd-application-controller-59865dc5f-mmj9c          1/1     Running                 12 (38h ago)    74d
+argocd                    argocd-dex-server-5d9465ccc7-z64dn                     1/1     Running                 11 (38h ago)    74d
+argocd                    argocd-redis-7f78f554f-mzlk5                           1/1     Running                 11 (38h ago)    74d
+argocd                    argocd-repo-server-d9b548b5b-4fvkh                     1/1     Running                 14 (38h ago)    74d
+argocd                    argocd-server-57988b688c-bzwtd                         1/1     Running                 14 (38h ago)    74d
+cert-manager              cert-manager-5dd59d9d9b-bxxg4                          1/1     Running                 11 (38h ago)    74d
+cert-manager              cert-manager-cainjector-8696fc9f89-6v5f6               1/1     Running                 13 (38h ago)    74d
+cert-manager              cert-manager-webhook-7d4b5b8c56-wpbn4                  1/1     Running                 12              74d
+consul                    consul-client-7zlfv                                    1/1     Running                 2 (38h ago)     14d
+consul                    consul-client-pmmg5                                    1/1     Running                 2 (38h ago)     14d
+consul                    consul-client-r9wwd                                    1/1     Running                 2 (38h ago)     14d
+consul                    consul-connect-injector-756b77665c-ffrvf               1/1     Running                 2 (38h ago)     14d
+consul                    consul-connect-injector-756b77665c-mkx5h               1/1     Running                 2 (38h ago)     14d
+consul                    consul-controller-6f6f65f68d-6x7hp                     1/1     Running                 2 (38h ago)     14d
+consul                    consul-mesh-gateway-68c8ff9778-27rrs                   2/2     Running                 5 (38h ago)     14d
+consul                    consul-mesh-gateway-68c8ff9778-cwl8s                   2/2     Running                 5 (38h ago)     14d
+consul                    consul-server-0                                        1/1     Running                 2 (38h ago)     14d
+consul                    consul-webhook-cert-manager-864885877d-6xdkv           1/1     Running                 2 (38h ago)     14d
+default                   keycloak-0                                             1/1     Running                 1 (38h ago)     13d
+default                   keycloak-postgresql-0                                  1/1     Running                 1 (38h ago)     13d
+default                   myjenkins-0                                            0/2     Init:CrashLoopBackOff   449 (29s ago)   36d
+devworkspace-controller   devworkspace-controller-manager-5b8f9df4f7-jtmm9       2/2     Running                 26 (38h ago)    74d
+devworkspace-controller   devworkspace-webhook-server-565d796797-dccd2           2/2     Running                 0               38h
+ingress-nginx             nginx-ingress-controller-74zkk                         1/1     Running                 16 (38h ago)    74d
+ingress-nginx             nginx-ingress-controller-87gb5                         1/1     Running                 14 (38h ago)    74d
+ingress-nginx             nginx-ingress-controller-z2gfk                         1/1     Running                 15 (38h ago)    74d
+kube-system               coredns-59499769fb-dpkv5                               1/1     Running                 11 (38h ago)    74d
+kube-system               coredns-59499769fb-tbpq8                               1/1     Running                 11 (38h ago)    74d
+kube-system               coredns-autoscaler-67cbd4599c-w2qdm                    1/1     Running                 11 (38h ago)    74d
+kube-system               metrics-server-585b7cc746-7s2xc                        1/1     Running                 14              74d
+kube-system               nfs-nfs-subdir-external-provisioner-575bcb78c6-9rw77   1/1     Running                 12 (38h ago)    74d
+kube-system               weave-net-62qs8                                        3/3     Running                 34 (38h ago)    74d
+kube-system               weave-net-bh6qb                                        3/3     Running                 34 (38h ago)    74d
+kube-system               weave-net-bqsh9                                        3/3     Running                 34 (38h ago)    74d
+kube-system               weave-net-wvv4r                                        3/3     Running                 34 (38h ago)    74d
+metallb-system            controller-7696f658c8-bcbmq                            1/1     Running                 7 (38h ago)     44d
+metallb-system            speaker-q9fkk                                          1/1     Running                 7 (38h ago)     44d
+metallb-system            speaker-s98vl                                          1/1     Running                 7 (38h ago)     44d
+metallb-system            speaker-vwcz9                                          1/1     Running                 7 (38h ago)     44d
+public                    continuous-image-puller-7d9rp                          1/1     Running                 11              74d
+public                    continuous-image-puller-bf6rq                          1/1     Running                 11 (38h ago)    74d
+public                    continuous-image-puller-vhkv6                          1/1     Running                 11 (38h ago)    74d
+public                    hub-7789d5747-8d7gs                                    1/1     Running                 13 (38h ago)    74d
+public                    mevijay-c754d78fd-x445l                                1/1     Running                 11              74d
+public                    minio-0                                                1/1     Running                 6 (38h ago)     30d
+public                    minio-1                                                1/1     Running                 6 (38h ago)     30d
+public                    proxy-685d6f559b-72mt6                                 1/1     Running                 12 (38h ago)    74d
+public                    sonar-postgresql-0                                     1/1     Running                 5               17d
+public                    sonar-sonarqube-0                                      1/1     Running                 5 (38h ago)     17d
+public                    user-scheduler-64c48b6954-df87m                        1/1     Running                 11 (38h ago)    74d
+public                    user-scheduler-64c48b6954-x79mk                        1/1     Running                 12              74d
+vijay@fedora ~> kubectl delete po myjenkins-0 -n default
+pod "myjenkins-0" deleted
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS     RESTARTS      AGE
+keycloak-0              1/1     Running    1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running    1 (38h ago)   13d
+myjenkins-0             0/2     Init:0/1   1 (11s ago)   66s
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS                  RESTARTS      AGE
+keycloak-0              1/1     Running                 1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running                 1 (38h ago)   13d
+myjenkins-0             0/2     Init:CrashLoopBackOff   1 (17s ago)   83s
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS                  RESTARTS      AGE
+keycloak-0              1/1     Running                 1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running                 1 (38h ago)   13d
+myjenkins-0             0/2     Init:CrashLoopBackOff   1 (19s ago)   85s
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS       RESTARTS      AGE
+keycloak-0              1/1     Running      1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running      1 (38h ago)   13d
+myjenkins-0             0/2     Init:Error   2 (23s ago)   89s
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS       RESTARTS      AGE
+keycloak-0              1/1     Running      1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running      1 (38h ago)   13d
+myjenkins-0             0/2     Init:Error   2 (25s ago)   91s
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS       RESTARTS      AGE
+keycloak-0              1/1     Running      1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running      1 (38h ago)   13d
+myjenkins-0             0/2     Init:Error   2 (26s ago)   92s
+vijay@fedora ~> kubectl get po -n default
+NAME                    READY   STATUS       RESTARTS      AGE
+keycloak-0              1/1     Running      1 (38h ago)   13d
+keycloak-postgresql-0   1/1     Running      1 (38h ago)   13d
+myjenkins-0             0/2     Init:Error   2 (27s ago)   93s
+vijay@fedora ~> kubectl create deploy apptcs --image=nginx:latest
+deployment.apps/apptcs created
+vijay@fedora ~> kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+apptcs   0/1     1            0           7s
+vijay@fedora ~> kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+apptcs   1/1     1            1           39s
+vijay@fedora ~> kubectl get rs
+NAME                DESIRED   CURRENT   READY   AGE
+apptcs-58ccb9dbcb   1         1         1       116s
+vijay@fedora ~> kubectl get po
+NAME                      READY   STATUS                  RESTARTS       AGE
+apptcs-58ccb9dbcb-ws4lk   1/1     Running                 0              2m39s
+keycloak-0                1/1     Running                 1 (38h ago)    13d
+keycloak-postgresql-0     1/1     Running                 1 (38h ago)    13d
+myjenkins-0               0/2     Init:CrashLoopBackOff   5 (2m5s ago)   7m1s
+vijay@fedora ~> kubectl delete po apptcs-58ccb9dbcb-ws4lk
+pod "apptcs-58ccb9dbcb-ws4lk" deleted
+vijay@fedora ~> kubectl get po
+NAME                      READY   STATUS                  RESTARTS      AGE
+apptcs-58ccb9dbcb-cs4m9   0/1     ContainerCreating       0             8s
+keycloak-0                1/1     Running                 1 (38h ago)   13d
+keycloak-postgresql-0     1/1     Running                 1 (38h ago)   13d
+myjenkins-0               0/2     Init:CrashLoopBackOff   6 (48s ago)   8m41s
+vijay@fedora ~> kubectl get po
+NAME                      READY   STATUS                  RESTARTS      AGE
+apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0             51s
+keycloak-0                1/1     Running                 1 (38h ago)   13d
+keycloak-postgresql-0     1/1     Running                 1 (38h ago)   13d
+myjenkins-0               0/2     Init:CrashLoopBackOff   6 (91s ago)   9m24s
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   1/1     1            1           5m20s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   1         1         1       5m20s
+
+NAME                          READY   STATUS                  RESTARTS       AGE
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0              69s
+pod/keycloak-0                1/1     Running                 1 (38h ago)    13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)    13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   6 (109s ago)   9m42s
+vijay@fedora ~> kubectl scale deploy apptcs --replicas=3
+deployment.apps/apptcs scaled
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   1/3     3            1           6m42s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   3         3         1       6m42s
+
+NAME                          READY   STATUS                  RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0               2m31s
+pod/apptcs-58ccb9dbcb-fl7qb   0/1     ContainerCreating       0               12s
+pod/apptcs-58ccb9dbcb-k5dxk   0/1     ContainerCreating       0               12s
+pod/keycloak-0                1/1     Running                 1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   6 (3m11s ago)   11m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   3/3     3            3           7m56s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   3         3         3       7m56s
+
+NAME                          READY   STATUS                  RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0               3m45s
+pod/apptcs-58ccb9dbcb-fl7qb   1/1     Running                 0               86s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running                 0               86s
+pod/keycloak-0                1/1     Running                 1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   6 (4m25s ago)   12m
+vijay@fedora ~> kubectl scale deploy apptcs --replicas=2
+deployment.apps/apptcs scaled
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   2/2     2            2           8m16s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   2         2         2       8m16s
+
+NAME                          READY   STATUS                  RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0               4m5s
+pod/apptcs-58ccb9dbcb-fl7qb   1/1     Terminating             0               106s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running                 0               106s
+pod/keycloak-0                1/1     Running                 1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   6 (4m45s ago)   12m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   2/2     2            2           8m27s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   2         2         2       8m27s
+
+NAME                          READY   STATUS                  RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0               4m16s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running                 0               117s
+pod/keycloak-0                1/1     Running                 1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   6 (4m56s ago)   12m
+vijay@fedora ~> kubectl scale deploy apptcs --replicas=10
+deployment.apps/apptcs scaled
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   2/10    10           2           8m35s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   10        10        2       8m36s
+
+NAME                          READY   STATUS                  RESTARTS       AGE
+pod/apptcs-58ccb9dbcb-4txk5   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-6p67j   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-96d8p   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0              4m26s
+pod/apptcs-58ccb9dbcb-f95mz   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-f98gq   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running                 0              2m7s
+pod/apptcs-58ccb9dbcb-qxhhq   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-vs9t7   0/1     ContainerCreating       0              5s
+pod/apptcs-58ccb9dbcb-w6jww   0/1     ContainerCreating       0              4s
+pod/keycloak-0                1/1     Running                 1 (38h ago)    13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)    13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   6 (5m6s ago)   12m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   2/10    10           2           8m51s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   10        10        2       8m51s
+
+NAME                          READY   STATUS              RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-4txk5   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-6p67j   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-96d8p   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running             0               4m40s
+pod/apptcs-58ccb9dbcb-f95mz   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-f98gq   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running             0               2m21s
+pod/apptcs-58ccb9dbcb-qxhhq   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-vs9t7   0/1     ContainerCreating   0               19s
+pod/apptcs-58ccb9dbcb-w6jww   0/1     ContainerCreating   0               18s
+pod/keycloak-0                1/1     Running             1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running             1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:0/1            7 (5m20s ago)   13m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   2/10    10           2           8m53s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   10        10        2       8m53s
+
+NAME                          READY   STATUS              RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-4txk5   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-6p67j   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-96d8p   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running             0               4m43s
+pod/apptcs-58ccb9dbcb-f95mz   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-f98gq   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running             0               2m24s
+pod/apptcs-58ccb9dbcb-qxhhq   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-vs9t7   0/1     ContainerCreating   0               22s
+pod/apptcs-58ccb9dbcb-w6jww   0/1     ContainerCreating   0               21s
+pod/keycloak-0                1/1     Running             1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running             1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:0/1            7 (5m23s ago)   13m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   2/10    10           2           8m55s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   10        10        2       8m57s
+
+NAME                          READY   STATUS              RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-4txk5   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-6p67j   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-96d8p   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running             0               4m46s
+pod/apptcs-58ccb9dbcb-f95mz   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-f98gq   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running             0               2m27s
+pod/apptcs-58ccb9dbcb-qxhhq   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-vs9t7   0/1     ContainerCreating   0               25s
+pod/apptcs-58ccb9dbcb-w6jww   0/1     ContainerCreating   0               24s
+pod/keycloak-0                1/1     Running             1 (38h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running             1 (38h ago)     13d
+pod/myjenkins-0               0/2     Init:Error          7 (5m26s ago)   13m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   10/10   10           10          9m56s
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   10        10        10      9m56s
+
+NAME                          READY   STATUS                  RESTARTS      AGE
+pod/apptcs-58ccb9dbcb-4txk5   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-6p67j   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-96d8p   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0             5m45s
+pod/apptcs-58ccb9dbcb-f95mz   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-f98gq   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running                 0             3m26s
+pod/apptcs-58ccb9dbcb-qxhhq   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-vs9t7   1/1     Running                 0             84s
+pod/apptcs-58ccb9dbcb-w6jww   1/1     Running                 0             83s
+pod/keycloak-0                1/1     Running                 1 (38h ago)   13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (38h ago)   13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   7 (66s ago)   14m
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   10/10   10           10          18m
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   10        10        10      18m
+
+NAME                          READY   STATUS                  RESTARTS       AGE
+pod/apptcs-58ccb9dbcb-4txk5   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-6p67j   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-96d8p   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running                 0              14m
+pod/apptcs-58ccb9dbcb-f95mz   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-f98gq   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-k5dxk   1/1     Running                 0              11m
+pod/apptcs-58ccb9dbcb-qxhhq   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-vs9t7   1/1     Running                 0              9m39s
+pod/apptcs-58ccb9dbcb-w6jww   1/1     Running                 0              9m38s
+pod/keycloak-0                1/1     Running                 1 (39h ago)    13d
+pod/keycloak-postgresql-0     1/1     Running                 1 (39h ago)    13d
+pod/myjenkins-0               0/2     Init:CrashLoopBackOff   8 (4m6s ago)   22m
+vijay@fedora ~> kubectl scale deploy apptcs --replicas=1
+deployment.apps/apptcs scaled
+vijay@fedora ~> kubectl get deploy,rs,po
+NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/apptcs   1/1     1            1           19m
+
+NAME                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/apptcs-58ccb9dbcb   1         1         1       19m
+
+NAME                          READY   STATUS       RESTARTS        AGE
+pod/apptcs-58ccb9dbcb-cs4m9   1/1     Running      0               15m
+pod/keycloak-0                1/1     Running      1 (39h ago)     13d
+pod/keycloak-postgresql-0     1/1     Running      1 (39h ago)     13d
+pod/myjenkins-0               0/2     Init:Error   9 (5m35s ago)   24m
+vijay@fedora ~>
+vijay@fedora ~> kubectl create deploy apptcs --image=nginx:latest --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apptcs
+  name: apptcs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apptcs
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: apptcs
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        resources: {}
+status: {}
+vijay@fedora ~> kubectl create deploy apptcs --image=nginx:latest --dry-run=client -o yaml > tcsapp.yaml
+vijay@fedora ~> cat tcsapp.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apptcs
+  name: apptcs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apptcs
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: apptcs
+    spec:
+      containers:
+      - image: nginx:latest
+        name: nginx
+        resources: {}
+status: {}
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> docker searcha radish
+docker: 'searcha' is not a docker command.
+See 'docker --help'
+vijay@fedora ~ [1]> docker searcha radis
+docker: 'searcha' is not a docker command.
+See 'docker --help'
+vijay@fedora ~ [1]> docker search radis
+NAME                                     DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+radishgz/metrics-server-amd64            gcr.io/google_containers/metrics-server-amd6…   1                    [OK]
+radishgz/go-signup-login-example-mysql   go example                                      0                    [OK]
+radisys/5gc                              Radisys 5G Core Network Repository              0
+radistgla/nodejs-chromium-alpine         Image providing headless chrome and nodejs 8    0                    [OK]
+radisys/5goam                            Radisys 5G OAM CNF                              0
+radish/new-backend_base                                                                  0
+radish/restock_base                                                                      0
+radishgz/dashboard                       k8s dashboard                                   0                    [OK]
+radish/admin_base                                                                        0
+radish/website_base                                                                      0
+radish/app_base                                                                          0
+radisys/5gnr                             Radisys 5GNR DU, CU, CU CP, CU UP components…   0
+radishgz/ubuntu-slim                     gcr.io/google_containers/ubuntu-slim:0.1        0                    [OK]
+radish/redis-base                                                                        0
+radishjr/what-for-lunch-website                                                          0
+radishgz/ui                              rancher ui                                      0                    [OK]
+radishgz/monocular                       monocular api development environment with g…   0                    [OK]
+radishgz/cattle_base                     rancher cattle compile base image               0                    [OK]
+radishgz/prometheus-rancher-exporter     rancher exporter with environment information   0                    [OK]
+radishgz/flannel                         core flannel compile environment                0                    [OK]
+radishgz/winhong-elasticsearh            elasticsearh 5.3.1 cluster,backend are use c…   0                    [OK]
+radishgz/hue-docker                      hue-docker                                      0                    [OK]
+radistao/nodejs-apache-autobuild         Build nodejs apache image                       0                    [OK]
+radishjr/friendlyhello                                                                   0
+radishgz/ubuntu-sshserver                ubuntu 16.04 with sshserver                     0                    [OK]
+vijay@fedora ~> docker search redis
+NAME                               DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+redis                              Redis is an open source key-value store that…   11526     [OK]
+bitnami/redis                      Bitnami Redis Docker Image                      234                  [OK]
+redislabs/redisinsight             RedisInsight - The GUI for Redis                68
+redislabs/redisearch               Redis With the RedisSearch module pre-loaded…   54
+redislabs/rejson                   RedisJSON - Enhanced JSON data type processi…   48
+redislabs/redis                    Clustered in-memory database engine compatib…   35
+redislabs/redismod                 An automated build of redismod - latest Redi…   27                   [OK]
+redislabs/redisgraph               A graph database module for Redis               24                   [OK]
+redis/redis-stack                  redis-stack installs a Redis server with add…   24
+redislabs/rebloom                  A probablistic datatypes module for Redis       21                   [OK]
+circleci/redis                     CircleCI images for Redis                       14                   [OK]
+redislabs/redistimeseries          A time series database module for Redis         12
+redis/redis-stack-server           redis-stack-server installs a Redis server w…   11
+redislabs/operator                                                                 7
+redislabs/redis-py                                                                 5
+redislabs/redisgears               An automated build of RedisGears                4
+redislabs/redisai                                                                  4
+redislabs/redisml                  A Redis module that implements several machi…   2                    [OK]
+redislabs/k8s-controller                                                           2
+redislabs/redis-webcli             A tiny Flask app to provide access to Redis …   2                    [OK]
+redislabs/rcp-kubectl              Container for running kubectl commands (plus…   1
+redislabs/ng-redis-raft            Redis with redis raft module                    0
+redislabs/gesher                   K8s Admission control proxy                     0
+redislabs/redis-connect-postgres   Redis Connect PostgreSQL Connector for Conti…   0
+redislabs/memtier_benchmark        Docker image to run memtier_benchmark           0
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> kubectl create deploy apptcs --image=nginx:latest --dry-run=client -o yaml^C
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~>
+vijay@fedora ~> kubectl create deploy apptcs --image=nginx:latest --dry-run=client -o yaml > tcsapp.yaml^C
+vijay@fedora ~> kubectl apply -f tcsapp.yaml
+Warning: resource deployments/apptcs is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+deployment.apps/apptcs configured
+vijay@fedora ~> kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+apptcs   1/1     1            1           34m
+vijay@fedora ~> kubectl delete deploy apptcs
+deployment.apps "apptcs" deleted
+vijay@fedora ~> kubectl delete -f tcsapp.yaml
+Error from server (NotFound): error when deleting "tcsapp.yaml": deployments.apps "apptcs" not found
+vijay@fedora ~ [1]> kubectl apply -f tcsapp.yaml
+deployment.apps/apptcs created
+vijay@fedora ~> kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+apptcs   1/1     1            1           47s
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS       AGE
+apptcs-7b774ffcf-m85r4   2/2     Running                 0              52s
+keycloak-0               1/1     Running                 1 (39h ago)    13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)    13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (41s ago)   40m
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> kubectl apply -f tcsapp.yaml
+deployment.apps/apptcs configured
+vijay@fedora ~> watch kubectl get po
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-bwdxf   1/1     Running                 0                30s
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (2m15s ago)   42m
+vijay@fedora ~>
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-bwdxf   1/1     Running                 0                34s
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (2m19s ago)   42m
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> kubectl apply -f tcsapp.yaml
+deployment.apps/apptcs configured
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-bwdxf   1/1     Running                 0                71s
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (2m56s ago)   42m
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-bwdxf   1/1     Running                 0                72s
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (2m57s ago)   42m
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-bwdxf   1/1     Running                 0                73s
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (2m58s ago)   42m
+vijay@fedora ~> kubectl apply -f tcsapp.yaml
+deployment.apps/apptcs configured
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS        AGE
+apptcs-96886fb48-bwdxf   1/1     Running                 0               80s
+keycloak-0               1/1     Running                 1 (39h ago)     13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)     13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (3m5s ago)   43m
+vijay@fedora ~> kubectl delete -f tcsapp.yaml
+deployment.apps "apptcs" deleted
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-bwdxf   1/1     Terminating             0                2m1s
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   12 (3m46s ago)   43m
+vijay@fedora ~> kubectl get po
+NAME                    READY   STATUS                  RESTARTS         AGE
+keycloak-0              1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0   1/1     Running                 1 (39h ago)      13d
+myjenkins-0             0/2     Init:CrashLoopBackOff   12 (3m50s ago)   43m
+vijay@fedora ~>
+vijay@fedora ~> kubectl get po
+NAME                    READY   STATUS                  RESTARTS         AGE
+keycloak-0              1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0   1/1     Running                 1 (39h ago)      13d
+myjenkins-0             0/2     Init:CrashLoopBackOff   12 (4m38s ago)   44m
+vijay@fedora ~> kubectl get po -o wide
+NAME                    READY   STATUS                  RESTARTS         AGE   IP             NODE           NOMINATED NODE   READINESS GATES
+keycloak-0              1/1     Running                 1 (39h ago)      13d   10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0   1/1     Running                 1 (39h ago)      13d   10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0             0/2     Init:CrashLoopBackOff   12 (4m51s ago)   44m   10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~> kubectl apply -f tcsapp.yaml^C
+vijay@fedora ~> kubectl api-resources
+NAME                              SHORTNAMES            APIVERSION                             NAMESPACED   KIND
+bindings                                                v1                                     true         Binding
+componentstatuses                 cs                    v1                                     false        ComponentStatus
+configmaps                        cm                    v1                                     true         ConfigMap
+endpoints                         ep                    v1                                     true         Endpoints
+events                            ev                    v1                                     true         Event
+limitranges                       limits                v1                                     true         LimitRange
+namespaces                        ns                    v1                                     false        Namespace
+nodes                             no                    v1                                     false        Node
+persistentvolumeclaims            pvc                   v1                                     true         PersistentVolumeClaim
+persistentvolumes                 pv                    v1                                     false        PersistentVolume
+pods                              po                    v1                                     true         Pod
+podtemplates                                            v1                                     true         PodTemplate
+replicationcontrollers            rc                    v1                                     true         ReplicationController
+resourcequotas                    quota                 v1                                     true         ResourceQuota
+secrets                                                 v1                                     true         Secret
+serviceaccounts                   sa                    v1                                     true         ServiceAccount
+services                          svc                   v1                                     true         Service
+challenges                                              acme.cert-manager.io/v1                true         Challenge
+orders                                                  acme.cert-manager.io/v1                true         Order
+mutatingwebhookconfigurations                           admissionregistration.k8s.io/v1        false        MutatingWebhookConfiguration
+validatingwebhookconfigurations                         admissionregistration.k8s.io/v1        false        ValidatingWebhookConfiguration
+customresourcedefinitions         crd,crds              apiextensions.k8s.io/v1                false        CustomResourceDefinition
+apiservices                                             apiregistration.k8s.io/v1              false        APIService
+controllerrevisions                                     apps/v1                                true         ControllerRevision
+daemonsets                        ds                    apps/v1                                true         DaemonSet
+deployments                       deploy                apps/v1                                true         Deployment
+replicasets                       rs                    apps/v1                                true         ReplicaSet
+statefulsets                      sts                   apps/v1                                true         StatefulSet
+applications                      app,apps              argoproj.io/v1alpha1                   true         Application
+appprojects                       appproj,appprojs      argoproj.io/v1alpha1                   true         AppProject
+tokenreviews                                            authentication.k8s.io/v1               false        TokenReview
+localsubjectaccessreviews                               authorization.k8s.io/v1                true         LocalSubjectAccessReview
+selfsubjectaccessreviews                                authorization.k8s.io/v1                false        SelfSubjectAccessReview
+selfsubjectrulesreviews                                 authorization.k8s.io/v1                false        SelfSubjectRulesReview
+subjectaccessreviews                                    authorization.k8s.io/v1                false        SubjectAccessReview
+horizontalpodautoscalers          hpa                   autoscaling/v2                         true         HorizontalPodAutoscaler
+cronjobs                          cj                    batch/v1                               true         CronJob
+jobs                                                    batch/v1                               true         Job
+certificaterequests               cr,crs                cert-manager.io/v1                     true         CertificateRequest
+certificates                      cert,certs            cert-manager.io/v1                     true         Certificate
+clusterissuers                                          cert-manager.io/v1                     false        ClusterIssuer
+issuers                                                 cert-manager.io/v1                     true         Issuer
+certificatesigningrequests        csr                   certificates.k8s.io/v1                 false        CertificateSigningRequest
+exportedservices                  exported-services     consul.hashicorp.com/v1alpha1          true         ExportedServices
+ingressgateways                   ingress-gateway       consul.hashicorp.com/v1alpha1          true         IngressGateway
+meshes                                                  consul.hashicorp.com/v1alpha1          true         Mesh
+proxydefaults                     proxy-defaults        consul.hashicorp.com/v1alpha1          true         ProxyDefaults
+servicedefaults                   service-defaults      consul.hashicorp.com/v1alpha1          true         ServiceDefaults
+serviceintentions                 service-intentions    consul.hashicorp.com/v1alpha1          true         ServiceIntentions
+serviceresolvers                  service-resolver      consul.hashicorp.com/v1alpha1          true         ServiceResolver
+servicerouters                    service-router        consul.hashicorp.com/v1alpha1          true         ServiceRouter
+servicesplitters                  service-splitter      consul.hashicorp.com/v1alpha1          true         ServiceSplitter
+terminatinggateways               terminating-gateway   consul.hashicorp.com/v1alpha1          true         TerminatingGateway
+devworkspaceoperatorconfigs       dwoc                  controller.devfile.io/v1alpha1         true         DevWorkspaceOperatorConfig
+devworkspaceroutings              dwr                   controller.devfile.io/v1alpha1         true         DevWorkspaceRouting
+leases                                                  coordination.k8s.io/v1                 true         Lease
+endpointslices                                          discovery.k8s.io/v1                    true         EndpointSlice
+events                            ev                    events.k8s.io/v1                       true         Event
+flowschemas                                             flowcontrol.apiserver.k8s.io/v1beta2   false        FlowSchema
+prioritylevelconfigurations                             flowcontrol.apiserver.k8s.io/v1beta2   false        PriorityLevelConfiguration
+nodes                                                   metrics.k8s.io/v1beta1                 false        NodeMetrics
+pods                                                    metrics.k8s.io/v1beta1                 true         PodMetrics
+ingressclasses                                          networking.k8s.io/v1                   false        IngressClass
+ingresses                         ing                   networking.k8s.io/v1                   true         Ingress
+networkpolicies                   netpol                networking.k8s.io/v1                   true         NetworkPolicy
+runtimeclasses                                          node.k8s.io/v1                         false        RuntimeClass
+poddisruptionbudgets              pdb                   policy/v1                              true         PodDisruptionBudget
+podsecuritypolicies               psp                   policy/v1beta1                         false        PodSecurityPolicy
+clusterrolebindings                                     rbac.authorization.k8s.io/v1           false        ClusterRoleBinding
+clusterroles                                            rbac.authorization.k8s.io/v1           false        ClusterRole
+rolebindings                                            rbac.authorization.k8s.io/v1           true         RoleBinding
+roles                                                   rbac.authorization.k8s.io/v1           true         Role
+priorityclasses                   pc                    scheduling.k8s.io/v1                   false        PriorityClass
+csidrivers                                              storage.k8s.io/v1                      false        CSIDriver
+csinodes                                                storage.k8s.io/v1                      false        CSINode
+csistoragecapacities                                    storage.k8s.io/v1                      true         CSIStorageCapacity
+storageclasses                    sc                    storage.k8s.io/v1                      false        StorageClass
+volumeattachments                                       storage.k8s.io/v1                      false        VolumeAttachment
+devworkspaces                     dw                    workspace.devfile.io/v1alpha2          true         DevWorkspace
+devworkspacetemplates             dwt                   workspace.devfile.io/v1alpha2          true         DevWorkspaceTemplate
+vijay@fedora ~>
+vijay@fedora ~> kubectl apply -f tcsapp.yaml
+deployment.apps/apptcs created
+vijay@fedora ~> kubectl get po -o wide
+NAME                     READY   STATUS                  RESTARTS        AGE   IP             NODE           NOMINATED NODE   READINESS GATES
+apptcs-96886fb48-xwww6   0/1     ContainerCreating       0               4s    <none>         192.168.1.18   <none>           <none>
+keycloak-0               1/1     Running                 1 (39h ago)     13d   10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)     13d   10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0              0/2     Init:CrashLoopBackOff   13 (102s ago)   46m   10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~> kubectl get po -o wide
+NAME                     READY   STATUS                  RESTARTS        AGE   IP             NODE           NOMINATED NODE   READINESS GATES
+apptcs-96886fb48-xwww6   0/1     ContainerCreating       0               6s    <none>         192.168.1.18   <none>           <none>
+keycloak-0               1/1     Running                 1 (39h ago)     13d   10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)     13d   10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0              0/2     Init:CrashLoopBackOff   13 (104s ago)   46m   10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~> kubectl get po -o wide
+NAME                     READY   STATUS                  RESTARTS        AGE   IP             NODE           NOMINATED NODE   READINESS GATES
+apptcs-96886fb48-xwww6   1/1     Running                 0               11s   10.42.0.15     192.168.1.18   <none>           <none>
+keycloak-0               1/1     Running                 1 (39h ago)     13d   10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)     13d   10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0              0/2     Init:CrashLoopBackOff   13 (109s ago)   47m   10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~> kubectl get po -o wide
+NAME                     READY   STATUS                  RESTARTS        AGE   IP             NODE           NOMINATED NODE   READINESS GATES
+apptcs-96886fb48-xwww6   1/1     Running                 0               13s   10.42.0.15     192.168.1.18   <none>           <none>
+keycloak-0               1/1     Running                 1 (39h ago)     13d   10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)     13d   10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0              0/2     Init:CrashLoopBackOff   13 (111s ago)   47m   10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~> kubectl get node
+NAME           STATUS   ROLES               AGE   VERSION
+192.168.1.15   Ready    controlplane,etcd   74d   v1.24.2
+192.168.1.16   Ready    worker              74d   v1.24.2
+192.168.1.17   Ready    worker              74d   v1.24.2
+192.168.1.18   Ready    worker              74d   v1.24.2
+vijay@fedora ~> kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+apptcs   1/1     1            1           96s
+vijay@fedora ~> kubectl describe deploy apptcs
+Name:                   apptcs
+Namespace:              default
+CreationTimestamp:      Thu, 03 Nov 2022 13:00:02 +0530
+Labels:                 app=apptcs
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=apptcs
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=apptcs
+  Containers:
+   nginx2:
+    Image:        nginx:latest
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   apptcs-96886fb48 (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  115s  deployment-controller  Scaled up replica set apptcs-96886fb48 to 1
+vijay@fedora ~> kubectl get po -o wide
+NAME                     READY   STATUS       RESTARTS         AGE     IP             NODE           NOMINATED NODE   READINESS GATES
+apptcs-96886fb48-xwww6   1/1     Running      0                3m40s   10.42.0.15     192.168.1.18   <none>           <none>
+keycloak-0               1/1     Running      1 (39h ago)      13d     10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0    1/1     Running      1 (39h ago)      13d     10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0              0/2     Init:Error   14 (5m18s ago)   50m     10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~> kubectl describe node  192.168.1.18
+Name:               192.168.1.18
+Roles:              worker
+Labels:             beta.kubernetes.io/arch=amd64
+                    beta.kubernetes.io/os=linux
+                    kubernetes.io/arch=amd64
+                    kubernetes.io/hostname=192.168.1.18
+                    kubernetes.io/os=linux
+                    node-role.kubernetes.io/worker=true
+Annotations:        node.alpha.kubernetes.io/ttl: 0
+                    rke.cattle.io/external-ip: 192.168.1.18
+                    rke.cattle.io/internal-ip: 192.168.1.18
+                    volumes.kubernetes.io/controller-managed-attach-detach: true
+CreationTimestamp:  Sat, 20 Aug 2022 20:10:02 +0530
+Taints:             <none>
+Unschedulable:      false
+Lease:
+  HolderIdentity:  192.168.1.18
+  AcquireTime:     <unset>
+  RenewTime:       Thu, 03 Nov 2022 13:04:46 +0530
+Conditions:
+  Type                 Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
+  ----                 ------  -----------------                 ------------------                ------                       -------
+  NetworkUnavailable   False   Tue, 01 Nov 2022 21:32:58 +0530   Tue, 01 Nov 2022 21:32:58 +0530   WeaveIsUp                    Weave pod has set this
+  MemoryPressure       False   Thu, 03 Nov 2022 13:02:46 +0530   Tue, 11 Oct 2022 19:56:00 +0530   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure         False   Thu, 03 Nov 2022 13:02:46 +0530   Tue, 11 Oct 2022 19:56:00 +0530   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure          False   Thu, 03 Nov 2022 13:02:46 +0530   Tue, 11 Oct 2022 19:56:00 +0530   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready                True    Thu, 03 Nov 2022 13:02:46 +0530   Tue, 11 Oct 2022 19:56:00 +0530   KubeletReady                 kubelet is posting ready status. AppArmor enabled
+Addresses:
+  InternalIP:  192.168.1.18
+  Hostname:    192.168.1.18
+Capacity:
+  cpu:                2
+  ephemeral-storage:  50620216Ki
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             8148700Ki
+  pods:               110
+Allocatable:
+  cpu:                2
+  ephemeral-storage:  46651590989
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             8046300Ki
+  pods:               110
+System Info:
+  Machine ID:
+  System UUID:                aa007813-e93a-4197-b2a3-0c5cca758738
+  Boot ID:                    7eddd1ae-f4fb-4bd2-b588-24c296cf8a8f
+  Kernel Version:             5.4.0-131-generic
+  OS Image:                   Ubuntu 20.04.4 LTS
+  Operating System:           linux
+  Architecture:               amd64
+  Container Runtime Version:  docker://20.10.17
+  Kubelet Version:            v1.24.2
+  Kube-Proxy Version:         v1.24.2
+PodCIDR:                      10.42.3.0/24
+PodCIDRs:                     10.42.3.0/24
+Non-terminated Pods:          (16 in total)
+  Namespace                   Name                                                CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age
+  ---------                   ----                                                ------------  ----------  ---------------  -------------  ---
+  argocd                      argocd-dex-server-5d9465ccc7-z64dn                  0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+  cert-manager                cert-manager-cainjector-8696fc9f89-6v5f6            0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+  cert-manager                cert-manager-webhook-7d4b5b8c56-wpbn4               0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+  consul                      consul-client-7zlfv                                 100m (5%)     100m (5%)   100Mi (1%)       100Mi (1%)     14d
+  consul                      consul-connect-injector-756b77665c-mkx5h            50m (2%)      50m (2%)    50Mi (0%)        50Mi (0%)      14d
+  consul                      consul-mesh-gateway-68c8ff9778-27rrs                120m (6%)     120m (6%)   125Mi (1%)       150Mi (1%)     14d
+  default                     apptcs-96886fb48-xwww6                              0 (0%)        0 (0%)      0 (0%)           0 (0%)         4m48s
+  default                     myjenkins-0                                         50m (2%)      2 (100%)    256Mi (3%)       4Gi (52%)      51m
+  devworkspace-controller     devworkspace-controller-manager-5b8f9df4f7-jtmm9    250m (12%)    1 (50%)     100Mi (1%)       1Gi (13%)      74d
+  ingress-nginx               nginx-ingress-controller-74zkk                      0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+  kube-system                 metrics-server-585b7cc746-7s2xc                     100m (5%)     0 (0%)      200Mi (2%)       0 (0%)         74d
+  kube-system                 weave-net-bqsh9                                     100m (5%)     0 (0%)      0 (0%)           0 (0%)         74d
+  metallb-system              speaker-q9fkk                                       100m (5%)     100m (5%)   100Mi (1%)       100Mi (1%)     44d
+  public                      continuous-image-puller-vhkv6                       0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+  public                      proxy-685d6f559b-72mt6                              0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+  public                      user-scheduler-64c48b6954-x79mk                     0 (0%)        0 (0%)      0 (0%)           0 (0%)         74d
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests     Limits
+  --------           --------     ------
+  cpu                870m (43%)   3370m (168%)
+  memory             931Mi (11%)  5520Mi (70%)
+  ephemeral-storage  0 (0%)       0 (0%)
+  hugepages-1Gi      0 (0%)       0 (0%)
+  hugepages-2Mi      0 (0%)       0 (0%)
+Events:              <none>
+vijay@fedora ~> kubectl get po -o wide
+NAME                     READY   STATUS                  RESTARTS         AGE     IP             NODE           NOMINATED NODE   READINESS GATES
+apptcs-96886fb48-xwww6   1/1     Running                 0                7m30s   10.42.0.15     192.168.1.18   <none>           <none>
+keycloak-0               1/1     Running                 1 (39h ago)      13d     10.42.128.10   192.168.1.17   <none>           <none>
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d     10.42.128.6    192.168.1.17   <none>           <none>
+myjenkins-0              0/2     Init:CrashLoopBackOff   14 (3m55s ago)   54m     10.42.0.5      192.168.1.18   <none>           <none>
+vijay@fedora ~>
+vijay@fedora ~> kubectl create deploy^C
+vijay@fedora ~> kubectl get po -n kube-system
+NAME                                                   READY   STATUS    RESTARTS       AGE
+coredns-59499769fb-dpkv5                               1/1     Running   11 (39h ago)   74d
+coredns-59499769fb-tbpq8                               1/1     Running   11 (39h ago)   74d
+coredns-autoscaler-67cbd4599c-w2qdm                    1/1     Running   11 (39h ago)   74d
+metrics-server-585b7cc746-7s2xc                        1/1     Running   14             74d
+nfs-nfs-subdir-external-provisioner-575bcb78c6-9rw77   1/1     Running   12 (39h ago)   74d
+weave-net-62qs8                                        3/3     Running   34 (39h ago)   74d
+weave-net-bh6qb                                        3/3     Running   34 (39h ago)   74d
+weave-net-bqsh9                                        3/3     Running   34 (39h ago)   74d
+weave-net-wvv4r                                        3/3     Running   34 (39h ago)   74d
+vijay@fedora ~> kubectl get deploy
+NAME     READY   UP-TO-DATE   AVAILABLE   AGE
+apptcs   1/1     1            1           20m
+vijay@fedora ~> vim tcsapp.yaml
+vijay@fedora ~> kubectl get po
+NAME                     READY   STATUS                  RESTARTS         AGE
+apptcs-96886fb48-xwww6   1/1     Running                 0                23m
+keycloak-0               1/1     Running                 1 (39h ago)      13d
+keycloak-postgresql-0    1/1     Running                 1 (39h ago)      13d
+myjenkins-0              0/2     Init:CrashLoopBackOff   17 (4m16s ago)   70m
+vijay@fedora ~> kubectl describe po apptcs-96886fb48-xwww6
+Name:         apptcs-96886fb48-xwww6
+Namespace:    default
+Priority:     0
+Node:         192.168.1.18/192.168.1.18
+Start Time:   Thu, 03 Nov 2022 13:00:03 +0530
+Labels:       app=apptcs
+              pod-template-hash=96886fb48
+Annotations:  <none>
+Status:       Running
+IP:           10.42.0.15
+IPs:
+  IP:           10.42.0.15
+Controlled By:  ReplicaSet/apptcs-96886fb48
+Containers:
+  nginx2:
+    Container ID:   docker://a3cbe2cb8726d961a69578fd6de589d769ffefa8f139d8bedf85dec52644c530
+    Image:          nginx:latest
+    Image ID:       docker-pullable://nginx@sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Thu, 03 Nov 2022 13:00:11 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-q8z97 (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  kube-api-access-q8z97:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  23m   default-scheduler  Successfully assigned default/apptcs-96886fb48-xwww6 to 192.168.1.18
+  Normal  Pulling    23m   kubelet            Pulling image "nginx:latest"
+  Normal  Pulled     23m   kubelet            Successfully pulled image "nginx:latest" in 3.187181433s
+  Normal  Created    23m   kubelet            Created container nginx2
+  Normal  Started    23m   kubelet            Started container nginx2
+vijay@fedora ~> kubectl get rs
+NAME               DESIRED   CURRENT   READY   AGE
+apptcs-96886fb48   1         1         1       24m
+vijay@fedora ~> kubectl describe rs apptcs-96886fb48
+Name:           apptcs-96886fb48
+Namespace:      default
+Selector:       app=apptcs,pod-template-hash=96886fb48
+Labels:         app=apptcs
+                pod-template-hash=96886fb48
+Annotations:    deployment.kubernetes.io/desired-replicas: 1
+                deployment.kubernetes.io/max-replicas: 2
+                deployment.kubernetes.io/revision: 1
+Controlled By:  Deployment/apptcs
+Replicas:       1 current / 1 desired
+Pods Status:    1 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=apptcs
+           pod-template-hash=96886fb48
+  Containers:
+   nginx2:
+    Image:        nginx:latest
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  24m   replicaset-controller  Created pod: apptcs-96886fb48-xwww6
+vijay@fedora ~> kubectl describe deploy apptcs
+Name:                   apptcs
+Namespace:              default
+CreationTimestamp:      Thu, 03 Nov 2022 13:00:02 +0530
+Labels:                 app=apptcs
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=apptcs
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=apptcs
+  Containers:
+   nginx2:
+    Image:        nginx:latest
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   apptcs-96886fb48 (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  25m   deployment-controller  Scaled up replica set apptcs-96886fb48 to 1
+vijay@fedora ~> kubectl expose deploy apptcs --port=8080 --target-port=80  --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: apptcs
+  name: apptcs
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: apptcs
+status:
+  loadBalancer: {}
+vijay@fedora ~> kubectl expose deploy apptcs --port=8080 --target-port=80  --dry-run=client -o yaml > tcsappsvc.yaml
+vijay@fedora ~> kubectl apply -f tcsappsvc.yaml
+service/apptcs created
+vijay@fedora ~> kubectl get svc
+NAME                            TYPE           CLUSTER-IP      EXTERNAL-IP    PORT(S)        AGE
+apptcs                          ClusterIP      10.43.181.44    <none>         8080/TCP       6s
+consul-api-gateway-controller   ClusterIP      10.43.240.181   <none>         9090/TCP       22d
+keycloak                        LoadBalancer   10.43.19.47     192.168.1.74   80:32205/TCP   13d
+keycloak-headless               ClusterIP      None            <none>         80/TCP         13d
+keycloak-postgresql             ClusterIP      10.43.28.21     <none>         5432/TCP       13d
+keycloak-postgresql-hl          ClusterIP      None            <none>         5432/TCP       13d
+kubernetes                      ClusterIP      10.43.0.1       <none>         443/TCP        74d
+local-app-helm-guestbook        ClusterIP      10.43.176.212   <none>         80/TCP         36d
+myjenkins                       ClusterIP      10.43.216.122   <none>         8080/TCP       37d
+myjenkins-agent                 ClusterIP      10.43.224.61    <none>         50000/TCP      37d
+vijay@fedora ~> kubectl get ep
+NAME                                                ENDPOINTS           AGE
+apptcs                                              10.42.0.15:80       42s
+cluster.local-nfs-nfs-subdir-external-provisioner   <none>              74d
+consul-api-gateway-controller                       <none>              22d
+keycloak                                            10.42.128.10:8080   13d
+keycloak-headless                                   10.42.128.10:8080   13d
+keycloak-postgresql                                 10.42.128.6:5432    13d
+keycloak-postgresql-hl                              10.42.128.6:5432    13d
+kubernetes                                          192.168.1.15:6443   74d
+local-app-helm-guestbook                            <none>              36d
+myjenkins                                                               37d
+myjenkins-agent                                                         37d
+vijay@fedora ~>

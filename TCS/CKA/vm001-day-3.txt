@@ -1,0 +1,1531 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\vijay> ssh sfjbs@20.244.35.190
+sfjbs@20.244.35.190's password:
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Nov  2 03:56:24 UTC 2022
+
+  System load:  0.0                Users logged in:                  0
+  Usage of /:   15.0% of 28.89GB   IPv4 address for br-080b6829422c: 172.18.0.1
+  Memory usage: 9%                 IPv4 address for docker0:         172.17.0.1
+  Swap usage:   0%                 IPv4 address for eth0:            10.0.0.4
+  Processes:    138                IPv4 address for weave:           10.32.0.1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+11 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+New release '22.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+*** System restart required ***
+Last login: Tue Nov  1 07:17:56 2022 from 103.208.71.153
+sfjbs@vm001:~$ sudo bash
+root@vm001:/home/sfjbs# cd
+root@vm001:~# kueadm reset
+
+Command 'kueadm' not found, did you mean:
+
+  command 'kubeadm' from snap kubeadm (1.25.3)
+
+See 'snap info <snapname>' for additional versions.
+
+root@vm001:~# kubeadm reset
+W1102 03:56:41.494307   63562 preflight.go:55] [reset] WARNING: Changes made to this host by 'kubeadm init' or 'kubeadm join' will be reverted.
+[reset] Are you sure you want to proceed? [y/N]: y
+[preflight] Running pre-flight checks
+W1102 03:56:42.876576   63562 removeetcdmember.go:84] [reset] No kubeadm config, using etcd pod spec to get data directory
+[reset] No etcd config found. Assuming external etcd
+[reset] Please, manually reset etcd to prevent further issues
+[reset] Stopping the kubelet service
+[reset] Unmounting mounted directories in "/var/lib/kubelet"
+W1102 03:56:42.912639   63562 cleanupnode.go:93] [reset] Failed to remove containers: output: E1102 03:56:42.911434   63568 remote_runtime.go:377] "ListPodSandbox with filter from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService" filter="&PodSandboxFilter{Id:,State:nil,LabelSelector:map[string]string{},}"
+time="2022-11-02T03:56:42Z" level=fatal msg="listing pod sandboxes: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[reset] Deleting contents of directories: [/etc/kubernetes/manifests /etc/kubernetes/pki]
+[reset] Deleting files: [/etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf]
+[reset] Deleting contents of stateful directories: [/var/lib/kubelet /var/lib/dockershim /var/run/kubernetes /var/lib/cni]
+
+The reset process does not clean CNI configuration. To do so, you must remove /etc/cni/net.d
+
+The reset process does not reset or clean up iptables rules or IPVS tables.
+If you wish to reset iptables, you must do so manually by using the "iptables" command.
+
+If your cluster was setup to utilize IPVS, run ipvsadm --clear (or similar)
+to reset your system's IPVS tables.
+
+The reset process does not clean your kubeconfig files and you must remove them manually.
+Please, check the contents of the $HOME/.kube/config file.
+root@vm001:~#
+root@vm001:~# docker info
+Client:
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  app: Docker App (Docker Inc., v0.9.1-beta3)
+  buildx: Docker Buildx (Docker Inc., v0.9.1-docker)
+  compose: Docker Compose (Docker Inc., v2.12.2)
+  scan: Docker Scan (Docker Inc., v0.21.0)
+
+Server:
+ Containers: 2
+  Running: 2
+  Paused: 0
+  Stopped: 0
+ Images: 6
+ Server Version: 20.10.21
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Native Overlay Diff: false
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Cgroup Version: 1
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 1c90a442489720eec95342e1789ee8a5e1b9536f
+ runc version: v1.1.4-0-g5fd4c4d
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: default
+ Kernel Version: 5.15.0-1022-azure
+ Operating System: Ubuntu 20.04.5 LTS
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 2
+ Total Memory: 7.765GiB
+ Name: vm001
+ ID: IPTG:BXS3:FNL7:XG7N:IXJC:IHN6:D3CD:255H:QNZB:D3G4:VKCU:OO22
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Registry: https://index.docker.io/v1/
+ Labels:
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+root@vm001:~#
+root@vm001:~# exit
+sfjbs@vm001:~$
+Preparing to unpack .../10-snapd_2.57.5+20.04_amd64.deb ...
+Unpacking snapd (2.57.5+20.04) over (2.55.5+20.04) ...
+Preparing to unpack .../11-sosreport_4.4-1ubuntu0.20.04.1_amd64.deb ...
+Unpacking sosreport (4.4-1ubuntu0.20.04.1) over (4.3-1ubuntu0.20.04.2) ...
+Setting up snapd (2.57.5+20.04) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/snapd.aa-prompt-listener.service → /lib/systemd/system/snapd.aa-prompt-listener.service.
+snapd.failure.service is a disabled or a static unit not running, not starting it.
+snapd.snap-repair.service is a disabled or a static unit not running, not starting it.
+Setting up libxmlb2:amd64 (0.3.6-2build1~20.04.1) ...
+Setting up libfwupd2:amd64 (1.7.9-1~20.04.1) ...
+Setting up tzdata (2022e-0ubuntu0.20.04.0) ...
+
+Current default time zone: 'Etc/UTC'
+Local time is now:      Wed Nov  2 06:21:07 UTC 2022.
+Universal Time is now:  Wed Nov  2 06:21:07 UTC 2022.
+Run 'dpkg-reconfigure tzdata' if you wish to change it.
+
+Setting up kubectl (1.25.3-00) ...
+Setting up sosreport (4.4-1ubuntu0.20.04.1) ...
+Setting up kubelet (1.25.3-00) ...
+Setting up grub-efi-amd64-bin (2.04-1ubuntu47.4) ...
+Setting up libfwupdplugin5:amd64 (1.7.9-1~20.04.1) ...
+Setting up fwupd (1.7.9-1~20.04.1) ...
+Installing new version of config file /etc/fwupd/redfish.conf ...
+fwupd-offline-update.service is a disabled or a static unit not running, not starting it.
+fwupd-refresh.service is a disabled or a static unit not running, not starting it.
+fwupd.service is a disabled or a static unit not running, not starting it.
+Setting up kubeadm (1.25.3-00) ...
+Setting up grub-efi-amd64-signed (1.173.2~20.04.1+2.04-1ubuntu47.4) ...
+Trying to migrate /boot/efi into esp config
+Installing grub to /boot/efi.
+Installing for x86_64-efi platform.
+Installation finished. No error reported.
+Processing triggers for man-db (2.9.1-1) ...
+Processing triggers for dbus (1.12.16-2ubuntu2.3) ...
+Processing triggers for mime-support (3.64ubuntu1) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.9) ...
+sfjbs@vm001:~$ sudo reboot
+Connection to 20.244.35.190 closed by remote host.
+Connection to 20.244.35.190 closed.
+PS C:\Users\vijay> ssh sfjbs@20.244.35.190
+sfjbs@20.244.35.190's password:
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Nov  2 06:23:51 UTC 2022
+
+  System load:  0.04               Users logged in:                  0
+  Usage of /:   15.1% of 28.89GB   IPv4 address for br-080b6829422c: 172.18.0.1
+  Memory usage: 4%                 IPv4 address for docker0:         172.17.0.1
+  Swap usage:   0%                 IPv4 address for eth0:            10.0.0.4
+  Processes:    149
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+0 updates can be applied immediately.
+
+
+Last login: Wed Nov  2 03:56:24 2022 from 103.208.71.153
+sfjbs@vm001:~$ sudo apt-get install containerd -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  runc
+The following packages will be REMOVED:
+  containerd.io docker-ce
+The following NEW packages will be installed:
+  containerd runc
+0 upgraded, 2 newly installed, 2 to remove and 0 not upgraded.
+Need to get 0 B/36.9 MB of archives.
+After this operation, 32.3 MB disk space will be freed.
+(Reading database ... 58979 files and directories currently installed.)
+Removing docker-ce (5:20.10.21~3-0~ubuntu-focal) ...
+Warning: Stopping docker.service, but it can still be activated by:
+  docker.socket
+Removing containerd.io (1.6.9-1) ...
+Selecting previously unselected package runc.
+(Reading database ... 58957 files and directories currently installed.)
+Preparing to unpack .../runc_1.1.0-0ubuntu1~20.04.1_amd64.deb ...
+Unpacking runc (1.1.0-0ubuntu1~20.04.1) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../containerd_1.5.9-0ubuntu1~20.04.4_amd64.deb ...
+Unpacking containerd (1.5.9-0ubuntu1~20.04.4) ...
+Setting up runc (1.1.0-0ubuntu1~20.04.1) ...
+Setting up containerd (1.5.9-0ubuntu1~20.04.4) ...
+Processing triggers for man-db (2.9.1-1) ...
+sfjbs@vm001:~$ sudo apt remove docker
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Package 'docker' is not installed, so not removed
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+sfjbs@vm001:~$ docker ps
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+sfjbs@vm001:~$ sudo apt-get install containerd -y
+Reading package lists... Done
+Hit:6 https://packages.cloud.google.com/apt kubernetes-xenial InRelease
+Fetched 336 kB in 1s (546 kB/s)
+Reading package lists... Done
+sfjbs@vm001:~$ sudo apt install kubelet=1.24.7-00 kubeadm=1.24.7-00 kubectl=1.24.7-00 -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages will be DOWNGRADED:
+  kubeadm kubectl kubelet
+0 upgraded, 0 newly installed, 3 downgraded, 0 to remove and 0 not upgraded.
+E: Packages were downgraded and -y was used without --allow-downgrades.
+sfjbs@vm001:~$ sudo apt install kubelet=1.24.7-00 kubeadm=1.24.7-00 kubectl=1.24.7-00  --allow-downgrades -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages will be DOWNGRADED:
+  kubeadm kubectl kubelet
+0 upgraded, 0 newly installed, 3 downgraded, 0 to remove and 0 not upgraded.
+Need to get 37.5 MB of archives.
+After this operation, 3156 kB of additional disk space will be used.
+Get:1 https://packages.cloud.google.com/apt kubernetes-xenial/main amd64 kubelet amd64 1.24.7-00 [19.2 MB]
+Get:2 https://packages.cloud.google.com/apt kubernetes-xenial/main amd64 kubectl amd64 1.24.7-00 [9326 kB]
+Get:3 https://packages.cloud.google.com/apt kubernetes-xenial/main amd64 kubeadm amd64 1.24.7-00 [9009 kB]
+Fetched 37.5 MB in 10s (3643 kB/s)
+dpkg: warning: downgrading kubelet from 1.25.3-00 to 1.24.7-00
+(Reading database ... 59013 files and directories currently installed.)
+Preparing to unpack .../kubelet_1.24.7-00_amd64.deb ...
+Unpacking kubelet (1.24.7-00) over (1.25.3-00) ...
+dpkg: warning: downgrading kubectl from 1.25.3-00 to 1.24.7-00
+Preparing to unpack .../kubectl_1.24.7-00_amd64.deb ...
+Unpacking kubectl (1.24.7-00) over (1.25.3-00) ...
+dpkg: warning: downgrading kubeadm from 1.25.3-00 to 1.24.7-00
+Preparing to unpack .../kubeadm_1.24.7-00_amd64.deb ...
+Unpacking kubeadm (1.24.7-00) over (1.25.3-00) ...
+Setting up kubectl (1.24.7-00) ...
+Setting up kubelet (1.24.7-00) ...
+Setting up kubeadm (1.24.7-00) ...
+sfjbs@vm001:~$ sudo modprobe overlay
+sfjbs@vm001:~$ sudo modprobe br_netfilter
+sfjbs@vm001:~$ sudo sysctl --system
+* Applying /etc/sysctl.d/10-console-messages.conf ...
+kernel.printk = 4 4 1 7
+* Applying /etc/sysctl.d/10-ipv6-privacy.conf ...
+net.ipv6.conf.all.use_tempaddr = 2
+net.ipv6.conf.default.use_tempaddr = 2
+* Applying /etc/sysctl.d/10-kernel-hardening.conf ...
+kernel.kptr_restrict = 1
+* Applying /etc/sysctl.d/10-link-restrictions.conf ...
+fs.protected_hardlinks = 1
+fs.protected_symlinks = 1
+* Applying /etc/sysctl.d/10-magic-sysrq.conf ...
+kernel.sysrq = 176
+* Applying /etc/sysctl.d/10-network-security.conf ...
+net.ipv4.conf.default.rp_filter = 2
+net.ipv4.conf.all.rp_filter = 2
+* Applying /etc/sysctl.d/10-ptrace.conf ...
+kernel.yama.ptrace_scope = 1
+* Applying /etc/sysctl.d/10-zeropage.conf ...
+vm.mmap_min_addr = 65536
+* Applying /usr/lib/sysctl.d/50-default.conf ...
+net.ipv4.conf.default.promote_secondaries = 1
+sysctl: setting key "net.ipv4.conf.all.promote_secondaries": Invalid argument
+net.ipv4.ping_group_range = 0 2147483647
+net.core.default_qdisc = fq_codel
+fs.protected_regular = 1
+fs.protected_fifos = 1
+* Applying /usr/lib/sysctl.d/50-pid-max.conf ...
+kernel.pid_max = 4194304
+* Applying /etc/sysctl.d/99-cloudimg-ipv6.conf ...
+net.ipv6.conf.all.use_tempaddr = 0
+net.ipv6.conf.default.use_tempaddr = 0
+* Applying /etc/sysctl.d/99-sysctl.conf ...
+* Applying /etc/sysctl.d/kubernetes.conf ...
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+* Applying /usr/lib/sysctl.d/protect-links.conf ...
+fs.protected_fifos = 1
+fs.protected_hardlinks = 1
+fs.protected_regular = 2
+fs.protected_symlinks = 1
+* Applying /etc/sysctl.conf ...
+sfjbs@vm001:~$
+sfjbs@vm001:~$ sudo kubeadm --version
+unknown flag: --version
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo kubeadm  version
+kubeadm version: &version.Info{Major:"1", Minor:"24", GitVersion:"v1.24.7", GitCommit:"e6f35974b08862a23e7f4aad8e5d7f7f2de26c15", GitTreeState:"clean", BuildDate:"2022-10-12T10:55:41Z", GoVersion:"go1.18.7", Compiler:"gc", Platform:"linux/amd64"}
+sfjbs@vm001:~$ sudo kubeadm  version --short
+unknown flag: --short
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo kubeadm  version
+kubeadm version: &version.Info{Major:"1", Minor:"24", GitVersion:"v1.24.7", GitCommit:"e6f35974b08862a23e7f4aad8e5d7f7f2de26c15", GitTreeState:"clean", BuildDate:"2022-10-12T10:55:41Z", GoVersion:"go1.18.7", Compiler:"gc", Platform:"linux/amd64"}
+sfjbs@vm001:~$ ls
+Dockerfiles  components.yaml  get-docker.sh
+sfjbs@vm001:~$ sudo kubeadm init --help
+Run this command in order to set up the Kubernetes control plane
+
+The "init" command executes the following phases:
+```
+preflight                    Run pre-flight checks
+certs                        Certificate generation
+  /ca                          Generate the self-signed Kubernetes CA to provision identities for other Kubernetes components
+  /apiserver                   Generate the certificate for serving the Kubernetes API
+  /apiserver-kubelet-client    Generate the certificate for the API server to connect to kubelet
+  /front-proxy-ca              Generate the self-signed CA to provision identities for front proxy
+  /front-proxy-client          Generate the certificate for the front proxy client
+  /etcd-ca                     Generate the self-signed CA to provision identities for etcd
+  /etcd-server                 Generate the certificate for serving etcd
+  /etcd-peer                   Generate the certificate for etcd nodes to communicate with each other
+  /etcd-healthcheck-client     Generate the certificate for liveness probes to healthcheck etcd
+  /apiserver-etcd-client       Generate the certificate the apiserver uses to access etcd
+  /sa                          Generate a private key for signing service account tokens along with its public key
+kubeconfig                   Generate all kubeconfig files necessary to establish the control plane and the admin kubeconfig file
+  /admin                       Generate a kubeconfig file for the admin to use and for kubeadm itself
+  /kubelet                     Generate a kubeconfig file for the kubelet to use *only* for cluster bootstrapping purposes
+  /controller-manager          Generate a kubeconfig file for the controller manager to use
+  /scheduler                   Generate a kubeconfig file for the scheduler to use
+kubelet-start                Write kubelet settings and (re)start the kubelet
+control-plane                Generate all static Pod manifest files necessary to establish the control plane
+  /apiserver                   Generates the kube-apiserver static Pod manifest
+  /controller-manager          Generates the kube-controller-manager static Pod manifest
+  /scheduler                   Generates the kube-scheduler static Pod manifest
+etcd                         Generate static Pod manifest file for local etcd
+  /local                       Generate the static Pod manifest file for a local, single-node local etcd instance
+upload-config                Upload the kubeadm and kubelet configuration to a ConfigMap
+  /kubeadm                     Upload the kubeadm ClusterConfiguration to a ConfigMap
+  /kubelet                     Upload the kubelet component config to a ConfigMap
+upload-certs                 Upload certificates to kubeadm-certs
+mark-control-plane           Mark a node as a control-plane
+bootstrap-token              Generates bootstrap tokens used to join a node to a cluster
+kubelet-finalize             Updates settings relevant to the kubelet after TLS bootstrap
+  /experimental-cert-rotation  Enable kubelet client certificate rotation
+addon                        Install required addons for passing conformance tests
+  /coredns                     Install the CoreDNS addon to a Kubernetes cluster
+  /kube-proxy                  Install the kube-proxy addon to a Kubernetes cluster
+```
+
+Usage:
+  kubeadm init [flags]
+  kubeadm init [command]
+
+Available Commands:
+  phase       Use this command to invoke single phase of the init workflow
+
+Flags:
+      --apiserver-advertise-address string   The IP address the API Server will advertise it's listening on. If not set the default network interface will be used.
+      --apiserver-bind-port int32            Port for the API Server to bind to. (default 6443)
+      --apiserver-cert-extra-sans strings    Optional extra Subject Alternative Names (SANs) to use for the API Server serving certificate. Can be both IP addresses and DNS names.
+      --cert-dir string                      The path where to save and store the certificates. (default "/etc/kubernetes/pki")
+      --certificate-key string               Key used to encrypt the control-plane certificates in the kubeadm-certs Secret.
+      --config string                        Path to a kubeadm configuration file.
+      --control-plane-endpoint string        Specify a stable IP address or DNS name for the control plane.
+      --cri-socket string                    Path to the CRI socket to connect. If empty kubeadm will try to auto-detect this value; use this option only if you have more than one CRI installed or if you have non-standard CRI socket.
+      --dry-run                              Don't apply any changes; just output what would be done.
+      --feature-gates string                 A set of key=value pairs that describe feature gates for various features. Options are:
+                                             PublicKeysECDSA=true|false (ALPHA - default=false)
+                                             RootlessControlPlane=true|false (ALPHA - default=false)
+                                             UnversionedKubeletConfigMap=true|false (BETA - default=true)
+  -h, --help                                 help for init
+      --ignore-preflight-errors strings      A list of checks whose errors will be shown as warnings. Example: 'IsPrivilegedUser,Swap'. Value 'all' ignoreserrors from all checks.
+      --image-repository string              Choose a container registry to pull control plane images from (default "k8s.gcr.io")
+      --kubernetes-version string            Choose a specific Kubernetes version for the control plane. (default "stable-1")
+      --node-name string                     Specify the node name.
+      --patches string                       Path to a directory that contains files named "target[suffix][+patchtype].extension". For example, "kube-apiserver0+merge.yaml" or just "etcd.json". "target" can be one of "kube-apiserver", "kube-controller-manager", "kube-scheduler", "etcd". "patchtype" can be one of "strategic", "merge" or "json" and they match the patch formats supported by kubectl. The default "patchtype" is "strategic". "extension" must be either "json" or "yaml". "suffix" is an optional string that can be used to determine which patches are applied first alpha-numerically.
+      --pod-network-cidr string              Specify range of IP addresses for the pod network. If set, the control plane will automatically allocate CIDRsfor every node.
+      --service-cidr string                  Use alternative range of IP address for service VIPs. (default "10.96.0.0/12")
+      --service-dns-domain string            Use alternative domain for services, e.g. "myorg.internal". (default "cluster.local")
+      --skip-certificate-key-print           Don't print the key used to encrypt the control-plane certificates.
+      --skip-phases strings                  List of phases to be skipped
+      --skip-token-print                     Skip printing of the default bootstrap token generated by 'kubeadm init'.
+      --token string                         The token to use for establishing bidirectional trust between nodes and control-plane nodes. The format is [a-z0-9]{6}\.[a-z0-9]{16} - e.g. abcdef.0123456789abcdef
+      --token-ttl duration                   The duration before the token is automatically deleted (e.g. 1s, 2m, 3h). If set to '0', the token will never expire (default 24h0m0s)
+      --upload-certs                         Upload control-plane certificates to the kubeadm-certs Secret.
+
+Global Flags:
+      --add-dir-header           If true, adds the file directory to the header of the log messages
+      --log-file string          If non-empty, use this log file
+      --log-file-max-size uint   Defines the maximum size a log file can grow to. Unit is megabytes. If the value is 0, the maximum file size is unlimited.(default 1800)
+      --one-output               If true, only write logs to their native severity level (vs also writing to each lower severity level)
+      --rootfs string            [EXPERIMENTAL] The path to the 'real' host root filesystem.
+      --skip-headers             If true, avoid header prefixes in the log messages
+      --skip-log-headers         If true, avoid headers when opening log files
+  -v, --v Level                  number for the log level verbosity
+
+Use "kubeadm init [command] --help" for more information about a command.
+sfjbs@vm001:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 60:45:bd:ac:33:6f brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.4/24 brd 10.0.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::6245:bdff:feac:336f/64 scope link
+       valid_lft forever preferred_lft forever
+3: enP46301s1: <BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP> mtu 1500 qdisc mq master eth0 state UP group default qlen 1000
+    link/ether 60:45:bd:ac:33:6f brd ff:ff:ff:ff:ff:ff
+    altname enP46301p0s2
+4: br-080b6829422c: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:1b:31:80:68 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-080b6829422c
+       valid_lft forever preferred_lft forever
+5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:24:9e:45:ec brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:24ff:fe9e:45ec/64 scope link
+       valid_lft forever preferred_lft forever
+sfjbs@vm001:~$
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190
+I1102 07:30:20.003302    5437 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:30:20.743027    5445 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:30:20Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 06:25:29 UTC; 1h 5min ago
+       Docs: https://containerd.io
+   Main PID: 1912 (containerd)
+      Tasks: 12
+     Memory: 34.7M
+     CGroup: /system.slice/containerd.service
+             └─1912 /usr/bin/containerd
+
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294006537Z" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=>
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294025638Z" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.>
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294069638Z" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=i>
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294095738Z" level=info msg="loading plugin \"io.containerd.grpc.v1.tasks\"..." type=io.co>
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294115239Z" level=info msg="loading plugin \"io.containerd.grpc.v1.version\"..." type=io.>
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294132939Z" level=info msg="loading plugin \"io.containerd.grpc.v1.introspection\"..." ty>
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294404142Z" level=info msg=serving... address=/run/containerd/containerd.sock.ttrpc
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294468442Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 06:25:29 vm001 containerd[1912]: time="2022-11-02T06:25:29.294539843Z" level=info msg="containerd successfully booted in 0.030552s"
+Nov 02 06:25:29 vm001 systemd[1]: Started containerd container runtime.
+sfjbs@vm001:~$ sudo systemctl restart containerd
+sfjbs@vm001:~$ sudo apt search docker
+Sorting... Done
+Full Text Search... Done
+amazon-ecr-credential-helper/focal 0.3.1-1 amd64
+  Amazon ECR Credential Helper for Docker
+
+auto-apt-proxy/focal 12 all
+  automatic detector of common APT proxy settings
+
+cadvisor/focal 0.27.1+dfsg2-4 amd64
+  analyze resource usage and performance characteristics of running containers
+
+ctop/focal 1.0.0-2 all
+  Command line / text based Linux Containers monitoring tool
+
+debocker/focal 0.2.3 all
+  docker-powered package builder for Debian
+
+debootstick/focal 2.4 amd64
+  Turn a chroot environment into a bootable image
+
+debuerreotype/focal 0.10-1 all
+  reproducible, snapshot-based Debian rootfs builder
+
+docker/focal 1.5-2 all
+  transitional package
+
+docker-ce/focal,now 5:20.10.21~3-0~ubuntu-focal amd64 [residual-config]
+  Docker: the open-source application container engine
+
+docker-ce-cli/focal,now 5:20.10.21~3-0~ubuntu-focal amd64 [installed]
+  Docker CLI: the open-source application container engine
+
+docker-ce-rootless-extras/focal,now 5:20.10.21~3-0~ubuntu-focal amd64 [installed]
+  Rootless support for Docker.
+
+docker-compose/focal 1.25.0-1 all
+  Punctual, lightweight development environments using Docker
+
+docker-compose-plugin/focal,now 2.12.2~ubuntu-focal amd64 [installed]
+  Docker Compose (V2) plugin for the Docker CLI.
+
+docker-doc/focal-updates 20.10.12-0ubuntu2~20.04.1 all
+  Linux container runtime -- documentation
+
+docker-engine/kubernetes-xenial 1.11.2-0~xenial amd64
+  Docker: the open-source application container engine
+
+docker-registry/focal 2.7.1+ds2-7 amd64
+  Docker toolset to pack, ship, store, and deliver content
+
+docker-scan-plugin/focal,now 0.21.0~ubuntu-focal amd64 [installed]
+  Docker scan cli plugin.
+
+docker.io/focal-updates 20.10.12-0ubuntu2~20.04.1 amd64
+  Linux container runtime
+
+docker2aci/focal 0.17.2+dfsg-2 amd64
+  CLI tool to convert Docker images to ACIs
+
+dumb-init/focal 1.2.2-1.2 amd64
+  wrapper script which proxies signals to a child
+
+fence-agents/focal-updates 4.5.2-1ubuntu0.1 amd64
+  Fence Agents for Red Hat Cluster
+
+gnome-shell-extension-hide-veth/focal 1.0.2-1 all
+  hides veth devices typically used by docker and lxc
+
+golang-docker-credential-helpers/focal 0.6.3-1 amd64
+  native stores to safeguard Docker credentials
+
+golang-docker-dev/focal-updates 20.10.12-0ubuntu2~20.04.1 all
+  Transitional package for golang-github-docker-docker-dev
+
+golang-github-appc-docker2aci-dev/focal 0.17.2+dfsg-2 all
+  library to convert Docker images to ACIs
+
+golang-github-containers-image-dev/focal 4.0.1-1 all
+  golang library to work with containers' images
+
+golang-github-crossdock-crossdock-go-dev/focal 0.0~git20160816.049aabb-2 all
+  Go client for Crossdock
+
+golang-github-docker-containerd-dev/focal-updates,focal-security 1.5.2-0ubuntu1~20.04.3 all
+  Transitional package for golang-github-containerd-containerd-dev
+
+golang-github-docker-distribution-dev/focal 2.7.1+ds2-7 all
+  Docker toolset to pack, ship, store, and deliver content (source)
+
+golang-github-docker-docker-credential-helpers-dev/focal 0.6.3-1 all
+  native stores to safeguard Docker credentials - library
+
+golang-github-docker-docker-dev/focal-updates 20.10.12-0ubuntu2~20.04.1 all
+  Externally reusable Go packages included with Docker
+
+golang-github-docker-engine-api-dev/focal 0.4.0-4 all
+  client and server components compatible with the Docker engine
+
+golang-github-docker-go-connections-dev/focal 0.4.0-1 all
+  Golang utility package to work with network connections
+
+golang-github-docker-go-dev/focal 0.0~git20160303.0.d30aec9-3 all
+  Go packages with small patches autogenerated (used for canonical/json)
+
+golang-github-docker-go-events-dev/focal 0.0~git20170721.0.9461782-1 all
+  Composable event distribution for Go
+
+golang-github-docker-go-metrics-dev/focal 0.0~git20180209.399ea8c-1 all
+  Package for metrics collection in Docker projects
+
+golang-github-docker-go-units-dev/focal 0.4.0-3 all
+  parse and print size and time units in human-readable format
+
+golang-github-docker-goamz-dev/focal 0.0~git20160206.0.f0a21f5-3 all
+  Enable Go programs to interact with Amazon Web Services
+
+golang-github-docker-leadership-dev/focal 0.1.0-1 all
+  distributed leader election using docker/libkv
+
+golang-github-docker-libkv-dev/focal 0.2.1-1 all
+  Key/Value store abstraction library
+
+golang-github-docker-libtrust-dev/focal 0.0~git20150526.0.9cbd2a1-3 all
+  Primitives for identity and authorization
+
+golang-github-docker-notary-dev/focal 0.6.1~ds2-5 all
+  library for running and interacting with trusted collections
+
+golang-github-docker-spdystream-dev/focal 0.0~git20181023.6480d4a-1 all
+  multiplexed stream library using spdy
+
+golang-github-fsouza-go-dockerclient-dev/focal-updates 1.6.0-2ubuntu0.20.04.1 all
+  Docker client library in Go
+
+golang-github-google-cadvisor-dev/focal 0.27.1+dfsg2-4 all
+  analyze resource usage and performance of running containers
+
+golang-github-hashicorp-go-reap-dev/focal 0.0~git20160113.0.2d85522-3 all
+  child process reaping utilities for Go
+
+golang-github-jfrazelle-go-dev/focal 0.0~git20160303.0.d30aec9-3 all
+  Transitional package for golang-github-docker-go-dev
+
+golang-github-mrunalp-fileutils-dev/focal 0.0~git20160930.0.4ee1cc9-1 all
+  collection of utilities for file manipulation in golang
+
+golang-github-opencontainers-runc-dev/focal-updates 1.1.0-0ubuntu1~20.04.1 all
+  Open Container Project - development files
+
+golang-github-openshift-imagebuilder-dev/focal-updates 1.1.0-2ubuntu0.20.04.1 all
+  Builds container images using Dockerfile as imput
+
+golang-github-rkt-rkt-dev/focal 1.30.0+dfsg1-9 all
+  rkt API source
+
+golang-github-samalba-dockerclient-dev/focal 0.0~git20160531.0.a303626-2 all
+  Docker client library in Go
+
+golang-github-vishvananda-netlink-dev/focal 1.1.0-1 all
+  netlink library for go
+
+gosu/focal-updates 1.10-1ubuntu0.20.04.1 amd64
+  Simple Go-based setuid+setgid+setgroups+exec
+
+itamae/focal 1.9.10-2 all
+  Simple Configuration Management Tool
+
+karbon/focal 1:3.1.0+dfsg-6ubuntu7 amd64
+  vector graphics application for the Calligra Suite
+
+kdocker/focal 5.0-1.1 amd64
+  lets you dock any application into the system tray
+
+libcib27/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager CIB library
+
+libcrmcluster29/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager cluster library
+
+libcrmcommon34/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager common library
+
+libcrmservice28/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager service library
+
+libghc-pid1-dev/focal 0.1.2.0-3build3 amd64
+  signal handling and orphan reaping for Unix PID1 init processes
+
+libghc-pid1-doc/focal 0.1.2.0-3build3 all
+  signal handling and orphan reaping for Unix PID1 init processes; documentation
+
+libghc-pid1-prof/focal 0.1.2.0-3build3 amd64
+  signal handling and orphan reaping for Unix PID1 init processes; profiling libraries
+
+liblrmd28/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager LRMD library
+
+libnss-docker/focal 0.02-1 amd64
+  nss module for finding Docker containers
+
+libpacemaker1/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager utility library
+
+libpe-rules26/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager Policy Engine rules library
+
+libpe-status28/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager Policy Engine status library
+
+libstonithd26/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager STONITH daemon library
+
+magnum-api/focal-updates 10.0.0-0ubuntu0.20.04.2 all
+  OpenStack containers as a service
+
+magnum-common/focal-updates 10.0.0-0ubuntu0.20.04.2 all
+  OpenStack containers as a service - API server
+
+magnum-conductor/focal-updates 10.0.0-0ubuntu0.20.04.2 all
+  OpenStack containers as a service - conductor
+
+needrestart/focal-updates,focal-security 3.4-6ubuntu0.1 all
+  check which daemons need to be restarted after library upgrades
+
+nomad/focal 0.8.7+dfsg1-1ubuntu1 amd64
+  distributed, highly available, datacenter-aware scheduler
+
+openscap-daemon/focal 0.1.10-3 all
+  Daemon for infrastructure continuous SCAP compliance checks
+
+openshift-imagebuilder/focal-updates 1.1.0-2ubuntu0.20.04.1 amd64
+  Builds container images using Dockerfile as imput
+
+ovn-docker/focal-updates 20.03.2-0ubuntu0.20.04.3 amd64
+  OVN Docker drivers
+
+pacemaker/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager
+
+pacemaker-cli-utils/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager command line utilities
+
+pacemaker-common/focal-updates 2.0.3-3ubuntu4.3 all
+  cluster resource manager common files
+
+pacemaker-dev/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager development
+
+pacemaker-doc/focal-updates 2.0.3-3ubuntu4.3 all
+  cluster resource manager HTML documentation
+
+pacemaker-remote/focal-updates 2.0.3-3ubuntu4.3 amd64
+  cluster resource manager proxy daemon for remote nodes
+
+pacemaker-resource-agents/focal-updates 2.0.3-3ubuntu4.3 all
+  cluster resource manager general resource agents
+
+pid1/focal 0.1.2.0-3build3 amd64
+  signal handling and orphan reaping for Unix PID1 init processes
+
+pidgin/focal 1:2.13.0-2.2ubuntu4 amd64
+  graphical multi-protocol instant messaging client
+
+puppet-module-magnum/focal 15.4.0-2 all
+  Puppet module for OpenStack Magnum
+
+python-magnumclient-doc/focal 2.11.0-0ubuntu4 all
+  client library for Magnum API - doc
+
+python3-ck/focal 1.9.4-1.1 all
+  Python3 light-weight knowledge manager
+
+python3-docker/focal 4.1.0-1 all
+  Python 3 wrapper to access docker.io's control socket
+
+python3-dockerpty/focal 0.4.1-2 all
+  Pseudo-tty handler for docker Python client (Python 3.x)
+
+python3-dockerpycreds/focal 0.3.0-1.1 all
+  Python3 bindings for the docker credentials store API
+
+python3-magnum/focal-updates 10.0.0-0ubuntu0.20.04.2 all
+  OpenStack containers as a service - Python 3 library
+
+python3-magnum-ui/focal 5.2.0-1 all
+  OpenStack Magnum - dashboard plugin
+
+python3-magnumclient/focal 2.11.0-0ubuntu4 all
+  client library for Magnum API - Python 3.x
+
+r-cran-batchtools/focal 0.9.12-1 amd64
+  GNU R tools for computation on batch systems
+
+rawdns/focal 1.6~ds1-1 amd64
+  raw DNS interface to the Docker API
+
+resource-agents/focal-updates 1:4.5.0-2ubuntu2.2 amd64
+  Cluster Resource Agents
+
+rkt/focal 1.30.0+dfsg1-9 amd64
+  CLI for running App Containers
+
+ruby-docker-api/focal 1.22.2-1 all
+  Ruby gem to interact with docker.io remote API
+
+ruby-kitchen-docker/focal 2.7.0-1 all
+  Docker Driver for Test Kitchen
+
+sen/focal 0.6.1-0.1 all
+  Terminal user interface for docker engine
+
+subuser/focal 0.6.2-3 all
+  Run programs on Linux with selectively restricted permissions
+
+test-kitchen/focal 1.23.2-5 all
+  integration tool for Chef
+
+vim-syntastic/focal 3.10.0-2 all
+  Syntax checking hacks for vim
+
+vim-syntax-docker/focal-updates 20.10.12-0ubuntu2~20.04.1 all
+  Docker container engine - Vim highlighting syntax files
+
+wait-for-it/focal 0.0~git20180723-1 all
+  script that will wait on the availability of a host and TCP port
+
+whalebuilder/focal 0.8 all
+  Debian package builder using Docker
+
+wmdocker/focal 1.5-2 amd64
+  System tray for KDE3/GNOME2 docklet applications
+
+sfjbs@vm001:~$ sudo apt remove docker
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Package 'docker' is not installed, so not removed
+0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+sfjbs@vm001:~$ sudo apt remove docker*
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Note, selecting 'docker-engine-cs' for glob 'docker*'
+Note, selecting 'docker-compose' for glob 'docker*'
+Note, selecting 'docker-ce-rootless-extras' for glob 'docker*'
+Note, selecting 'docker' for glob 'docker*'
+Note, selecting 'docker.io-doc' for glob 'docker*'
+Note, selecting 'docker2aci' for glob 'docker*'
+Note, selecting 'docker-engine' for glob 'docker*'
+Note, selecting 'docker-registry' for glob 'docker*'
+Note, selecting 'docker-compose-plugin' for glob 'docker*'
+Note, selecting 'docker-scan-plugin' for glob 'docker*'
+Note, selecting 'docker-doc' for glob 'docker*'
+Note, selecting 'docker-ce' for glob 'docker*'
+Note, selecting 'docker-ce-cli' for glob 'docker*'
+Note, selecting 'docker.io' for glob 'docker*'
+Note, selecting 'docker-doc' instead of 'docker.io-doc'
+Package 'docker-engine-cs' is not installed, so not removed
+Package 'docker' is not installed, so not removed
+Package 'docker-compose' is not installed, so not removed
+Package 'docker-registry' is not installed, so not removed
+Package 'docker2aci' is not installed, so not removed
+Package 'docker-doc' is not installed, so not removed
+Package 'docker.io' is not installed, so not removed
+Package 'docker-engine' is not installed, so not removed
+Package 'docker-ce' is not installed, so not removed
+The following package was automatically installed and is no longer required:
+  slirp4netns
+Use 'sudo apt autoremove' to remove it.
+The following packages will be REMOVED:
+  docker-ce-cli docker-ce-rootless-extras docker-compose-plugin docker-scan-plugin
+0 upgraded, 0 newly installed, 4 to remove and 3 not upgraded.
+After this operation, 225 MB disk space will be freed.
+Do you want to continue? [Y/n] n
+Abort.
+sfjbs@vm001:~$ sudo apt auto-remove
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+sfjbs@vm001:~$ sudo apt autoremove
+Reading package lists... Done
+Building dependency tree
+Note, selecting 'docker-compose' for glob 'docker*'
+Note, selecting 'docker-ce-rootless-extras' for glob 'docker*'
+Note, selecting 'docker' for glob 'docker*'
+Note, selecting 'docker.io-doc' for glob 'docker*'
+Note, selecting 'docker2aci' for glob 'docker*'
+Note, selecting 'docker-engine' for glob 'docker*'
+Note, selecting 'docker-registry' for glob 'docker*'
+Note, selecting 'docker-compose-plugin' for glob 'docker*'
+Note, selecting 'docker-scan-plugin' for glob 'docker*'
+Note, selecting 'docker-doc' for glob 'docker*'
+Note, selecting 'docker-ce' for glob 'docker*'
+Note, selecting 'docker-ce-cli' for glob 'docker*'
+Note, selecting 'docker.io' for glob 'docker*'
+Note, selecting 'docker-doc' instead of 'docker.io-doc'
+Package 'docker-engine-cs' is not installed, so not removed
+Package 'docker' is not installed, so not removed
+Package 'docker-compose' is not installed, so not removed
+Package 'docker-registry' is not installed, so not removed
+Package 'docker2aci' is not installed, so not removed
+Package 'docker-doc' is not installed, so not removed
+Package 'docker.io' is not installed, so not removed
+Package 'docker-engine' is not installed, so not removed
+Package 'docker-ce' is not installed, so not removed
+The following package was automatically installed and is no longer required:
+  slirp4netns
+Use 'sudo apt autoremove' to remove it.
+The following packages will be REMOVED:
+  docker-ce-cli docker-ce-rootless-extras docker-compose-plugin docker-scan-plugin
+0 upgraded, 0 newly installed, 4 to remove and 3 not upgraded.
+After this operation, 225 MB disk space will be freed.
+Do you want to continue? [Y/n]
+(Reading database ... 59013 files and directories currently installed.)
+Removing docker-ce-cli (5:20.10.21~3-0~ubuntu-focal) ...
+Removing docker-ce-rootless-extras (5:20.10.21~3-0~ubuntu-focal) ...
+Removing docker-compose-plugin (2.12.2~ubuntu-focal) ...
+Removing docker-scan-plugin (0.21.0~ubuntu-focal) ...
+Processing triggers for man-db (2.9.1-1) ...
+sfjbs@vm001:~$ sudo systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 07:30:55 UTC; 1min 20s ago
+       Docs: https://containerd.io
+    Process: 5490 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 5491 (containerd)
+      Tasks: 11
+     Memory: 24.8M
+     CGroup: /system.slice/containerd.service
+             └─5491 /usr/bin/containerd
+
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733482274Z" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733502174Z" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733553775Z" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=i>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733577575Z" level=info msg="loading plugin \"io.containerd.grpc.v1.tasks\"..." type=io.co>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733597175Z" level=info msg="loading plugin \"io.containerd.grpc.v1.version\"..." type=io.>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733617375Z" level=info msg="loading plugin \"io.containerd.grpc.v1.introspection\"..." ty>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733907977Z" level=info msg=serving... address=/run/containerd/containerd.sock.ttrpc
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733974278Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 07:30:55 vm001 systemd[1]: Started containerd container runtime.
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.736423198Z" level=info msg="containerd successfully booted in 0.032881s"
+...skipping...
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 07:30:55 UTC; 1min 20s ago
+       Docs: https://containerd.io
+    Process: 5490 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 5491 (containerd)
+      Tasks: 11
+     Memory: 24.8M
+     CGroup: /system.slice/containerd.service
+             └─5491 /usr/bin/containerd
+
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733482274Z" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733502174Z" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733553775Z" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=i>
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.733974278Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 07:30:55 vm001 systemd[1]: Started containerd container runtime.
+Nov 02 07:30:55 vm001 containerd[5491]: time="2022-11-02T07:30:55.736423198Z" level=info msg="containerd successfully booted in 0.032881s"
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+~
+sfjbs@vm001:~$ sudo systemctl remove containerd
+Unknown operation remove.
+sfjbs@vm001:~$ sudo apt remove containerd -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  runc slirp4netns
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  containerd
+0 upgraded, 0 newly installed, 1 to remove and 3 not upgraded.
+After this operation, 150 MB disk space will be freed.
+(Reading database ... 58803 files and directories currently installed.)
+Removing containerd (1.5.9-0ubuntu1~20.04.4) ...
+Processing triggers for man-db (2.9.1-1) ...
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190
+I1102 07:33:04.177944    6078 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: time="2022-11-02T07:33:04Z" level=fatal msg="unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing dial unix /var/run/containerd/containerd.sock: connect: no such file or directory\""
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$
+sfjbs@vm001:~$ sudo apt-get install containerd -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  slirp4netns
+Use 'sudo apt autoremove' to remove it.
+The following NEW packages will be installed:
+  containerd
+0 upgraded, 1 newly installed, 0 to remove and 3 not upgraded.
+Need to get 0 B/33.0 MB of archives.
+After this operation, 150 MB of additional disk space will be used.
+Selecting previously unselected package containerd.
+(Reading database ... 58774 files and directories currently installed.)
+Preparing to unpack .../containerd_1.5.9-0ubuntu1~20.04.4_amd64.deb ...
+Unpacking containerd (1.5.9-0ubuntu1~20.04.4) ...
+Setting up containerd (1.5.9-0ubuntu1~20.04.4) ...
+Processing triggers for man-db (2.9.1-1) ...
+sfjbs@vm001:~$ sudo systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 07:33:27 UTC; 10s ago
+       Docs: https://containerd.io
+    Process: 6236 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 6237 (containerd)
+      Tasks: 11
+     Memory: 26.8M
+     CGroup: /system.slice/containerd.service
+             └─6237 /usr/bin/containerd
+
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820000897Z" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820019296Z" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820064896Z" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=i>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820093295Z" level=info msg="loading plugin \"io.containerd.grpc.v1.tasks\"..." type=io.co>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820112795Z" level=info msg="loading plugin \"io.containerd.grpc.v1.version\"..." type=io.>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820130595Z" level=info msg="loading plugin \"io.containerd.grpc.v1.introspection\"..." ty>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820408791Z" level=info msg=serving... address=/run/containerd/containerd.sock.ttrpc
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820467590Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 07:33:27 vm001 systemd[1]: Started containerd container runtime.
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.821716274Z" level=info msg="containerd successfully booted in 0.032018s"
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190
+I1102 07:33:44.314672    6329 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:33:44.964982    6337 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:33:44Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo kubeadm init --help
+Run this command in order to set up the Kubernetes control plane
+
+The "init" command executes the following phases:
+```
+preflight                    Run pre-flight checks
+certs                        Certificate generation
+  /ca                          Generate the self-signed Kubernetes CA to provision identities for other Kubernetes components
+  /apiserver                   Generate the certificate for serving the Kubernetes API
+  /apiserver-kubelet-client    Generate the certificate for the API server to connect to kubelet
+  /front-proxy-ca              Generate the self-signed CA to provision identities for front proxy
+  /front-proxy-client          Generate the certificate for the front proxy client
+  /etcd-ca                     Generate the self-signed CA to provision identities for etcd
+  /etcd-server                 Generate the certificate for serving etcd
+  /etcd-peer                   Generate the certificate for etcd nodes to communicate with each other
+  /etcd-healthcheck-client     Generate the certificate for liveness probes to healthcheck etcd
+  /apiserver-etcd-client       Generate the certificate the apiserver uses to access etcd
+  /sa                          Generate a private key for signing service account tokens along with its public key
+kubeconfig                   Generate all kubeconfig files necessary to establish the control plane and the admin kubeconfig file
+  /admin                       Generate a kubeconfig file for the admin to use and for kubeadm itself
+  /kubelet                     Generate a kubeconfig file for the kubelet to use *only* for cluster bootstrapping purposes
+  /controller-manager          Generate a kubeconfig file for the controller manager to use
+  /scheduler                   Generate a kubeconfig file for the scheduler to use
+kubelet-start                Write kubelet settings and (re)start the kubelet
+control-plane                Generate all static Pod manifest files necessary to establish the control plane
+  /apiserver                   Generates the kube-apiserver static Pod manifest
+  /controller-manager          Generates the kube-controller-manager static Pod manifest
+  /scheduler                   Generates the kube-scheduler static Pod manifest
+etcd                         Generate static Pod manifest file for local etcd
+  /local                       Generate the static Pod manifest file for a local, single-node local etcd instance
+upload-config                Upload the kubeadm and kubelet configuration to a ConfigMap
+  /kubeadm                     Upload the kubeadm ClusterConfiguration to a ConfigMap
+  /kubelet                     Upload the kubelet component config to a ConfigMap
+upload-certs                 Upload certificates to kubeadm-certs
+mark-control-plane           Mark a node as a control-plane
+bootstrap-token              Generates bootstrap tokens used to join a node to a cluster
+kubelet-finalize             Updates settings relevant to the kubelet after TLS bootstrap
+  /experimental-cert-rotation  Enable kubelet client certificate rotation
+addon                        Install required addons for passing conformance tests
+  /coredns                     Install the CoreDNS addon to a Kubernetes cluster
+  /kube-proxy                  Install the kube-proxy addon to a Kubernetes cluster
+```
+
+Usage:
+  kubeadm init [flags]
+  kubeadm init [command]
+
+Available Commands:
+  phase       Use this command to invoke single phase of the init workflow
+
+Flags:
+      --apiserver-advertise-address string   The IP address the API Server will advertise it's listening on. If not set the default network interface will be used.
+      --apiserver-bind-port int32            Port for the API Server to bind to. (default 6443)
+      --apiserver-cert-extra-sans strings    Optional extra Subject Alternative Names (SANs) to use for the API Server serving certificate. Can be both IP addresses and DNS names.
+      --cert-dir string                      The path where to save and store the certificates. (default "/etc/kubernetes/pki")
+      --certificate-key string               Key used to encrypt the control-plane certificates in the kubeadm-certs Secret.
+      --config string                        Path to a kubeadm configuration file.
+      --control-plane-endpoint string        Specify a stable IP address or DNS name for the control plane.
+      --cri-socket string                    Path to the CRI socket to connect. If empty kubeadm will try to auto-detect this value; use this option only if you have more than one CRI installed or if you have non-standard CRI socket.
+      --dry-run                              Don't apply any changes; just output what would be done.
+      --feature-gates string                 A set of key=value pairs that describe feature gates for various features. Options are:
+                                             PublicKeysECDSA=true|false (ALPHA - default=false)
+                                             RootlessControlPlane=true|false (ALPHA - default=false)
+                                             UnversionedKubeletConfigMap=true|false (BETA - default=true)
+  -h, --help                                 help for init
+      --ignore-preflight-errors strings      A list of checks whose errors will be shown as warnings. Example: 'IsPrivilegedUser,Swap'. Value 'all' ignoreserrors from all checks.
+      --image-repository string              Choose a container registry to pull control plane images from (default "k8s.gcr.io")
+      --kubernetes-version string            Choose a specific Kubernetes version for the control plane. (default "stable-1")
+      --node-name string                     Specify the node name.
+      --patches string                       Path to a directory that contains files named "target[suffix][+patchtype].extension". For example, "kube-apiserver0+merge.yaml" or just "etcd.json". "target" can be one of "kube-apiserver", "kube-controller-manager", "kube-scheduler", "etcd". "patchtype" can be one of "strategic", "merge" or "json" and they match the patch formats supported by kubectl. The default "patchtype" is "strategic". "extension" must be either "json" or "yaml". "suffix" is an optional string that can be used to determine which patches are applied first alpha-numerically.
+      --pod-network-cidr string              Specify range of IP addresses for the pod network. If set, the control plane will automatically allocate CIDRsfor every node.
+      --service-cidr string                  Use alternative range of IP address for service VIPs. (default "10.96.0.0/12")
+      --service-dns-domain string            Use alternative domain for services, e.g. "myorg.internal". (default "cluster.local")
+      --skip-certificate-key-print           Don't print the key used to encrypt the control-plane certificates.
+      --skip-phases strings                  List of phases to be skipped
+      --skip-token-print                     Skip printing of the default bootstrap token generated by 'kubeadm init'.
+      --token string                         The token to use for establishing bidirectional trust between nodes and control-plane nodes. The format is [a-z0-9]{6}\.[a-z0-9]{16} - e.g. abcdef.0123456789abcdef
+      --token-ttl duration                   The duration before the token is automatically deleted (e.g. 1s, 2m, 3h). If set to '0', the token will never expire (default 24h0m0s)
+      --upload-certs                         Upload control-plane certificates to the kubeadm-certs Secret.
+
+Global Flags:
+      --add-dir-header           If true, adds the file directory to the header of the log messages
+      --log-file string          If non-empty, use this log file
+      --log-file-max-size uint   Defines the maximum size a log file can grow to. Unit is megabytes. If the value is 0, the maximum file size is unlimited.(default 1800)
+      --one-output               If true, only write logs to their native severity level (vs also writing to each lower severity level)
+      --rootfs string            [EXPERIMENTAL] The path to the 'real' host root filesystem.
+      --skip-headers             If true, avoid header prefixes in the log messages
+      --skip-log-headers         If true, avoid headers when opening log files
+  -v, --v Level                  number for the log level verbosity
+
+Use "kubeadm init [command] --help" for more information about a command.
+sfjbs@vm001:~$ sudo ls /run/
+0_waagent.pid      cloud-init/        dbus/              initctl            mount/             snapd/             systemd/           uuidd/
+agetty.reload      console-setup/     dmeventd-client    irqbalance/        multipathd.pid     snapd-snap.socket  tmpfiles.d/        waagent.pid
+atd.pid            containerd/        dmeventd-server    lock/              netns/             snapd.socket       udev/              xtables.lock
+blkid/             crond.pid          docker/            log/               screen/            sshd/              udisks2/
+chrony/            crond.reboot       docker.sock        lvm/               sendsigs.omit.d/   sshd.pid           user/
+chronyd.pid        cryptsetup/        fsck/              motd.dynamic       shm/               sudo/              utmp
+sfjbs@vm001:~$ sudo systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 07:33:27 UTC; 1min 50s ago
+       Docs: https://containerd.io
+    Process: 6236 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 6237 (containerd)
+      Tasks: 11
+     Memory: 26.8M
+     CGroup: /system.slice/containerd.service
+             └─6237 /usr/bin/containerd
+
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820000897Z" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820019296Z" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820064896Z" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=i>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820093295Z" level=info msg="loading plugin \"io.containerd.grpc.v1.tasks\"..." type=io.co>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820112795Z" level=info msg="loading plugin \"io.containerd.grpc.v1.version\"..." type=io.>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820130595Z" level=info msg="loading plugin \"io.containerd.grpc.v1.introspection\"..." ty>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820408791Z" level=info msg=serving... address=/run/containerd/containerd.sock.ttrpc
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820467590Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 07:33:27 vm001 systemd[1]: Started containerd container runtime.
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.821716274Z" level=info msg="containerd successfully booted in 0.032018s"
+sfjbs@vm001:~$
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190  --cri-socket=/run/containerd/containerd.sock
+W1102 07:36:01.780705    6456 initconfiguration.go:120] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future.Automatically prepending scheme "unix" to the "criSocket" with value "/run/containerd/containerd.sock". Please update your configuration!
+I1102 07:36:02.419519    6456 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:36:03.068159    6463 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:36:03Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190  --cri-socket=unix:/run/containerd/containerd.sock
+I1102 07:36:32.803903    6497 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:36:33.436838    6505 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:36:33Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190  --cri-socket /run/containerd/containerd.sock
+W1102 07:37:26.192318    6555 initconfiguration.go:120] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future.Automatically prepending scheme "unix" to the "criSocket" with value "/run/containerd/containerd.sock". Please update your configuration!
+I1102 07:37:26.817743    6555 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:37:27.446869    6562 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:37:27Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+sfjbs@vm001:~$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190  --cri-socket /run/containerd/containerd.sock --v=5
+W1102 07:37:38.233078    6583 initconfiguration.go:120] Usage of CRI endpoints without URL scheme is deprecated and can cause kubelet errors in the future.Automatically prepending scheme "unix" to the "criSocket" with value "/run/containerd/containerd.sock". Please update your configuration!
+I1102 07:37:38.233376    6583 interface.go:432] Looking for default routes with IPv4 addresses
+I1102 07:37:38.233390    6583 interface.go:437] Default route transits interface "eth0"
+I1102 07:37:38.233623    6583 interface.go:209] Interface eth0 is up
+I1102 07:37:38.233740    6583 interface.go:257] Interface "eth0" has 2 addresses :[10.0.0.4/24 fe80::6245:bdff:feac:336f/64].
+I1102 07:37:38.233777    6583 interface.go:224] Checking addr  10.0.0.4/24.
+I1102 07:37:38.233895    6583 interface.go:231] IP found 10.0.0.4
+I1102 07:37:38.233911    6583 interface.go:263] Found valid IPv4 address 10.0.0.4 for interface "eth0".
+I1102 07:37:38.233979    6583 interface.go:443] Found active IP 10.0.0.4
+I1102 07:37:38.234039    6583 kubelet.go:218] the value of KubeletConfiguration.cgroupDriver is empty; setting it to "systemd"
+I1102 07:37:38.238390    6583 version.go:186] fetching Kubernetes version from URL: https://dl.k8s.io/release/stable-1.txt
+I1102 07:37:38.852979    6583 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+I1102 07:37:38.853053    6583 version.go:186] fetching Kubernetes version from URL: https://dl.k8s.io/release/stable-1.24.txt
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+I1102 07:37:39.454715    6583 checks.go:570] validating Kubernetes and kubeadm version
+I1102 07:37:39.454747    6583 checks.go:170] validating if the firewall is enabled and active
+I1102 07:37:39.465402    6583 checks.go:205] validating availability of port 6443
+I1102 07:37:39.465631    6583 checks.go:205] validating availability of port 10259
+I1102 07:37:39.465670    6583 checks.go:205] validating availability of port 10257
+I1102 07:37:39.465717    6583 checks.go:282] validating the existence of file /etc/kubernetes/manifests/kube-apiserver.yaml
+I1102 07:37:39.465747    6583 checks.go:282] validating the existence of file /etc/kubernetes/manifests/kube-controller-manager.yaml
+I1102 07:37:39.465768    6583 checks.go:282] validating the existence of file /etc/kubernetes/manifests/kube-scheduler.yaml
+I1102 07:37:39.465782    6583 checks.go:282] validating the existence of file /etc/kubernetes/manifests/etcd.yaml
+I1102 07:37:39.465817    6583 checks.go:432] validating if the connectivity type is via proxy or direct
+I1102 07:37:39.465853    6583 checks.go:471] validating http connectivity to first IP address in the CIDR
+I1102 07:37:39.465885    6583 checks.go:471] validating http connectivity to first IP address in the CIDR
+I1102 07:37:39.465911    6583 checks.go:106] validating the container runtime
+I1102 07:37:39.495385    6583 checks.go:331] validating the contents of file /proc/sys/net/bridge/bridge-nf-call-iptables
+I1102 07:37:39.495454    6583 checks.go:331] validating the contents of file /proc/sys/net/ipv4/ip_forward
+I1102 07:37:39.495487    6583 checks.go:646] validating whether swap is enabled or not
+I1102 07:37:39.495526    6583 checks.go:372] validating the presence of executable crictl
+I1102 07:37:39.495589    6583 checks.go:372] validating the presence of executable conntrack
+I1102 07:37:39.495614    6583 checks.go:372] validating the presence of executable ip
+I1102 07:37:39.495638    6583 checks.go:372] validating the presence of executable iptables
+I1102 07:37:39.495678    6583 checks.go:372] validating the presence of executable mount
+I1102 07:37:39.495707    6583 checks.go:372] validating the presence of executable nsenter
+I1102 07:37:39.495730    6583 checks.go:372] validating the presence of executable ebtables
+I1102 07:37:39.495770    6583 checks.go:372] validating the presence of executable ethtool
+I1102 07:37:39.495800    6583 checks.go:372] validating the presence of executable socat
+I1102 07:37:39.495822    6583 checks.go:372] validating the presence of executable tc
+I1102 07:37:39.495856    6583 checks.go:372] validating the presence of executable touch
+I1102 07:37:39.495884    6583 checks.go:518] running all checks
+I1102 07:37:39.505332    6583 checks.go:403] checking whether the given node name is valid and reachable using net.LookupHost
+I1102 07:37:39.508416    6583 checks.go:612] validating kubelet version
+I1102 07:37:39.563642    6583 checks.go:132] validating if the "kubelet" service is enabled and active
+I1102 07:37:39.574145    6583 checks.go:205] validating availability of port 10250
+I1102 07:37:39.574363    6583 checks.go:205] validating availability of port 2379
+I1102 07:37:39.574455    6583 checks.go:205] validating availability of port 2380
+I1102 07:37:39.574550    6583 checks.go:245] validating the existence and emptiness of directory /var/lib/etcd
+[preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:37:39.493942    6590 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:37:39Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+error execution phase preflight
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).Run.func1
+        cmd/kubeadm/app/cmd/phases/workflow/runner.go:235
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).visitAll
+        cmd/kubeadm/app/cmd/phases/workflow/runner.go:421
+k8s.io/kubernetes/cmd/kubeadm/app/cmd/phases/workflow.(*Runner).Run
+        cmd/kubeadm/app/cmd/phases/workflow/runner.go:207
+k8s.io/kubernetes/cmd/kubeadm/app/cmd.newCmdInit.func1
+        cmd/kubeadm/app/cmd/init.go:153
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).execute
+        vendor/github.com/spf13/cobra/command.go:856
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).ExecuteC
+        vendor/github.com/spf13/cobra/command.go:974
+k8s.io/kubernetes/vendor/github.com/spf13/cobra.(*Command).Execute
+        vendor/github.com/spf13/cobra/command.go:902
+k8s.io/kubernetes/cmd/kubeadm/app.Run
+        cmd/kubeadm/app/kubeadm.go:50
+main.main
+        cmd/kubeadm/kubeadm.go:25
+runtime.main
+        /usr/local/go/src/runtime/proc.go:250
+runtime.goexit
+        /usr/local/go/src/runtime/asm_amd64.s:1571
+sfjbs@vm001:~$
+sfjbs@vm001:~$ s ip a
+s: command not found
+sfjbs@vm001:~$ ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 60:45:bd:ac:33:6f brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.4/24 brd 10.0.0.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::6245:bdff:feac:336f/64 scope link
+       valid_lft forever preferred_lft forever
+3: enP46301s1: <BROADCAST,MULTICAST,SLAVE,UP,LOWER_UP> mtu 1500 qdisc mq master eth0 state UP group default qlen 1000
+    link/ether 60:45:bd:ac:33:6f brd ff:ff:ff:ff:ff:ff
+    altname enP46301p0s2
+4: br-080b6829422c: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:1b:31:80:68 brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-080b6829422c
+       valid_lft forever preferred_lft forever
+5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:24:9e:45:ec brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:24ff:fe9e:45ec/64 scope link
+       valid_lft forever preferred_lft forever
+sfjbs@vm001:~$ sudo ls /run/containerd/containerd.sock
+/run/containerd/containerd.sock
+sfjbs@vm001:~$ sudo ls -l /run/containerd/containerd.sock
+srw-rw---- 1 root root 0 Nov  2 07:33 /run/containerd/containerd.sock
+sfjbs@vm001:~$ sudo bash
+root@vm001:/home/sfjbs# cd
+root@vm001:~# kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190
+I1102 07:40:46.995977    6737 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:40:47.661609    6745 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:40:47Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+root@vm001:~# cd /etc/
+root@vm001:/etc# ls
+ModemManager                   cron.daily            group-           libaudit.conf   netplan                  rc2.d             sudoers
+NetworkManager                 cron.hourly           grub.d           libblockdev     network                  rc3.d             sudoers.d
+PackageKit                     cron.monthly          gshadow          locale.alias    networkd-dispatcher      rc4.d             sysctl.conf
+X11                            cron.weekly           gshadow-         locale.gen      networks                 rc5.d             sysctl.d
+adduser.conf                   crontab               gss              localtime       newt                     rc6.d             systemd
+alternatives                   cryptsetup-initramfs  hdparm.conf      logcheck        nsswitch.conf            rcS.d             terminfo
+apparmor                       crypttab              host.conf        login.defs      opt                      request-key.conf  timezone
+apparmor.d                     dbus-1                hostname         logrotate.conf  os-release               request-key.d     tmpfiles.d
+apport                         dconf                 hosts            logrotate.d     overlayroot.conf         resolv.conf       ubuntu-advantage
+apt                            debconf.conf          hosts.allow      lsb-release     overlayroot.local.conf   rmt               ucf.conf
+at.deny                        debian_version        hosts.deny       ltrace.conf     pam.conf                 rpc               udev
+bash.bashrc                    default               init             lvm             pam.d                    rsyslog.conf      udisks2
+bash_completion                deluser.conf          init.d           machine-id      passwd                   rsyslog.d         ufw
+bash_completion.d              depmod.d              initramfs-tools  magic           passwd-                  screenrc          update-manager
+bindresvport.blacklist         dhcp                  inputrc          magic.mime      perl                     security          update-motd.d
+binfmt.d                       docker                iproute2         mailcap         pki                      selinux           update-notifier
+byobu                          dpkg                  iscsi            mailcap.order   pm                       services          usb_modeswitch.conf
+ca-certificates                e2scrub.conf          issue            manpath.config  polkit-1                 shadow            usb_modeswitch.d
+ca-certificates.conf           ec2_version           issue.net        mdadm           pollinate                shadow-           vim
+ca-certificates.conf.dpkg-old  environment           kernel           mime.types      popularity-contest.conf  shells            vmware-tools
+calendar                       ethertypes            kernel-img.conf  mke2fs.conf     ppp                      skel              vtrgb
+chrony                         fonts                 kubernetes       modprobe.d      profile                  sos               waagent.conf
+cifs-utils                     fstab                 landscape        modules         profile.d                ssh               wgetrc
+cloud                          fuse.conf             ld.so.cache      modules-load.d  protocols                ssl               xattr.conf
+cni                            fwupd                 ld.so.conf       mtab            python3                  subgid            xdg
+console-setup                  gai.conf              ld.so.conf.d     multipath       python3.8                subgid-           zsh_command_not_found
+containerd                     groff                 ldap             multipath.conf  rc0.d                    subuid
+cron.d                         group                 legal            nanorc          rc1.d                    subuid-
+root@vm001:/etc# rm -rf kubernetes
+root@vm001:/etc# cd
+root@vm001:~# kubeadm init --pod-network-cidr=10.244.0.0/16 --service-cidr=192.168.0.0/24  --apiserver-cert-extra-sans=20.244.35.190
+I1102 07:41:07.457482    6797 version.go:255] remote version is much newer: v1.25.3; falling back to: stable-1.24
+[init] Using Kubernetes version: v1.24.7
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:41:08.097164    6817 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:41:08Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+root@vm001:~# systemctl info containerd
+Unknown operation info.
+root@vm001:~# systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 07:33:27 UTC; 8min ago
+       Docs: https://containerd.io
+    Process: 6236 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 6237 (containerd)
+      Tasks: 11
+     Memory: 34.5M
+     CGroup: /system.slice/containerd.service
+             └─6237 /usr/bin/containerd
+
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820000897Z" level=info msg="loading plugin \"io.containerd.grpc.v1.namespaces\"..." type=>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820019296Z" level=info msg="loading plugin \"io.containerd.internal.v1.opt\"..." type=io.>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820064896Z" level=info msg="loading plugin \"io.containerd.grpc.v1.snapshots\"..." type=i>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820093295Z" level=info msg="loading plugin \"io.containerd.grpc.v1.tasks\"..." type=io.co>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820112795Z" level=info msg="loading plugin \"io.containerd.grpc.v1.version\"..." type=io.>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820130595Z" level=info msg="loading plugin \"io.containerd.grpc.v1.introspection\"..." ty>
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820408791Z" level=info msg=serving... address=/run/containerd/containerd.sock.ttrpc
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.820467590Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 07:33:27 vm001 systemd[1]: Started containerd container runtime.
+Nov 02 07:33:27 vm001 containerd[6237]: time="2022-11-02T07:33:27.821716274Z" level=info msg="containerd successfully booted in 0.032018s"
+root@vm001:~#
+root@vm001:~# kubeadm join 10.0.0.5:6443 --token r492kl.zr1dwzvjsoad1b6w \
+>         --discovery-token-ca-cert-hash sha256:4f9e1fc68085e08bc3fe63ef8180bd8ade275e38fff2aec6c1f3209e737b3df2
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:46:36.888781    7047 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:46:36Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+, error: exit status 1
+[preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`
+To see the stack trace of this error execute with --v=5 or higher
+root@vm001:~# containerd --version
+containerd github.com/containerd/containerd 1.5.9-0ubuntu1~20.04.4
+root@vm001:~# containerd
+containerd               containerd-shim          containerd-shim-runc-v1  containerd-shim-runc-v2  containerd-stress
+root@vm001:~# containerd
+containerd               containerd-shim          containerd-shim-runc-v1  containerd-shim-runc-v2  containerd-stress
+root@vm001:~# containerd^C
+root@vm001:~# kubeadm join 10.0.0.5:6443 --token r492kl.zr1dwzvjsoad1b6w \
+>         --discovery-token-ca-cert-hash sha256:4f9e1fc68085e08bc3fe63ef8180bd8ade275e38fff2aec6c1f3209e737b3df2
+[preflight] Running pre-flight checks
+error execution phase preflight: [preflight] Some fatal errors occurred:
+        [ERROR CRI]: container runtime is not running: output: E1102 07:53:13.525933    7319 remote_runtime.go:948] "Status from runtime service failed" err="rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeService"
+time="2022-11-02T07:53:13Z" level=fatal msg="getting status of runtime: rpc error: code = Unimplemented desc = unknown service runtime.v1alpha2.RuntimeServiroot@vm001:~# cd /etc/apt/
+root@vm001:/etc/apt# ls
+apt.conf.d  auth.conf.d  keyrings  preferences.d  sources.list  sources.list.d  sources.list.save  trusted.gpg  trusted.gpg.d  trusted.gpg~
+root@vm001:/etc/apt# cd sources.list.d/
+root@vm001:/etc/apt/sources.list.d# ls
+docker.list  docker.list.save
+root@vm001:/etc/apt/sources.list.d# rm dock*
+root@vm001:/etc/apt/sources.list.d# cd
+Get:6 http://azure.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [2196 kB]
+Hit:5 https://packages.cloud.google.com/apt kubernetes-xenial InRelease
+Fetched 2532 kB in 1s (2789 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+3 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@vm001:~# apt delete containerd
+E: Invalid operation delete
+root@vm001:~# apt remove containerd
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  runc slirp4netns
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  containerd
+0 upgraded, 0 newly installed, 1 to remove and 3 not upgraded.
+After this operation, 150 MB disk space will be freed.
+Do you want to continue? [Y/n]
+(Reading database ... 58803 files and directories currently installed.)
+Removing containerd (1.5.9-0ubuntu1~20.04.4) ...
+Processing triggers for man-db (2.9.1-1) ...
+root@vm001:~# apt auto-remove
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following packages will be REMOVED:
+  runc slirp4netns
+0 upgraded, 0 newly installed, 2 to remove and 3 not upgraded.
+After this operation, 19.7 MB disk space will be freed.
+Do you want to continue? [Y/n]
+(Reading database ... 58774 files and directories currently installed.)
+Removing runc (1.1.0-0ubuntu1~20.04.1) ...
+Removing slirp4netns (0.4.3-1) ...
+Processing triggers for man-db (2.9.1-1) ...
+root@vm001:~# apt auto-remove
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+0 upgraded, 0 newly installed, 0 to remove and 3 not upgraded.
+root@vm001:~#
+root@vm001:~# apt ^Containerd
+root@vm001:~# cd /etc/containerd/
+root@vm001:/etc/containerd# ls
+config.toml
+root@vm001:/etc/containerd# rm config.toml
+root@vm001:/etc/containerd# cd ..
+root@vm001:/etc# rmdir containerd/
+root@vm001:/etc# cd
+root@vm001:~# apt install containerd
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  runc
+The following NEW packages will be installed:
+  containerd runc
+0 upgraded, 2 newly installed, 0 to remove and 3 not upgraded.
+Need to get 0 B/36.9 MB of archives.
+After this operation, 170 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+Selecting previously unselected package runc.
+(Reading database ... 58740 files and directories currently installed.)
+Preparing to unpack .../runc_1.1.0-0ubuntu1~20.04.1_amd64.deb ...
+Unpacking runc (1.1.0-0ubuntu1~20.04.1) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../containerd_1.5.9-0ubuntu1~20.04.4_amd64.deb ...
+Unpacking containerd (1.5.9-0ubuntu1~20.04.4) ...
+Setting up runc (1.1.0-0ubuntu1~20.04.1) ...
+Setting up containerd (1.5.9-0ubuntu1~20.04.4) ...
+Processing triggers for man-db (2.9.1-1) ...
+root@vm001:~# apt update
+Hit:1 http://azure.archive.ubuntu.com/ubuntu focal InRelease
+Hit:2 http://azure.archive.ubuntu.com/ubuntu focal-updates InRelease
+Hit:3 http://azure.archive.ubuntu.com/ubuntu focal-backports InRelease
+Hit:4 http://azure.archive.ubuntu.com/ubuntu focal-security InRelease
+Hit:5 https://packages.cloud.google.com/apt kubernetes-xenial InRelease
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+3 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@vm001:~# systemctl status containerd
+● containerd.service - containerd container runtime
+     Loaded: loaded (/lib/systemd/system/containerd.service; enabled; vendor preset: enabled)
+     Active: active (running) since Wed 2022-11-02 07:55:00 UTC; 17s ago
+       Docs: https://containerd.io
+    Process: 8255 ExecStartPre=/sbin/modprobe overlay (code=exited, status=0/SUCCESS)
+   Main PID: 8256 (containerd)
+      Tasks: 12
+     Memory: 27.6M
+     CGroup: /system.slice/containerd.service
+             └─8256 /usr/bin/containerd
+
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.078643442Z" level=info msg=serving... address=/run/containerd/containerd.sock.ttrpc
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.078709743Z" level=info msg=serving... address=/run/containerd/containerd.sock
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.078825944Z" level=info msg="containerd successfully booted in 0.037488s"
+Nov 02 07:55:00 vm001 systemd[1]: Started containerd container runtime.
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.083496201Z" level=info msg="Start subscribing containerd event"
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.084025608Z" level=info msg="Start recovering state"
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.167349626Z" level=info msg="Start event monitor"
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.167812632Z" level=info msg="Start snapshots syncer"
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.168058335Z" level=info msg="Start cni network conf syncer"
+Nov 02 07:55:00 vm001 containerd[8256]: time="2022-11-02T07:55:00.168456240Z" level=info msg="Start streaming server"
+root@vm001:~# kubeadm join 10.0.0.5:6443 --token r492kl.zr1dwzvjsoad1b6w \
+>         --discovery-token-ca-cert-hash sha256:4f9e1fc68085e08bc3fe63ef8180bd8ade275e38fff2aec6c1f3209e737b3df2
+[preflight] Running pre-flight checks
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+
+root@vm001:~# client_loop: send disconnect: Connection reset
+PS C:\Users\vijay>
