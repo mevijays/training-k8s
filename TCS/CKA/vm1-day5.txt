@@ -1,0 +1,2407 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\vijay> ssh sfjbs@20.40.53.99
+sfjbs@20.40.53.99's password:
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Nov  4 05:11:29 UTC 2022
+
+  System load:  0.08               Processes:              156
+  Usage of /:   12.4% of 28.89GB   Users logged in:        0
+  Memory usage: 16%                IPv4 address for eth0:  10.1.0.4
+  Swap usage:   0%                 IPv4 address for weave: 10.44.0.0
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+
+5 updates can be applied immediately.
+1 of these updates is a standard security update.
+To see these additional updates run: apt list --upgradable
+
+New release '22.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Thu Nov  3 09:19:52 2022 from 103.149.126.203
+sfjbs@n1:~$
+sfjbs@n1:~$ kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+serviceaccount/weave-net unchanged
+clusterrole.rbac.authorization.k8s.io/weave-net unchanged
+clusterrolebinding.rbac.authorization.k8s.io/weave-net unchanged
+role.rbac.authorization.k8s.io/weave-net unchanged
+rolebinding.rbac.authorization.k8s.io/weave-net unchanged
+daemonset.apps/weave-net configured
+sfjbs@n1:~$ kubectl get node
+NAME   STATUS   ROLES           AGE   VERSION
+n1     Ready    control-plane   19h   v1.24.7
+n2     Ready    <none>          19h   v1.24.7
+sfjbs@n1:~$ kubectl top node
+NAME   CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%
+n1     86m          4%     1477Mi          18%
+n2     28m          1%     1038Mi          13%
+sfjbs@n1:~$ kubectl top po -A
+NAMESPACE     NAME                              CPU(cores)   MEMORY(bytes)
+ingress       ingress-nginx-controller-g8446    1m           77Mi
+kube-system   coredns-6d4b75cb6d-sppph          2m           19Mi
+kube-system   coredns-6d4b75cb6d-vvq47          2m           21Mi
+kube-system   etcd-n1                           12m          72Mi
+kube-system   kube-apiserver-n1                 36m          324Mi
+kube-system   kube-controller-manager-n1        12m          62Mi
+kube-system   kube-proxy-b8g9q                  1m           18Mi
+kube-system   kube-proxy-swgrp                  1m           18Mi
+kube-system   kube-scheduler-n1                 3m           25Mi
+kube-system   metrics-server-7fbb5f69c6-65pqq   3m           26Mi
+kube-system   weave-net-rt6lz                   1m           66Mi
+kube-system   weave-net-rxrvm                   1m           67Mi
+sfjbs@n1:~$ kubectl get po-n kube-system
+error: the server doesn't have a resource type "po-n"
+sfjbs@n1:~$ kubectl get po -n kube-system
+NAME                              READY   STATUS    RESTARTS      AGE
+coredns-6d4b75cb6d-sppph          1/1     Running   0             20h
+coredns-6d4b75cb6d-vvq47          1/1     Running   0             20h
+etcd-n1                           1/1     Running   0             20h
+kube-apiserver-n1                 1/1     Running   0             20h
+kube-controller-manager-n1        1/1     Running   0             20h
+kube-proxy-b8g9q                  1/1     Running   0             20h
+kube-proxy-swgrp                  1/1     Running   0             20h
+kube-scheduler-n1                 1/1     Running   0             20h
+metrics-server-7fbb5f69c6-65pqq   1/1     Running   0             20h
+weave-net-rt6lz                   2/2     Running   1 (20h ago)   20h
+weave-net-rxrvm                   2/2     Running   1 (20h ago)   20h
+sfjbs@n1:~$
+sfjbs@n1:~$ kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$
+sfjbs@n1:~$ kubectl top --help
+Display Resource (CPU/Memory) usage.
+
+ The top command allows you to see the resource consumption for nodes or pods.
+
+ This command requires Metrics Server to be correctly configured and working on the server.
+
+Available Commands:
+  node          Display resource (CPU/memory) usage of nodes
+  pod           Display resource (CPU/memory) usage of pods
+
+Usage:
+  kubectl top [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl top node --help
+Display resource (CPU/memory) usage of nodes.
+
+ The top-node command allows you to see the resource consumption of nodes.
+
+Aliases:
+node, nodes, no
+
+Examples:
+  # Show metrics for all nodes
+  kubectl top node
+
+  # Show metrics for a given node
+  kubectl top node NODE_NAME
+
+Options:
+    --no-headers=false:
+        If present, print output without headers
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-capacity=false:
+        Print node resources based on Capacity instead of Allocatable(default) of the nodes.
+
+    --sort-by='':
+        If non-empty, sort nodes list using specified field. The field can be either 'cpu' or 'memory'.
+
+    --use-protocol-buffers=true:
+        Enables using protocol-buffers to access Metrics API.
+
+Usage:
+  kubectl top node [NAME | -l label] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl top po -n kube-system
+NAME                              CPU(cores)   MEMORY(bytes)
+coredns-6d4b75cb6d-sppph          2m           19Mi
+coredns-6d4b75cb6d-vvq47          2m           21Mi
+etcd-n1                           12m          65Mi
+kube-apiserver-n1                 45m          322Mi
+kube-controller-manager-n1        10m          62Mi
+kube-proxy-b8g9q                  1m           18Mi
+kube-proxy-swgrp                  1m           18Mi
+kube-scheduler-n1                 3m           25Mi
+metrics-server-7fbb5f69c6-65pqq   5m           26Mi
+weave-net-rt6lz                   1m           66Mi
+weave-net-rxrvm                   1m           67Mi
+sfjbs@n1:~$ kubectl top po --sort-by='cpu' -n kube-system
+NAME                              CPU(cores)   MEMORY(bytes)
+kube-apiserver-n1                 35m          322Mi
+etcd-n1                           11m          65Mi
+kube-controller-manager-n1        11m          62Mi
+metrics-server-7fbb5f69c6-65pqq   4m           26Mi
+kube-scheduler-n1                 3m           25Mi
+coredns-6d4b75cb6d-sppph          2m           19Mi
+coredns-6d4b75cb6d-vvq47          2m           21Mi
+kube-proxy-b8g9q                  1m           18Mi
+kube-proxy-swgrp                  1m           18Mi
+weave-net-rt6lz                   1m           66Mi
+weave-net-rxrvm                   1m           67Mi
+sfjbs@n1:~$ kubectl top po --sort-by='memory' -n kube-system
+NAME                              CPU(cores)   MEMORY(bytes)
+kube-apiserver-n1                 38m          322Mi
+weave-net-rxrvm                   1m           67Mi
+weave-net-rt6lz                   2m           66Mi
+etcd-n1                           11m          65Mi
+kube-controller-manager-n1        11m          62Mi
+metrics-server-7fbb5f69c6-65pqq   4m           26Mi
+kube-scheduler-n1                 3m           25Mi
+coredns-6d4b75cb6d-vvq47          2m           21Mi
+coredns-6d4b75cb6d-sppph          2m           19Mi
+kube-proxy-swgrp                  1m           18Mi
+kube-proxy-b8g9q                  1m           18Mi
+sfjbs@n1:~$ kubectl top po --sort-by='memory' -n kube-system
+NAME                              CPU(cores)   MEMORY(bytes)
+kube-apiserver-n1                 45m          322Mi
+weave-net-rxrvm                   1m           67Mi
+weave-net-rt6lz                   2m           66Mi
+etcd-n1                           11m          65Mi
+kube-controller-manager-n1        11m          62Mi
+kube-scheduler-n1                 3m           25Mi
+metrics-server-7fbb5f69c6-65pqq   5m           25Mi
+coredns-6d4b75cb6d-vvq47          2m           21Mi
+coredns-6d4b75cb6d-sppph          2m           19Mi
+kube-proxy-swgrp                  1m           18Mi
+kube-proxy-b8g9q                  1m           18Mi
+sfjbs@n1:~$ kubectl create --help
+Create a resource from a file or from stdin.
+
+ JSON and YAML formats are accepted.
+
+Examples:
+  # Create a pod using the data in pod.json
+  kubectl create -f ./pod.json
+
+  # Create a pod based on the JSON passed into stdin
+  cat pod.json | kubectl create -f -
+
+  # Edit the data in registry.yaml in JSON then create the resource using the edited data
+  kubectl create -f registry.yaml --edit -o json
+
+Available Commands:
+  clusterrole           Create a cluster role
+  clusterrolebinding    Create a cluster role binding for a particular cluster role
+  configmap             Create a config map from a local file, directory or literal value
+  cronjob               Create a cron job with the specified name
+  deployment            Create a deployment with the specified name
+  ingress               Create an ingress with the specified name
+  job                   Create a job with the specified name
+  namespace             Create a namespace with the specified name
+  poddisruptionbudget   Create a pod disruption budget with the specified name
+  priorityclass         Create a priority class with the specified name
+  quota                 Create a quota with the specified name
+  role                  Create a role with single rule
+  rolebinding           Create a role binding for a particular role or cluster role
+  secret                Create a secret using specified subcommand
+  service               Create a service using a specified subcommand
+  serviceaccount        Create a service account with the specified name
+  token                 Request a service account token
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --edit=false:
+        Edit the API resource before creating
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files to use to create the resource
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --raw='':
+        Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file.
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+    --windows-line-endings=false:
+        Only relevant if --edit=true. Defaults to the line ending native to your platform.
+
+Usage:
+  kubectl create -f FILENAME [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl create deployment --help
+Create a deployment with the specified name.
+
+Aliases:
+deployment, deploy
+
+Examples:
+  # Create a deployment named my-dep that runs the busybox image
+  kubectl create deployment my-dep --image=busybox
+
+  # Create a deployment with a command
+  kubectl create deployment my-dep --image=busybox -- date
+
+  # Create a deployment named my-dep that runs the nginx image with 3 replicas
+  kubectl create deployment my-dep --image=nginx --replicas=3
+
+  # Create a deployment named my-dep that runs the busybox image and expose port 5701
+  kubectl create deployment my-dep --image=busybox --port=5701
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    --image=[]:
+        Image names to run.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --port=-1:
+        The port that this container exposes.
+
+    -r, --replicas=1:
+        Number of replicas to create. Default is 1.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+Usage:
+  kubectl create deployment NAME --image=image -- [COMMAND] [args...] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl create clusterrolebinding --help
+Create a cluster role binding for a particular cluster role.
+
+Examples:
+  # Create a cluster role binding for user1, user2, and group1 using the cluster-admin cluster role
+  kubectl create clusterrolebinding cluster-admin --clusterrole=cluster-admin --user=user1 --user=user2 --group=group1
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --clusterrole='':
+        ClusterRole this ClusterRoleBinding should reference
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    --group=[]:
+        Groups to bind to the clusterrole
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --serviceaccount=[]:
+        Service accounts to bind to the clusterrole, in the format <namespace>:<name>
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+Usage:
+  kubectl create clusterrolebinding NAME --clusterrole=NAME [--user=username] [--group=groupname]
+[--serviceaccount=namespace:serviceaccountname] [--dry-run=server|client|none] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl run --help
+Create and run a particular image in a pod.
+
+Examples:
+  # Start a nginx pod
+  kubectl run nginx --image=nginx
+
+  # Start a hazelcast pod and let the container expose port 5701
+  kubectl run hazelcast --image=hazelcast/hazelcast --port=5701
+
+  # Start a hazelcast pod and set environment variables "DNS_DOMAIN=cluster" and "POD_NAMESPACE=default" in the
+container
+  kubectl run hazelcast --image=hazelcast/hazelcast --env="DNS_DOMAIN=cluster" --env="POD_NAMESPACE=default"
+
+  # Start a hazelcast pod and set labels "app=hazelcast" and "env=prod" in the container
+  kubectl run hazelcast --image=hazelcast/hazelcast --labels="app=hazelcast,env=prod"
+
+  # Dry run; print the corresponding API objects without creating them
+  kubectl run nginx --image=nginx --dry-run=client
+
+  # Start a nginx pod, but overload the spec with a partial set of values parsed from JSON
+  kubectl run nginx --image=nginx --overrides='{ "apiVersion": "v1", "spec": { ... } }'
+
+  # Start a busybox pod and keep it in the foreground, don't restart it if it exits
+  kubectl run -i -t busybox --image=busybox --restart=Never
+
+  # Start the nginx pod using the default command, but use custom arguments (arg1 .. argN) for that command
+  kubectl run nginx --image=nginx -- <arg1> <arg2> ... <argN>
+
+  # Start the nginx pod using a different command and custom arguments
+  kubectl run nginx --image=nginx --command -- <cmd> <arg1> ... <argN>
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --annotations=[]:
+        Annotations to apply to the pod.
+
+    --attach=false:
+        If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.
+        Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit
+        code of the container process is returned.
+
+    --cascade='background':
+        Must be "background", "orphan", or "foreground". Selects the deletion cascading strategy for the dependents
+        (e.g. Pods created by a ReplicationController). Defaults to background.
+
+    --command=false:
+        If true and extra arguments are present, use them as the 'command' field in the container, rather than the
+        'args' field which is the default.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --env=[]:
+        Environment variables to set in the container.
+
+    --expose=false:
+        If true, create a ClusterIP service associated with the pod.  Requires `--port`.
+
+    --field-manager='kubectl-run':
+        Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+        to use to replace the resource.
+
+    --force=false:
+        If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of
+        some resources may result in inconsistency or data loss and requires confirmation.
+
+    --grace-period=-1:
+        Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for
+        immediate shutdown. Can only be set to 0 when --force is true (force deletion).
+
+    --image='':
+        The image for the container to run.
+
+    --image-pull-policy='':
+        The image pull policy for the container.  If left empty, this value will not be specified by the client and
+        defaulted by the server.
+
+    -k, --kustomize='':
+        Process a kustomization directory. This flag can't be used together with -f or -R.
+
+    -l, --labels='':
+        Comma separated labels to apply to the pod. Will override previous values.
+
+    --leave-stdin-open=false:
+        If the pod is started in interactive mode or with stdin, leave stdin open after the first attach completes. By
+        default, stdin will be closed after the first attach completes.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --override-type='merge':
+        The method used to override the generated object: json, merge, or strategic.
+
+    --overrides='':
+        An inline JSON override for the generated object. If this is non-empty, it is used to override the generated
+        object. Requires that the object supply a valid apiVersion field.
+
+    --pod-running-timeout=1m0s:
+        The length of time (like 5s, 2m, or 3h, higher than zero) to wait until at least one pod is running
+
+    --port='':
+        The port that this container exposes.
+
+    --privileged=false:
+        If true, run the container in privileged mode.
+
+    -q, --quiet=false:
+        If true, suppress prompt messages.
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --restart='Always':
+        The restart policy for this Pod.  Legal values [Always, OnFailure, Never].
+
+    --rm=false:
+        If true, delete the pod after it exits.  Only valid when attaching to the container, e.g. with '--attach' or
+        with '-i/--stdin'.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    -i, --stdin=false:
+        Keep stdin open on the container in the pod, even if nothing is attached.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --timeout=0s:
+        The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the
+        object
+
+    -t, --tty=false:
+        Allocate a TTY for the container in the pod.
+
+    --wait=false:
+        If true, wait for resources to be gone before returning. This waits for finalizers.
+
+Usage:
+  kubectl run NAME --image=image [--env="key=value"] [--port=port] [--dry-run=server|client] [--overrides=inline-json]
+[--command] -- [COMMAND] [args...] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$
+sfjbs@n1:~$ kubectl get pod
+No resources found in default namespace.
+sfjbs@n1:~$ kubectl run testpod --image=nginx --dry-run=client -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: testpod
+  name: testpod
+spec:
+  containers:
+  - image: nginx
+    name: testpod
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+sfjbs@n1:~$ kubectl create deploy testpod --image=nginx --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: testpod
+  name: testpod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: testpod
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: testpod
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
+sfjbs@n1:~$ kubectl create deploy testpod --image=nginx --dry-run=client -o json
+{
+    "kind": "Deployment",
+    "apiVersion": "apps/v1",
+    "metadata": {
+        "name": "testpod",
+        "creationTimestamp": null,
+        "labels": {
+            "app": "testpod"
+        }
+    },
+    "spec": {
+        "replicas": 1,
+        "selector": {
+            "matchLabels": {
+                "app": "testpod"
+            }
+        },
+        "template": {
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "testpod"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "nginx",
+                        "image": "nginx",
+                        "resources": {}
+                    }
+                ]
+            }
+        },
+        "strategy": {}
+    },
+    "status": {}
+}
+sfjbs@n1:~$ kubectl run testpod --image=nginx --dry-run=client -o json
+{
+    "kind": "Pod",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "testpod",
+        "creationTimestamp": null,
+        "labels": {
+            "run": "testpod"
+        }
+    },
+    "spec": {
+        "containers": [
+            {
+                "name": "testpod",
+                "image": "nginx",
+                "resources": {}
+            }
+        ],
+        "restartPolicy": "Always",
+        "dnsPolicy": "ClusterFirst"
+    },
+    "status": {}
+}
+sfjbs@n1:~$ kubectl run testpod --image=nginx
+pod/testpod created
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS              RESTARTS   AGE
+testpod   0/1     ContainerCreating   0          9s
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS              RESTARTS   AGE
+testpod   0/1     ContainerCreating   0          12s
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS              RESTARTS   AGE
+testpod   0/1     ContainerCreating   0          13s
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS              RESTARTS   AGE
+testpod   0/1     ContainerCreating   0          13s
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS              RESTARTS   AGE
+testpod   0/1     ContainerCreating   0          14s
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS    RESTARTS   AGE
+testpod   1/1     Running   0          14s
+sfjbs@n1:~$ kubectl get po
+NAME      READY   STATUS    RESTARTS   AGE
+testpod   1/1     Running   0          15s
+sfjbs@n1:~$ kubectl delete po testpod
+pod "testpod" deleted
+sfjbs@n1:~$ kubectl get po
+No resources found in default namespace.
+sfjbs@n1:~$ kubectl delete po
+error: resource(s) were provided, but no name was specified
+sfjbs@n1:~$ kubectl run testpod --image=nginx
+pod/testpod created
+sfjbs@n1:~$ kubectl run testpod1 --image=nginx
+pod/testpod1 created
+sfjbs@n1:~$ kubectl run testpod{3..8} --image=nginx
+pod/testpod3 created
+sfjbs@n1:~$ kubectl run testpod5 --image=nginx
+pod/testpod5 created
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS              RESTARTS     AGE
+testpod    1/1     Running             0            22s
+testpod1   1/1     Running             0            18s
+testpod3   0/1     CrashLoopBackOff    1 (5s ago)   11s
+testpod5   0/1     ContainerCreating   0            3s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             27s
+testpod1   1/1     Running            0             23s
+testpod3   0/1     CrashLoopBackOff   1 (10s ago)   16s
+testpod5   1/1     Running            0             8s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             28s
+testpod1   1/1     Running            0             24s
+testpod3   0/1     CrashLoopBackOff   1 (11s ago)   17s
+testpod5   1/1     Running            0             9s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             28s
+testpod1   1/1     Running            0             24s
+testpod3   0/1     CrashLoopBackOff   1 (11s ago)   17s
+testpod5   1/1     Running            0             9s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             29s
+testpod1   1/1     Running            0             25s
+testpod3   0/1     CrashLoopBackOff   1 (12s ago)   18s
+testpod5   1/1     Running            0             10s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             29s
+testpod1   1/1     Running            0             25s
+testpod3   0/1     CrashLoopBackOff   1 (12s ago)   18s
+testpod5   1/1     Running            0             10s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             30s
+testpod1   1/1     Running            0             26s
+testpod3   0/1     CrashLoopBackOff   1 (13s ago)   19s
+testpod5   1/1     Running            0             11s
+sfjbs@n1:~$ kubectl get po
+NAME       READY   STATUS             RESTARTS      AGE
+testpod    1/1     Running            0             30s
+testpod1   1/1     Running            0             26s
+testpod3   0/1     CrashLoopBackOff   1 (13s ago)   19s
+testpod5   1/1     Running            0             11s
+sfjbs@n1:~$ kubectl delete po --all
+pod "testpod" deleted
+pod "testpod1" deleted
+pod "testpod3" deleted
+pod "testpod5" deleted
+sfjbs@n1:~$ kubectl get po
+No resources found in default namespace.
+sfjbs@n1:~$ kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl create deploy testpod --image=nginx
+deployment.apps/testpod created
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-g8d2p   1/1     Running   0          4s
+sfjbs@n1:~$ kubectl get deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+testpod   1/1     1            1           8s
+sfjbs@n1:~$ kubectl get deploy testpod -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-11-04T06:21:59Z"
+  generation: 1
+  labels:
+    app: testpod
+  name: testpod
+  namespace: default
+  resourceVersion: "109745"
+  uid: de32d245-491d-4b20-a9f1-f2d80f1be0de
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: testpod
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: testpod
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-11-04T06:22:02Z"
+    lastUpdateTime: "2022-11-04T06:22:02Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-11-04T06:21:59Z"
+    lastUpdateTime: "2022-11-04T06:22:02Z"
+    message: ReplicaSet "testpod-565f4b7cb5" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+sfjbs@n1:~$ kubectl describe deploy testpod
+Name:                   testpod
+Namespace:              default
+CreationTimestamp:      Fri, 04 Nov 2022 06:21:59 +0000
+Labels:                 app=testpod
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=testpod
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=testpod
+  Containers:
+   nginx:
+    Image:        nginx
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   testpod-565f4b7cb5 (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  47s   deployment-controller  Scaled up replica set testpod-565f4b7cb5 to 1
+sfjbs@n1:~$ kubectl get deploy testpod -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2022-11-04T06:21:59Z"
+  generation: 1
+  labels:
+    app: testpod
+  name: testpod
+  namespace: default
+  resourceVersion: "109745"
+  uid: de32d245-491d-4b20-a9f1-f2d80f1be0de
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: testpod
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: testpod
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: nginx
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-11-04T06:22:02Z"
+    lastUpdateTime: "2022-11-04T06:22:02Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-11-04T06:21:59Z"
+    lastUpdateTime: "2022-11-04T06:22:02Z"
+    message: ReplicaSet "testpod-565f4b7cb5" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+sfjbs@n1:~$ kubectl set --help
+Configure application resources.
+
+ These commands help you make changes to existing application resources.
+
+Available Commands:
+  env              Update environment variables on a pod template
+  image            Update the image of a pod template
+  resources        Update resource requests/limits on objects with pod templates
+  selector         Set the selector on a resource
+  serviceaccount   Update the service account of a resource
+  subject          Update the user, group, or service account in a role binding or cluster role binding
+
+Usage:
+  kubectl set SUBCOMMAND [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl set image --help
+Update existing container image(s) of resources.
+
+ Possible resources include (case insensitive):
+
+  pod (po), replicationcontroller (rc), deployment (deploy), daemonset (ds), statefulset (sts), cronjob (cj), replicaset
+(rs)
+
+Examples:
+  # Set a deployment's nginx container image to 'nginx:1.9.1', and its busybox container image to 'busybox'
+  kubectl set image deployment/nginx busybox=busybox nginx=nginx:1.9.1
+
+  # Update all deployments' and rc's nginx container's image to 'nginx:1.9.1'
+  kubectl set image deployments,rc nginx=nginx:1.9.1 --all
+
+  # Update image of all containers of daemonset abc to 'nginx:1.9.1'
+  kubectl set image daemonset abc *=nginx:1.9.1
+
+  # Print result (in yaml format) of updating nginx container image from local file, without hitting the server
+  kubectl set image -f path/to/file.yaml nginx=nginx:1.9.1 --local -o yaml
+
+Options:
+    --all=false:
+        Select all resources, in the namespace of the specified resource types
+
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-set':
+        Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to get from a server.
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    --local=false:
+        If true, set image will NOT contact api-server but run locally.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  kubectl set image (-f FILENAME | TYPE NAME) CONTAINER_NAME_1=CONTAINER_IMAGE_1 ... CONTAINER_NAME_N=CONTAINER_IMAGE_N
+[options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl set image deploy testpod nginx=nginx:1.23.2-alpine
+deployment.apps/testpod image updated
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS              RESTARTS   AGE
+testpod-565f4b7cb5-g8d2p   1/1     Running             0          4m48s
+testpod-66ff4ccf5f-lwwj5   0/1     ContainerCreating   0          6s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-66ff4ccf5f-lwwj5   1/1     Running   0          12s
+sfjbs@n1:~$ kubectl get deploy testpod -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+  creationTimestamp: "2022-11-04T06:21:59Z"
+  generation: 2
+  labels:
+    app: testpod
+  name: testpod
+  namespace: default
+  resourceVersion: "110187"
+  uid: de32d245-491d-4b20-a9f1-f2d80f1be0de
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: testpod
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: testpod
+    spec:
+      containers:
+      - image: nginx:1.23.2-alpine
+        imagePullPolicy: Always
+        name: nginx
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-11-04T06:22:02Z"
+    lastUpdateTime: "2022-11-04T06:22:02Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2022-11-04T06:21:59Z"
+    lastUpdateTime: "2022-11-04T06:26:50Z"
+    message: ReplicaSet "testpod-66ff4ccf5f" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1
+sfjbs@n1:~$
+sfjbs@n1:~$ kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl rollout --help
+Manage the rollout of one or many resources.
+
+ Valid resource types include:
+
+  *  deployments
+  *  daemonsets
+  *  statefulsets
+
+Examples:
+  # Rollback to the previous deployment
+  kubectl rollout undo deployment/abc
+
+  # Check the rollout status of a daemonset
+  kubectl rollout status daemonset/foo
+
+  # Restart a deployment
+  kubectl rollout restart deployment/abc
+
+  # Restart deployments with the app=nginx label
+  kubectl rollout restart deployment --selector=app=nginx
+
+Available Commands:
+  history       View rollout history
+  pause         Mark the provided resource as paused
+  restart       Restart a resource
+  resume        Resume a paused resource
+  status        Show the status of the rollout
+  undo          Undo a previous rollout
+
+Usage:
+  kubectl rollout SUBCOMMAND [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl rollout status deploy testpod
+deployment "testpod" successfully rolled out
+sfjbs@n1:~$ kubectl rollout status deploy/testpod
+deployment "testpod" successfully rolled out
+sfjbs@n1:~$ kubectl rollout history deploy/testpod
+deployment.apps/testpod
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+sfjbs@n1:~$ kubectl rollout history --help
+View previous rollout revisions and configurations.
+
+Examples:
+  # View the rollout history of a deployment
+  kubectl rollout history deployment/abc
+
+  # View the details of daemonset revision 3
+  kubectl rollout history daemonset/abc --revision=3
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to get from a server.
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --revision=0:
+        See the details, including podTemplate of the revision specified
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  kubectl rollout history (TYPE NAME | TYPE/NAME) [flags] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl rollout history deploy/testpod
+deployment.apps/testpod
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+sfjbs@n1:~$ kubectl rollout history deploy/testpod --revision=1
+deployment.apps/testpod with revision #1
+Pod Template:
+  Labels:       app=testpod
+        pod-template-hash=565f4b7cb5
+  Containers:
+   nginx:
+    Image:      nginx
+    Port:       <none>
+    Host Port:  <none>
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+sfjbs@n1:~$ kubectl rollout history deploy/testpod --revision=2
+deployment.apps/testpod with revision #2
+Pod Template:
+  Labels:       app=testpod
+        pod-template-hash=66ff4ccf5f
+  Containers:
+   nginx:
+    Image:      nginx:1.23.2-alpine
+    Port:       <none>
+    Host Port:  <none>
+    Environment:        <none>
+    Mounts:     <none>
+  Volumes:      <none>
+
+sfjbs@n1:~$ kubectl rollout --help
+Manage the rollout of one or many resources.
+
+ Valid resource types include:
+
+  *  deployments
+  *  daemonsets
+  *  statefulsets
+
+Examples:
+  # Rollback to the previous deployment
+  kubectl rollout undo deployment/abc
+
+  # Check the rollout status of a daemonset
+  kubectl rollout status daemonset/foo
+
+  # Restart a deployment
+  kubectl rollout restart deployment/abc
+
+  # Restart deployments with the app=nginx label
+  kubectl rollout restart deployment --selector=app=nginx
+
+Available Commands:
+  history       View rollout history
+  pause         Mark the provided resource as paused
+  restart       Restart a resource
+  resume        Resume a paused resource
+  status        Show the status of the rollout
+  undo          Undo a previous rollout
+
+Usage:
+  kubectl rollout SUBCOMMAND [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl rollout history deploy/testpod
+deployment.apps/testpod
+REVISION  CHANGE-CAUSE
+1         <none>
+2         <none>
+
+sfjbs@n1:~$ kubectl rollout undo --help
+Roll back to a previous rollout.
+
+Examples:
+  # Roll back to the previous deployment
+  kubectl rollout undo deployment/abc
+
+  # Roll back to daemonset revision 3
+  kubectl rollout undo daemonset/abc --to-revision=3
+
+  # Roll back to the previous deployment with dry-run
+  kubectl rollout undo --dry-run=server deployment/abc
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to get from a server.
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --to-revision=0:
+        The revision to rollback to. Default to 0 (last revision).
+
+Usage:
+  kubectl rollout undo (TYPE NAME | TYPE/NAME) [flags] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl rollout undo deploy/testpod
+deployment.apps/testpod rolled back
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          5s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          7s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          7s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          8s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          9s
+sfjbs@n1:~$ kubectl describe po testpod-565f4b7cb5-hwgdz -o yaml
+error: unknown shorthand flag: 'o' in -o
+See 'kubectl describe --help' for usage.
+sfjbs@n1:~$ kubectl describe po testpod-565f4b7cb5-hwgdz
+Name:         testpod-565f4b7cb5-hwgdz
+Namespace:    default
+Priority:     0
+Node:         n2/10.1.0.5
+Start Time:   Fri, 04 Nov 2022 06:32:45 +0000
+Labels:       app=testpod
+              pod-template-hash=565f4b7cb5
+Annotations:  <none>
+Status:       Running
+IP:           10.32.0.3
+IPs:
+  IP:           10.32.0.3
+Controlled By:  ReplicaSet/testpod-565f4b7cb5
+Containers:
+  nginx:
+    Container ID:   containerd://5514efcf0abe55ba8277017381d5a6a1c480e249d62b6f20c04f882e7ebcb079
+    Image:          nginx
+    Image ID:       docker.io/library/nginx@sha256:943c25b4b66b332184d5ba6bb18234273551593016c0e0ae906bab111548239f
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Fri, 04 Nov 2022 06:32:48 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mssdj (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  kube-api-access-mssdj:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  31s   default-scheduler  Successfully assigned default/testpod-565f4b7cb5-hwgdz to n2
+  Normal  Pulling    31s   kubelet            Pulling image "nginx"
+  Normal  Pulled     29s   kubelet            Successfully pulled image "nginx" in 2.053896951s
+  Normal  Created    28s   kubelet            Created container nginx
+  Normal  Started    28s   kubelet            Started container nginx
+sfjbs@n1:~$ kubectl rollout history deploy/testpod
+deployment.apps/testpod
+REVISION  CHANGE-CAUSE
+2         <none>
+3         <none>
+
+sfjbs@n1:~$ kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl explain deploy/testpod
+the server doesn't have a resource type "deploy/testpod"
+sfjbs@n1:~$ kubectl explain deploy
+KIND:     Deployment
+VERSION:  apps/v1
+
+DESCRIPTION:
+     Deployment enables declarative updates for Pods and ReplicaSets.
+
+FIELDS:
+   apiVersion   <string>
+     APIVersion defines the versioned schema of this representation of an
+     object. Servers should convert recognized schemas to the latest internal
+     value, and may reject unrecognized values. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+
+   kind <string>
+     Kind is a string value representing the REST resource this object
+     represents. Servers may infer this from the endpoint the client submits
+     requests to. Cannot be updated. In CamelCase. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+
+   metadata     <Object>
+     Standard object's metadata. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+
+   spec <Object>
+     Specification of the desired behavior of the Deployment.
+
+   status       <Object>
+     Most recently observed status of the Deployment.
+
+sfjbs@n1:~$ kubectl explain sts
+KIND:     StatefulSet
+VERSION:  apps/v1
+
+DESCRIPTION:
+     StatefulSet represents a set of pods with consistent identities. Identities
+     are defined as:
+     - Network: A single stable DNS and hostname.
+     - Storage: As many VolumeClaims as requested. The StatefulSet guarantees
+     that a given network identity will always map to the same storage identity.
+
+FIELDS:
+   apiVersion   <string>
+     APIVersion defines the versioned schema of this representation of an
+     object. Servers should convert recognized schemas to the latest internal
+     value, and may reject unrecognized values. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+
+   kind <string>
+     Kind is a string value representing the REST resource this object
+     represents. Servers may infer this from the endpoint the client submits
+     requests to. Cannot be updated. In CamelCase. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+
+   metadata     <Object>
+     Standard object's metadata. More info:
+     https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
+
+   spec <Object>
+     Spec defines the desired identities of pods in this set.
+
+   status       <Object>
+     Status is the current status of Pods in this StatefulSet. This data may be
+     out of date by some window of time.
+
+sfjbs@n1:~$ kubectl --help
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl autoscale --help
+Creates an autoscaler that automatically chooses and sets the number of pods that run in a Kubernetes cluster.
+
+ Looks up a deployment, replica set, stateful set, or replication controller by name and creates an autoscaler that uses
+the given resource as a reference. An autoscaler can automatically increase or decrease number of pods deployed within
+the system as needed.
+
+Examples:
+  # Auto scale a deployment "foo", with the number of pods between 2 and 10, no target CPU utilization specified so a
+default autoscaling policy will be used
+  kubectl autoscale deployment foo --min=2 --max=10
+
+  # Auto scale a replication controller "foo", with the number of pods between 1 and 5, target CPU utilization at 80%
+  kubectl autoscale rc foo --max=5 --cpu-percent=80
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --cpu-percent=-1:
+        The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not
+        specified or negative, a default autoscaling policy will be used.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-autoscale':
+        Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to autoscale.
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    --max=-1:
+        The upper limit for the number of pods that can be set by the autoscaler. Required.
+
+    --min=-1:
+        The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative,
+        the server will apply a default value.
+
+    --name='':
+        The name for the newly created object. If not specified, the name of the input resource will be used.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  kubectl autoscale (-f FILENAME | TYPE NAME | TYPE/NAME) [--min=MINPODS] --max=MAXPODS [--cpu-percent=CPU] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl autoscale deployment testpod --min=2 --max=10 --cpu-percent=80
+horizontalpodautoscaler.autoscaling/testpod autoscaled
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          6m19s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS              RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running             0          6m28s
+testpod-565f4b7cb5-jpltz   0/1     ContainerCreating   0          1s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          6m33s
+testpod-565f4b7cb5-jpltz   1/1     Running   0          6s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          6m39s
+testpod-565f4b7cb5-jpltz   1/1     Running   0          12s
+sfjbs@n1:~$ kubectl get po
+NAME                       READY   STATUS    RESTARTS   AGE
+testpod-565f4b7cb5-hwgdz   1/1     Running   0          6m39s
+testpod-565f4b7cb5-jpltz   1/1     Running   0          12s
+sfjbs@n1:~$ kubectl get deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+testpod   2/2     2            2           17m
+sfjbs@n1:~$ kubectl get all
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/testpod-565f4b7cb5-hwgdz   1/1     Running   0          7m11s
+pod/testpod-565f4b7cb5-jpltz   1/1     Running   0          44s
+
+NAME                 TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   192.168.0.1   <none>        443/TCP   21h
+
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/testpod   2/2     2            2           17m
+
+NAME                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/testpod-565f4b7cb5   2         2         2       17m
+replicaset.apps/testpod-66ff4ccf5f   0         0         0       13m
+
+NAME                                          REFERENCE            TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/testpod   Deployment/testpod   <unknown>/80%   2         10        2          59s
+sfjbs@n1:~$ kubectl get hpa
+NAME      REFERENCE            TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+testpod   Deployment/testpod   <unknown>/80%   2         10        2          2m20s
+sfjbs@n1:~$ kubectl autoscale --help
+Creates an autoscaler that automatically chooses and sets the number of pods that run in a Kubernetes cluster.
+
+ Looks up a deployment, replica set, stateful set, or replication controller by name and creates an autoscaler that uses
+the given resource as a reference. An autoscaler can automatically increase or decrease number of pods deployed within
+the system as needed.
+
+Examples:
+  # Auto scale a deployment "foo", with the number of pods between 2 and 10, no target CPU utilization specified so a
+default autoscaling policy will be used
+  kubectl autoscale deployment foo --min=2 --max=10
+
+  # Auto scale a replication controller "foo", with the number of pods between 1 and 5, target CPU utilization at 80%
+  kubectl autoscale rc foo --max=5 --cpu-percent=80
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --cpu-percent=-1:
+        The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not
+        specified or negative, a default autoscaling policy will be used.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-autoscale':
+        Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to autoscale.
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    --max=-1:
+        The upper limit for the number of pods that can be set by the autoscaler. Required.
+
+    --min=-1:
+        The lower limit for the number of pods that can be set by the autoscaler. If it's not specified or negative,
+        the server will apply a default value.
+
+    --name='':
+        The name for the newly created object. If not specified, the name of the input resource will be used.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  kubectl autoscale (-f FILENAME | TYPE NAME | TYPE/NAME) [--min=MINPODS] --max=MAXPODS [--cpu-percent=CPU] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~$ kubectl get hpa
+NAME      REFERENCE            TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+testpod   Deployment/testpod   <unknown>/80%   2         10        2          3m14s
+sfjbs@n1:~$ kubectl get all
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/testpod-565f4b7cb5-hwgdz   1/1     Running   0          11m
+pod/testpod-565f4b7cb5-jpltz   1/1     Running   0          4m57s
+
+NAME                 TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   192.168.0.1   <none>        443/TCP   21h
+
+NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/testpod   2/2     2            2           22m
+
+NAME                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/testpod-565f4b7cb5   2         2         2       22m
+replicaset.apps/testpod-66ff4ccf5f   0         0         0       17m
+
+NAME                                          REFERENCE            TARGETS         MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/testpod   Deployment/testpod   <unknown>/80%   2         10        2          5m12s
+sfjbs@n1:~$ kubectl get all -n kube-system
+NAME                                  READY   STATUS    RESTARTS      AGE
+pod/coredns-6d4b75cb6d-sppph          1/1     Running   0             21h
+pod/coredns-6d4b75cb6d-vvq47          1/1     Running   0             21h
+pod/etcd-n1                           1/1     Running   0             21h
+pod/kube-apiserver-n1                 1/1     Running   0             21h
+pod/kube-controller-manager-n1        1/1     Running   0             21h
+pod/kube-proxy-b8g9q                  1/1     Running   0             21h
+pod/kube-proxy-swgrp                  1/1     Running   0             21h
+pod/kube-scheduler-n1                 1/1     Running   0             21h
+pod/metrics-server-7fbb5f69c6-65pqq   1/1     Running   0             21h
+pod/weave-net-rt6lz                   2/2     Running   1 (21h ago)   21h
+pod/weave-net-rxrvm                   2/2     Running   1 (21h ago)   21h
+
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                  AGE
+service/kube-dns         ClusterIP   192.168.0.10   <none>        53/UDP,53/TCP,9153/TCP   21h
+service/metrics-server   ClusterIP   192.168.0.69   <none>        443/TCP                  21h
+
+NAME                        DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+daemonset.apps/kube-proxy   2         2         2       2            2           kubernetes.io/os=linux   21h
+daemonset.apps/weave-net    2         2         2       2            2           <none>                   21h
+
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/coredns          2/2     2            2           21h
+deployment.apps/metrics-server   1/1     1            1           21h
+
+NAME                                        DESIRED   CURRENT   READY   AGE
+replicaset.apps/coredns-6d4b75cb6d          2         2         2       21h
+replicaset.apps/metrics-server-7fbb5f69c6   1         1         1       21h
+sfjbs@n1:~$
+sfjbs@n1:~$ kubectl get po -A
+NAMESPACE     NAME                              READY   STATUS    RESTARTS      AGE
+default       testpod-565f4b7cb5-hwgdz          1/1     Running   0             12m
+default       testpod-565f4b7cb5-jpltz          1/1     Running   0             5m50s
+ingress       ingress-nginx-controller-g8446    1/1     Running   0             21h
+kube-system   coredns-6d4b75cb6d-sppph          1/1     Running   0             21h
+kube-system   coredns-6d4b75cb6d-vvq47          1/1     Running   0             21h
+kube-system   etcd-n1                           1/1     Running   0             21h
+kube-system   kube-apiserver-n1                 1/1     Running   0             21h
+kube-system   kube-controller-manager-n1        1/1     Running   0             21h
+kube-system   kube-proxy-b8g9q                  1/1     Running   0             21h
+kube-system   kube-proxy-swgrp                  1/1     Running   0             21h
+kube-system   kube-scheduler-n1                 1/1     Running   0             21h
+kube-system   metrics-server-7fbb5f69c6-65pqq   1/1     Running   0             21h
+kube-system   weave-net-rt6lz                   2/2     Running   1 (21h ago)   21h
+kube-system   weave-net-rxrvm                   2/2     Running   1 (21h ago)   21h
+sfjbs@n1:~$ kubectl get deploy -A
+NAMESPACE     NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+default       testpod          2/2     2            2           23m
+kube-system   coredns          2/2     2            2           21h
+kube-system   metrics-server   1/1     1            1           21h
+sfjbs@n1:~$ kubectl get ds -A
+NAMESPACE     NAME                       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+ingress       ingress-nginx-controller   1         1         1       1            1           kubernetes.io/os=linux   21h
+kube-system   kube-proxy                 2         2         2       2            2           kubernetes.io/os=linux   21h
+kube-system   weave-net                  2         2         2       2            2           <none>                   21h
+sfjbs@n1:~$ kubectl get sts -A
+No resources found
+sfjbs@n1:~$ kubectl get svc -A
+NAMESPACE     NAME                                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE
+default       kubernetes                           ClusterIP   192.168.0.1     <none>        443/TCP                  21h
+ingress       ingress-nginx-controller-admission   ClusterIP   192.168.0.197   <none>        443/TCP                  21h
+kube-system   kube-dns                             ClusterIP   192.168.0.10    <none>        53/UDP,53/TCP,9153/TCP   21h
+kube-system   metrics-server                       ClusterIP   192.168.0.69    <none>        443/TCP                  21h
+sfjbs@n1:~$ kubectl get deploy
+NAME      READY   UP-TO-DATE   AVAILABLE   AGE
+testpod   2/2     2            2           50m
+sfjbs@n1:~$ kubectl expose deploy testpod --port=80 --target-port=80
+service/testpod exposed
+sfjbs@n1:~$ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   192.168.0.1     <none>        443/TCP   22h
+testpod      ClusterIP   192.168.0.148   <none>        80/TCP    4s
+sfjbs@n1:~$ kubectl delete svc testpod
+service "testpod" deleted
+sfjbs@n1:~$ kubectl expose deploy testpod --port=80 --target-port=80 --type=NodePort
+service/testpod exposed
+sfjbs@n1:~$ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   192.168.0.1     <none>        443/TCP        22h
+testpod      NodePort    192.168.0.191   <none>        80:31487/TCP   4s
+sfjbs@n1:~$ helm ls
+NAME    NAMESPACE       REVISION        UPDATED STATUS  CHART   APP VERSION
+sfjbs@n1:~$ helm ls -A
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+ingress-nginx   ingress         1               2022-11-03 09:22:47.641793301 +0000 UTC deployed        ingress-nginx-4.3.0     1.4.0
+sfjbs@n1:~$ helm delete ingress-nginx -n ngress
+Error: uninstall: Release not loaded: ingress-nginx: release: not found
+sfjbs@n1:~$ helm delete ingress-nginx -n ingress
+release "ingress-nginx" uninstalled
+sfjbs@n1:~$ kubectl get po -A
+NAMESPACE     NAME                              READY   STATUS        RESTARTS      AGE
+default       testpod-565f4b7cb5-hwgdz          1/1     Running       0             44m
+default       testpod-565f4b7cb5-jpltz          1/1     Running       0             38m
+ingress       ingress-nginx-controller-g8446    1/1     Terminating   0             21h
+kube-system   coredns-6d4b75cb6d-sppph          1/1     Running       0             22h
+kube-system   coredns-6d4b75cb6d-vvq47          1/1     Running       0             22h
+kube-system   etcd-n1                           1/1     Running       0             22h
+kube-system   kube-apiserver-n1                 1/1     Running       0             22h
+kube-system   kube-controller-manager-n1        1/1     Running       0             22h
+kube-system   kube-proxy-b8g9q                  1/1     Running       0             22h
+kube-system   kube-proxy-swgrp                  1/1     Running       0             22h
+kube-system   kube-scheduler-n1                 1/1     Running       0             22h
+kube-system   metrics-server-7fbb5f69c6-65pqq   1/1     Running       0             22h
+kube-system   weave-net-rt6lz                   2/2     Running       1 (22h ago)   22h
+kube-system   weave-net-rxrvm                   2/2     Running       1 (22h ago)   22h
+sfjbs@n1:~$ client_loop: send disconnect: Connection reset
+PS C:\Users\vijay>
+PS C:\Users\vijay>
+PS C:\Users\vijay> ssh sfjbs@20.40.53.99
+sfjbs@20.40.53.99's password:
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Nov  4 07:18:36 UTC 2022
+
+  System load:  0.39               Processes:              157
+  Usage of /:   12.4% of 28.89GB   Users logged in:        1
+  Memory usage: 16%                IPv4 address for eth0:  10.1.0.4
+  Swap usage:   0%                 IPv4 address for weave: 10.44.0.0
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+
+4 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+New release '22.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Fri Nov  4 05:11:30 2022 from 103.208.71.153
+sfjbs@n1:~$ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   192.168.0.1     <none>        443/TCP        22h
+testpod      NodePort    192.168.0.191   <none>        80:31487/TCP   4m21s
+sfjbs@n1:~$ kubectl create deploy testtcs --image=nginx
+deployment.apps/testtcs created
+sfjbs@n1:~$ kubectl expose deploy testtcs --port=80 --target-port=80 --type=NodePort
+service/testtcs exposed
+sfjbs@n1:~$ kubectl get svc
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   192.168.0.1     <none>        443/TCP        22h
+testpod      NodePort    192.168.0.191   <none>        80:31487/TCP   10m
+testtcs      NodePort    192.168.0.143   <none>        80:31004/TCP   8s
+sfjbs@n1:~$ kubectl delete svc testtcs
+service "testtcs" deleted
+sfjbs@n1:~$ kubectl expose deploy testtcs --port=80 --target-port=80 --type=LoadBalancer
+service/testtcs exposed
+sfjbs@n1:~$ kubectl get svc
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP      192.168.0.1     <none>        443/TCP        22h
+testpod      NodePort       192.168.0.191   <none>        80:31487/TCP   11m
+testtcs      LoadBalancer   192.168.0.192   <pending>     80:31642/TCP   7s
+sfjbs@n1:~$ kubectl create deploy testtest --image=nginx
+deployment.apps/testtest created
+sfjbs@n1:~$ kubectl expose deploy testtest --port=80 --target-port=80
+service/testtest exposed
+sfjbs@n1:~$ kubectl get svc
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP      192.168.0.1     <none>        443/TCP        22h
+testpod      NodePort       192.168.0.191   <none>        80:31487/TCP   13m
+testtcs      LoadBalancer   192.168.0.192   <pending>     80:31642/TCP   2m1s
+testtest     ClusterIP      192.168.0.234   <none>        80/TCP         2s
+sfjbs@n1:~$ client_loop: send disconnect: Connection reset
+PS C:\Users\vijay> ssh sfjbs@20.40.53.99
+sfjbs@20.40.53.99's password:
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sat Nov  5 02:48:39 UTC 2022
+
+  System load:  0.06               Processes:              156
+  Usage of /:   12.7% of 28.89GB   Users logged in:        0
+  Memory usage: 16%                IPv4 address for eth0:  10.1.0.4
+  Swap usage:   0%                 IPv4 address for weave: 10.44.0.0
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+
+4 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Fri Nov  4 07:18:37 2022 from 103.208.71.89
+sfjbs@n1:~$ ls
+get_helm.sh
+sfjbs@n1:~$ rm get_helm.sh
+sfjbs@n1:~$ pwd
+/home/sfjbs
+sfjbs@n1:~$ ls
+sfjbs@n1:~$ docker ps
+
+Command 'docker' not found, but can be installed with:
+
+sudo snap install docker     # version 20.10.17, or
+sudo apt  install docker.io  # version 20.10.12-0ubuntu2~20.04.1
+
+See 'snap info docker' for additional versions.
+
+sfjbs@n1:~$ crictl ps
+WARN[0000] runtime connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/var/run/dockershim.sock: connect: no such file or directory"
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/run/containerd/containerd.sock: connect: permission denied"
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/run/crio/crio.sock: connect: no such file or directory"
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/var/run/cri-dockerd.sock: connect: no such file or directory"
+FATA[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/var/run/cri-dockerd.sock: connect: no such file or directory"
+sfjbs@n1:~$ sudo crictl ps
+WARN[0000] runtime connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/var/run/dockershim.sock: connect: no such file or directory"
+WARN[0000] image connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine image API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"
+CONTAINER           IMAGE               CREATED             STATE               NAME                      ATTEMPT             POD ID              POD
+4de8472c81474       a4ca41631cc7a       42 hours ago        Running             coredns                   0                   aa20ac390cca5       coredns-6d4b75cb6d-vvq47
+39baa077d3b00       a4ca41631cc7a       42 hours ago        Running             coredns                   0                   6672cea30fe8f       coredns-6d4b75cb6d-sppph
+8ba5006a7aae7       62fea85d60522       42 hours ago        Running             weave                     1                   a1f9e2e9736a9       weave-net-rxrvm
+35d62aa2a5424       690c3345cc9c3       42 hours ago        Running             weave-npc                 0                   a1f9e2e9736a9       weave-net-rxrvm
+b0eb3720a5422       3033e2439ff0f       42 hours ago        Running             kube-proxy                0                   fca8fcd22d48b       kube-proxy-b8g9q
+b8594662f3ff0       9fde607b81ffe       42 hours ago        Running             kube-scheduler            0                   ccd393707748a       kube-scheduler-n1
+08081fed01ae4       aebe758cef4cd       42 hours ago        Running             etcd                      0                   1be46f12f81a5       etcd-n1
+7a080b6380631       1f38c0b6a9d1a       42 hours ago        Running             kube-apiserver            0                   ea5cb161f29ae       kube-apiserver-n1
+0e7d63373295d       8380b6a23fb81       42 hours ago        Running             kube-controller-manager   0                   0189b0aaa7317       kube-controller-manager-n1
+sfjbs@n1:~$ sudo bash
+root@n1:/home/sfjbs#
+root@n1:/home/sfjbs# crictl ps
+WARN[0000] runtime connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/var/run/dockershim.sock: connect: no such file or directory"
+WARN[0000] image connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine image API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"
+CONTAINER           IMAGE               CREATED             STATE               NAME                      ATTEMPT             POD ID              POD
+4de8472c81474       a4ca41631cc7a       42 hours ago        Running             coredns                   0                   aa20ac390cca5       coredns-6d4b75cb6d-vvq47
+39baa077d3b00       a4ca41631cc7a       42 hours ago        Running             coredns                   0                   6672cea30fe8f       coredns-6d4b75cb6d-sppph
+8ba5006a7aae7       62fea85d60522       42 hours ago        Running             weave                     1                   a1f9e2e9736a9       weave-net-rxrvm
+35d62aa2a5424       690c3345cc9c3       42 hours ago        Running             weave-npc                 0                   a1f9e2e9736a9       weave-net-rxrvm
+b0eb3720a5422       3033e2439ff0f       42 hours ago        Running             kube-proxy                0                   fca8fcd22d48b       kube-proxy-b8g9q
+b8594662f3ff0       9fde607b81ffe       42 hours ago        Running             kube-scheduler            0                   ccd393707748a       kube-scheduler-n1
+08081fed01ae4       aebe758cef4cd       42 hours ago        Running             etcd                      0                   1be46f12f81a5       etcd-n1
+7a080b6380631       1f38c0b6a9d1a       42 hours ago        Running             kube-apiserver            0                   ea5cb161f29ae       kube-apiserver-n1
+0e7d63373295d       8380b6a23fb81       42 hours ago        Running             kube-controller-manager   0                   0189b0aaa7317       kube-controller-manager-n1
+root@n1:/home/sfjbs# crictl images
+WARN[0000] image connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine image API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix /var/run/dockershim.sock: connect: no such file or directory"
+IMAGE                                TAG                 IMAGE ID            SIZE
+docker.io/weaveworks/weave-kube      latest              62fea85d60522       30.9MB
+docker.io/weaveworks/weave-npc       latest              690c3345cc9c3       12.8MB
+k8s.gcr.io/coredns/coredns           v1.8.6              a4ca41631cc7a       13.6MB
+k8s.gcr.io/etcd                      3.5.3-0             aebe758cef4cd       102MB
+k8s.gcr.io/kube-apiserver            v1.24.7             1f38c0b6a9d1a       33.8MB
+k8s.gcr.io/kube-controller-manager   v1.24.7             8380b6a23fb81       31MB
+k8s.gcr.io/kube-proxy                v1.24.7             3033e2439ff0f       39.5MB
+k8s.gcr.io/kube-scheduler            v1.24.7             9fde607b81ffe       15.5MB
+k8s.gcr.io/pause                     3.5                 ed210e3e4a5ba       301kB
+k8s.gcr.io/pause                     3.7                 221177c6082a8       311kB
+root@n1:/home/sfjbs# crictl volume ls
+No help topic for 'volume'
+root@n1:/home/sfjbs# crictl --help
+NAME:
+   crictl - client for CRI
+
+USAGE:
+   crictl [global options] command [command options] [arguments...]
+
+VERSION:
+   v1.25.0
+
+COMMANDS:
+   attach              Attach to a running container
+   create              Create a new container
+   exec                Run a command in a running container
+   version             Display runtime version information
+   images, image, img  List images
+   inspect             Display the status of one or more containers
+   inspecti            Return the status of one or more images
+   imagefsinfo         Return image filesystem info
+   inspectp            Display the status of one or more pods
+   logs                Fetch the logs of a container
+   port-forward        Forward local port to a pod
+   ps                  List containers
+   pull                Pull an image from a registry
+   run                 Run a new container inside a sandbox
+   runp                Run a new pod
+   rm                  Remove one or more containers
+   rmi                 Remove one or more images
+   rmp                 Remove one or more pods
+   pods                List pods
+   start               Start one or more created containers
+   info                Display information of the container runtime
+   stop                Stop one or more running containers
+   stopp               Stop one or more running pods
+   update              Update one or more running containers
+   config              Get and set crictl client configuration options
+   stats               List container(s) resource usage statistics
+   statsp              List pod resource usage statistics
+   completion          Output shell completion code
+   checkpoint          Checkpoint one or more running containers
+   help, h             Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --config value, -c value            Location of the client config file. If not specified and the default does not exist, the program's directory is searched as well (default: "/etc/crictl.yaml") [$CRI_CONFIG_FILE]
+   --debug, -D                         Enable debug mode (default: false)
+   --help, -h                          show help (default: false)
+   --image-endpoint value, -i value    Endpoint of CRI image manager service (default: uses 'runtime-endpoint' setting) [$IMAGE_SERVICE_ENDPOINT]
+   --runtime-endpoint value, -r value  Endpoint of CRI container runtime service (default: uses in order the first successful one of [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]). Default is now deprecated and the endpoint should be set instead. [$CONTAINER_RUNTIME_ENDPOINT]
+   --timeout value, -t value           Timeout of connecting to the server in seconds (e.g. 2s, 20s.). 0 or less is set to default (default: 2s)
+   --version, -v                       print the version (default: false)
+
+root@n1:/home/sfjbs# crictl pods ls
+WARN[0000] runtime connect using default endpoints: [unix:///var/run/dockershim.sock unix:///run/containerd/containerd.sock unix:///run/crio/crio.sock unix:///var/run/cri-dockerd.sock]. As the default settings are now deprecated, you should set the endpoint instead.
+ERRO[0000] unable to determine runtime API version: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing dial unix/var/run/dockershim.sock: connect: no such file or directory"
+POD ID              CREATED             STATE               NAME                         NAMESPACE           ATTEMPT             RUNTIME
+aa20ac390cca5       42 hours ago        Ready               coredns-6d4b75cb6d-vvq47     kube-system         0                   (default)
+6672cea30fe8f       42 hours ago        Ready               coredns-6d4b75cb6d-sppph     kube-system         0                   (default)
+a1f9e2e9736a9       42 hours ago        Ready               weave-net-rxrvm              kube-system         0                   (default)
+fca8fcd22d48b       42 hours ago        Ready               kube-proxy-b8g9q             kube-system         0                   (default)
+0189b0aaa7317       42 hours ago        Ready               kube-controller-manager-n1   kube-system         0                   (default)
+1be46f12f81a5       42 hours ago        Ready               etcd-n1                      kube-system         0                   (default)
+ccd393707748a       42 hours ago        Ready               kube-scheduler-n1            kube-system         0                   (default)
+ea5cb161f29ae       42 hours ago        Ready               kube-apiserver-n1            kube-system         0                   (default)
+root@n1:/home/sfjbs#
