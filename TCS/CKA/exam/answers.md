@@ -1,12 +1,14 @@
 # Questions Answers 
-### Q1. Create a deployment name as webcm from image nginx:alpine and expose it to service named webcm internally on port 80. Now create an ingress with hostname ckatcswebcm.lab when you access url ckatcswebcm.lab/hello, the deployment root should be accessible.
+### Q1.
+Create a deployment name as webcm from image nginx:alpine and expose it to service named webcm internally on port 80. Now create an ingress with hostname ckatcswebcm.lab when you access url ckatcswebcm.lab/hello, the deployment root should be accessible.
 - **Answer** :   
 ```
 kubectl create deploy webcm --image=nginx:alpine
 kubectl expose deploy webcm --port=80 --target-port=80
 kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/hello*=webcm:80 --annotation="nginx.ingress.kubernetes.io/rewrite-target=/"
 ```
-### Q2. A kubernetes node is in not ready condition, troubleshoot it.
+### Q2. 
+A kubernetes node is in not ready condition, troubleshoot it.
 - **Answer** :
 Check the node 
 ```
@@ -21,19 +23,22 @@ exit and check again
 kubectl get node
 ```
 
-### Q3. From the pod label name =overloaded-cpu, find the pods running high cpu workloads and write the name of the po consuming most cpu to the file in /opt
+### Q3.
+From the pod label name =overloaded-cpu, find the pods running high cpu workloads and write the name of the po consuming most cpu to the file in /opt
 - **Answer** :
 ```
 kubectl top po -l name=overloaded-cpu --sort-by='cpu'
 ```
-### Q4. Monitor the logs of a pod foo and: 1- extract the log lines containing error 'file not found'.   2- write them to /opt/file
+### Q4.
+Monitor the logs of a pod foo and: 1- extract the log lines containing error 'file not found'.   2- write them to /opt/file
 
 - **Answer**
 
 ```
 kubectl logs apppod | grep 'file not found' >> /opt/file
 ```
-### Q5. Create a persistent volume with name app-data and access mode readonlymany. the type of volume is hostpath and its location is /srv/app-data
+### Q5.
+Create a persistent volume with name app-data and access mode readonlymany. the type of volume is hostpath and its location is /srv/app-data
 
 - **Answer** :
 
@@ -54,7 +59,8 @@ spec:
     path: /srv/app-data
 ```
 
-### Q6.Schedule a pod as follows - name: kucc8, app containers: 2. container name/image is consul:consul and  nginx:nginx.
+### Q6.
+Schedule a pod as follows - name: kucc8, app containers: 2. container name/image is consul:consul and  nginx:nginx.
 
 - **Answer** :
 
@@ -77,7 +83,8 @@ spec:
   restartPolicy: Always
 status: {}
 ```
-### Q7. Check to see how many nodes are ready ( not include node tainted to noschedule) and write the number to /opt/file2
+### Q7.
+Check to see how many nodes are ready ( not include node tainted to noschedule) and write the number to /opt/file2
 - **Answer** :
 
 ```
