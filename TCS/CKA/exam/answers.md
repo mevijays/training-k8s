@@ -123,3 +123,12 @@ Scalea deployment  mywebapp to 3 pods.
 kubectl get deploy
 kubectl scale deploy mywebapp --replicas=3
 ```
+
+### Q10.
+Set the node name ek8s-node0 as unavailable and rescedule all the pods running on it.
+
+- **Answer**
+
+```
+kubectl drain node ek8s-node0 --ignore-daemonsets=true 
+```
