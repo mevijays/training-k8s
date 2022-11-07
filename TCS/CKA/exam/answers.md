@@ -115,3 +115,11 @@ spec:
     disk: ssd
 ```
 
+### Q9.
+Scalea deployment  mywebapp to 3 pods.
+- **Answer** :
+
+```
+kubectl get deploy
+kubectl scale deploy mywebapp --replicas=3
+```
