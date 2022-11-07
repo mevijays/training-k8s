@@ -94,5 +94,24 @@ kubectl describe node <node name>
 check the taints by above command and take note of count.
 
 
+### Q8.
+Schedule a pod as follow:  name nginx-ku8, image= nginx   node selector = disk=ssd
 
+- **Answer** :
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-ku8
+  labels:
+    env: test
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    imagePullPolicy: IfNotPresent
+  nodeSelector:
+    disk: ssd
+```
 
