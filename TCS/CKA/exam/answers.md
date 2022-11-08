@@ -132,3 +132,58 @@ Set the node name ek8s-node0 as unavailable and rescedule all the pods running o
 ```
 kubectl drain node ek8s-node0 --ignore-daemonsets=true 
 ```
+### Q11. 
+backup the ETCD database and restore
+
+First create snapshot of etcd instance running on https://127.0.0.1:2379, saving the snapshot to var/lib/backup/etcd-snapshot.db
+Note: in exam the etcdctl bin will be available in client machine and certificates details will be given already in question itself.
+- **Answer** :
+IN LAB
+Download the etcdctl binary archive
+```
+ wget https://github.com/etcd-io/etcd/releases/download/v3.4.22/etcd-v3.4.22-linux-amd64.tar.gz
+```
+extract it.
+```
+tar xvf etcd-v3.4.22-linux-amd64.tar.gz
+```
+change dir 
+```
+cd etcd-v3.4.22-linux-amd64
+```
+Now get the details of etcd pod and describe it for certificates path.
+```
+ kubectl describe $(kubectl get po -l component=etcd -n kube-system -o name) -n kube-system
+```
+take a note of the cert paths and endpoint, lets perform backup 
+
+```
+ ETCDCTL_API=3; sudo ./etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save  /var/lib/backup/etcd-snapshot.db
+```
+Second part of the question is to restore the older etcd database  snapshot from file /var/lib/backup/etcd-snapshot-previous.db
+
+Lets stop the etcd 
+```
+sudo bash 
+systemctl stop etcd   # this command to run when etcd installed as service # in exam step
+mv /etc/kubernetes/manifests/etcd.yaml /root/    # this command in case etcd running as static pod
+```
+Restore backup 
+```
+mv /var/lib/etcd /var/lib/etcd-old
+ETCDCTL_API=3; sudo ./etcdctl --data-dir=/var/lib/etcd snapshot restore /var/lib/backup/etcd-snapshot-previous.db
+systemctl start etcd # in exam 
+mv /root/etcd.yaml /etc/kubernetes/manifests/   # in lab
+```
+### Q12.
+Upgrade the control plane to newer version
+
+SSH in to master node
+```
+sudo bash
+apt unmask kubeadm kubelet
+apt install kubeadm=1.25.3-00 kubelet=kubeadm=1.25.3-00 -y
+kubeadm upgrade apply v1.25.3
+systemctl daemon-reload
+systemctl restart kubelet
+```
