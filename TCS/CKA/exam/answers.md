@@ -55,7 +55,7 @@ spec:
   - ReadOnlyMany
   persistentVolumeReclaimPolicy: Delete
   storageClassName: local-storage
-  local:
+  hostPath:
     path: /srv/app-data
 ```
 
