@@ -9,7 +9,7 @@ sudo chmod 777 /srv/app-data
 ```
 wget https://raw.githubusercontent.com/mevijays/training-k8s/main/TCS/CKA/yamls/hostpath/pv-volume.yaml
 wget https://raw.githubusercontent.com/mevijays/training-k8s/main/TCS/CKA/yamls/hostpath/pv-claim.yaml
-https://raw.githubusercontent.com/mevijays/training-k8s/main/TCS/CKA/yamls/hostpath/deployment.yaml
+wget https://raw.githubusercontent.com/mevijays/training-k8s/main/TCS/CKA/yamls/hostpath/deployment.yaml
 ```
 - Create a PV
 ```
