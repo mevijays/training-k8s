@@ -1,0 +1,3499 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+
+PS C:\Users\vijay> ssh sfjbs@20.40.53.99
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.15.0-1022-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Tue Nov  8 03:54:51 UTC 2022
+
+  System load:  0.17               Processes:              157
+  Usage of /:   13.2% of 28.89GB   Users logged in:        0
+  Memory usage: 17%                IPv4 address for eth0:  10.1.0.4
+  Swap usage:   0%                 IPv4 address for weave: 10.44.0.0
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+1 device has a firmware upgrade available.
+Run `fwupdmgr get-upgrades` for more information.
+
+
+4 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+New release '22.04.1 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Mon Nov  7 08:56:50 2022 from 103.208.71.134
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ kubectl delete -f deploy.yaml
+configmap "foo" deleted
+deployment.apps "webcm" deleted
+service "webcm" deleted
+ingress.networking.k8s.io "webcm" deleted
+sfjbs@n1:~$
+sfjbs@n1:~$ pwd
+/home/sfjbs
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ vim deploy.yaml
+sfjbs@n1:~$
+sfjbs@n1:~$ etcd
+
+Command 'etcd' not found, but can be installed with:
+
+sudo apt install etcd-server
+
+sfjbs@n1:~$ kubectl get po -A
+NAMESPACE     NAME                              READY   STATUS    RESTARTS        AGE
+default       nodehello-57589d9d44-4tzsh        1/1     Running   0               21h
+default       nodehello-57589d9d44-mb28l        1/1     Running   0               21h
+default       nodehello-57589d9d44-rcqsc        1/1     Running   0               21h
+default       testpod-565f4b7cb5-hwgdz          1/1     Running   0               3d21h
+default       testpod-565f4b7cb5-jpltz          1/1     Running   0               3d21h
+default       testtcs-54ddd9d578-4rqd5          1/1     Running   0               3d20h
+default       testtest-7548b57756-r2p4t         1/1     Running   0               3d20h
+ingress       ingress-nginx-controller-6vwm4    1/1     Running   0               22h
+kube-system   coredns-6d4b75cb6d-sppph          1/1     Running   0               4d18h
+kube-system   coredns-6d4b75cb6d-vvq47          1/1     Running   0               4d18h
+kube-system   etcd-n1                           1/1     Running   0               4d18h
+kube-system   kube-apiserver-n1                 1/1     Running   0               4d18h
+kube-system   kube-controller-manager-n1        1/1     Running   0               4d18h
+kube-system   kube-proxy-b8g9q                  1/1     Running   0               4d18h
+kube-system   kube-proxy-swgrp                  1/1     Running   0               4d18h
+kube-system   kube-scheduler-n1                 1/1     Running   0               4d18h
+kube-system   metrics-server-7fbb5f69c6-65pqq   1/1     Running   0               4d18h
+kube-system   weave-net-rt6lz                   2/2     Running   1 (4d18h ago)   4d18h
+kube-system   weave-net-rxrvm                   2/2     Running   1 (4d18h ago)   4d18h
+sfjbs@n1:~$ kubectl -n exec etcd-n1 -- sh
+Error: flags cannot be placed before plugin name: -n
+sfjbs@n1:~$ kubectl -n kube-system exec etcd-n1 -- sh
+sfjbs@n1:~$ kubectl -n kube-system attach etcd-n1
+If you don't see a command prompt, try pressing enter.
+
+
+^C
+sfjbs@n1:~$ etcdctl
+
+Command 'etcdctl' not found, but can be installed with:
+
+sudo snap install etcd         # version 3.4.5, or
+sudo apt  install etcd-client  # version 3.2.26+dfsg-6ubuntu0.1
+
+See 'snap info etcd' for additional versions.
+
+sfjbs@n1:~$
+sfjbs@n1:~$ wget https://github.com/etcd-io/etcd/releases/download/v3.4.22/etcd-v3.4.22-linux-amd64.tar.gz
+--2022-11-08 04:03:04--  https://github.com/etcd-io/etcd/releases/download/v3.4.22/etcd-v3.4.22-linux-amd64.tar.gz
+Resolving github.com (github.com)... 20.207.73.82
+Connecting to github.com (github.com)|20.207.73.82|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/11225014/b39f8286-5cdb-4515-ad99-cd60ba36f985?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20221108%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221108T040304Z&X-Amz-Expires=300&X-Amz-Signature=f9edd5624c0fb46aec67ff77d05a15e16d968f9eac1805a7c9672e56c4067980&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=11225014&response-content-disposition=attachment%3B%20filename%3Detcd-v3.4.22-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream [following]
+--2022-11-08 04:03:04--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/11225014/b39f8286-5cdb-4515-ad99-cd60ba36f985?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20221108%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221108T040304Z&X-Amz-Expires=300&X-Amz-Signature=f9edd5624c0fb46aec67ff77d05a15e16d968f9eac1805a7c9672e56c4067980&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=11225014&response-content-disposition=attachment%3B%20filename%3Detcd-v3.4.22-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream
+Resolving objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to objects.githubusercontent.com (objects.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15212663 (15M) [application/octet-stream]
+Saving to: ‘etcd-v3.4.22-linux-amd64.tar.gz’
+
+etcd-v3.4.22-linux-amd64.tar. 100%[=================================================>]  14.51M  15.5MB/s    in 0.9s
+
+2022-11-08 04:03:07 (15.5 MB/s) - ‘etcd-v3.4.22-linux-amd64.tar.gz’ saved [15212663/15212663]
+
+sfjbs@n1:~$ ls
+deploy.yaml  etcd-v3.4.22-linux-amd64.tar.gz  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ tar -xvf etcd-v3.4.22-linux-amd64.tar.gz
+etcd-v3.4.22-linux-amd64/
+etcd-v3.4.22-linux-amd64/etcd
+etcd-v3.4.22-linux-amd64/etcdctl
+etcd-v3.4.22-linux-amd64/README.md
+etcd-v3.4.22-linux-amd64/README-etcdctl.md
+etcd-v3.4.22-linux-amd64/READMEv2-etcdctl.md
+etcd-v3.4.22-linux-amd64/Documentation/
+etcd-v3.4.22-linux-amd64/Documentation/README.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/README.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-1-0-alpha-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-2-0-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-2-0-rc-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-2-0-rc-memory-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-3-demo-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-3-watch-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-storage-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/branch_management.md
+etcd-v3.4.22-linux-amd64/Documentation/demo.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/api_concurrency_reference_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/api_grpc_gateway.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/api_reference_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/rpc.swagger.json
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/v3election.swagger.json
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/v3lock.swagger.json
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/experimental_apis.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/grpc_naming.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/interacting_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/limit.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/local_cluster.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/discovery_protocol.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/logging.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/release.md
+etcd-v3.4.22-linux-amd64/Documentation/dl_build.md
+etcd-v3.4.22-linux-amd64/Documentation/docs.md
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/README.md
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/mixin.libsonnet
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/test.yaml
+etcd-v3.4.22-linux-amd64/Documentation/faq.md
+etcd-v3.4.22-linux-amd64/Documentation/integrations.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/
+etcd-v3.4.22-linux-amd64/Documentation/learning/api.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/api_guarantees.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/data_model.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/design-auth-v3.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/design-client.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/design-learner.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/glossary.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-01.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-02.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-03.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-04.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-05.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-06.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-07.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-08.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-09.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/etcd.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-01.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-02.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-03.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-04.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-05.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-06.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-07.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-08.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-09.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-10.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-11.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-12.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-13.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/why.md
+etcd-v3.4.22-linux-amd64/Documentation/metrics.md
+etcd-v3.4.22-linux-amd64/Documentation/metrics/
+etcd-v3.4.22-linux-amd64/Documentation/metrics/latest
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.0
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.1
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.10
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.11
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.12
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.13
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.14
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.15
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.16
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.17
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.18
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.19
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.2
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.20
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.3
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.4
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.5
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.6
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.7
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.8
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.9
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.0
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.1
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.10
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.11
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.12
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.13
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.14
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.15
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.16
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.17
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.18
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.19
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.2
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.20
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.21
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.22
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.23
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.24
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.25
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.3
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.4
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.5
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.6
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.7
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.8
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.9
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.0
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.1
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.10
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.2
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.3
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.4
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.5
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.6
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.7
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.8
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.9
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/authentication.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/clustering.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/container.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/etcd-sample-grafana.png
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/etcd3_alert.rules
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/etcd3_alert.rules.yml
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/failures.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/gateway.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/grafana.json
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/grpc_proxy.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/hardware.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/maintenance.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/monitoring.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/performance.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/recovery.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/runtime-configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/runtime-reconf-design.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/security.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/supported-platform.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/v2-migration.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/versioning.md
+etcd-v3.4.22-linux-amd64/Documentation/platforms/
+etcd-v3.4.22-linux-amd64/Documentation/platforms/aws.md
+etcd-v3.4.22-linux-amd64/Documentation/platforms/container-linux-systemd.md
+etcd-v3.4.22-linux-amd64/Documentation/platforms/freebsd.md
+etcd-v3.4.22-linux-amd64/Documentation/production-users.md
+etcd-v3.4.22-linux-amd64/Documentation/reporting_bugs.md
+etcd-v3.4.22-linux-amd64/Documentation/rfc/
+etcd-v3.4.22-linux-amd64/Documentation/rfc/v3api.md
+etcd-v3.4.22-linux-amd64/Documentation/triage/
+etcd-v3.4.22-linux-amd64/Documentation/triage/PRs.md
+etcd-v3.4.22-linux-amd64/Documentation/triage/issues.md
+etcd-v3.4.22-linux-amd64/Documentation/tuning.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_0.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_1.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_2.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_3.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_4.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_5.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrading-etcd.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/
+etcd-v3.4.22-linux-amd64/Documentation/v2/04_to_2_snapshot_migration.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/README.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/admin_guide.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/api_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/auth_api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/authentication.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/backward_compatibility.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/README.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-1-0-alpha-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-2-0-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-2-0-rc-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-2-0-rc-memory-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-3-demo-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-3-watch-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-storage-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/branch_management.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/clustering.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/dev/
+etcd-v3.4.22-linux-amd64/Documentation/v2/dev/release.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/discovery_protocol.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/docker_guide.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/errorcode.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/etcd_alert.rules
+etcd-v3.4.22-linux-amd64/Documentation/v2/etcd_alert.rules.yml
+etcd-v3.4.22-linux-amd64/Documentation/v2/faq.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/glossary.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/internal-protocol-versioning.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/libraries-and-tools.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/members_api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/metrics.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/other_apis.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/platforms/
+etcd-v3.4.22-linux-amd64/Documentation/v2/platforms/freebsd.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/production-users.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/proxy.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/reporting_bugs.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/rfc/
+etcd-v3.4.22-linux-amd64/Documentation/v2/rfc/v3api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/runtime-configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/runtime-reconf-design.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/security.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/tuning.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/upgrade_2_1.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/upgrade_2_2.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/upgrade_2_3.md
+sfjbs@n1:~$ ls
+deploy.yaml  etcd-v3.4.22-linux-amd64  etcd-v3.4.22-linux-amd64.tar.gz  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ cd etcd-v3.4.22-linux-amd64/
+sfjbs@n1:~/etcd-v3.4.22-linux-amd64$ ls
+Documentation  README-etcdctl.md  README.md  READMEv2-etcdctl.md  etcd  etcdctl
+sfjbs@n1:~/etcd-v3.4.22-linux-amd64$ ls
+Documentation  README-etcdctl.md  README.md  READMEv2-etcdctl.md  etcd  etcdctl
+sfjbs@n1:~/etcd-v3.4.22-linux-amd64$ cd ..
+sfjbs@n1:~$ ls
+deploy.yaml  etcd-v3.4.22-linux-amd64  etcd-v3.4.22-linux-amd64.tar.gz  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ rm -f etcd-v3.4.22-linux-amd*
+rm: cannot remove 'etcd-v3.4.22-linux-amd64': Is a directory
+sfjbs@n1:~$ ls
+deploy.yaml  etcd-v3.4.22-linux-amd64  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ rm -f etcd-v3.4.22-linux-amd64/
+rm: cannot remove 'etcd-v3.4.22-linux-amd64/': Is a directory
+sfjbs@n1:~$ ls
+deploy.yaml  etcd-v3.4.22-linux-amd64  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ rm -rf etcd-v3.4.22-linux-amd6*
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ cd src/
+sfjbs@n1:~/src$ ls
+index.html
+sfjbs@n1:~/src$ cat index.html
+<h1>Hello from vijay</h1>
+sfjbs@n1:~/src$ kubectl create configmap webcm --from-file=index.html --dry-run-client -o yaml
+error: unknown flag: --dry-run-client
+See 'kubectl create configmap --help' for usage.
+sfjbs@n1:~/src$ kubectl create configmap webcm --from-file=index.html --dry-run=client -o yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from vijay</h1>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: webcm
+sfjbs@n1:~/src$ kubectl create configmap webcm --from-file=index.html --dry-run=client -o yaml >cm.yaml
+sfjbs@n1:~/src$ ls
+cm.yaml  index.html
+sfjbs@n1:~/src$ vim cm.yaml
+sfjbs@n1:~/src$ sfjbs@n1:~/src$ kubectl get configmap
+NAME               DATA   AGE
+kube-root-ca.crt   1      4d19h
+sfjbs@n1:~/src$ kubectl get cm
+NAME               DATA   AGE
+kube-root-ca.crt   1      4d19h
+sfjbs@n1:~/src$ cat cm.yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from vijay</h1>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: webcm
+sfjbs@n1:~/src$ kubectl apply -f cm.yaml
+configmap/webcm created
+sfjbs@n1:~/src$ kubectl get cm
+NAME               DATA   AGE
+kube-root-ca.crt   1      4d19h
+webcm              1      5s
+sfjbs@n1:~/src$ cd
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ vim  deploy.yaml
+sfjbs@n1:~$ kubectl create deploy webcm --image=nginx:alpine --replicas=3 --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webcm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webcm
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        resources: {}
+status: {}
+sfjbs@n1:~$ #kubectl create deploy webcm --image=nginx:alpine --replicas=3 --dry-run=client -o yaml
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ cd src/
+sfjbs@n1:~/src$ ls
+cm.yaml  index.html
+sfjbs@n1:~/src$ mv cm.yaml appdeploy.yaml
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl create deploy webcm --image=nginx:alpine --replicas=3 --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webcm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webcm
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        resources: {}
+status: {}
+sfjbs@n1:~/src$ kubectl create deploy webcm --image=nginx:alpine --replicas=3 --dry-run=client -o yaml >> appdeploy.yaml
+sfjbs@n1:~/src$ cat appdeploy.yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from vijay</h1>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: webcm
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webcm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webcm
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        resources: {}
+status: {}
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html
+sfjbs@n1:~/src$ vim test.txt
+sfjbs@n1:~/src$ echo "hello line2" > test.txt
+sfjbs@n1:~/src$ cat test.txt
+hello line2
+sfjbs@n1:~/src$ echo "hello line3" >> test.txt
+sfjbs@n1:~/src$ cat test.txt
+hello line2
+hello line3
+sfjbs@n1:~/src$ rm test.txt
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ vim ../deploy.yaml
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl apply -f appdeploy.yaml
+configmap/webcm configured
+deployment.apps/webcm created
+sfjbs@n1:~/src$ kubectl expose deploy webcm --port=80 --target-port=80 --dry-run=client -o yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webcm
+status:
+  loadBalancer: {}
+sfjbs@n1:~/src$ kubectl expose deploy webcm --port=80 --target-port=80 --dry-run=client -o yaml >> appdeploy.yaml
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl apply -f appdeploy.yaml
+configmap/webcm configured
+deployment.apps/webcm configured
+service/webcm created
+sfjbs@n1:~/src$ vim ../deploy.yaml
+sfjbs@n1:~/src$ kubectl create ingress webcm --class=nginx --rule --help
+error: rule --help is invalid and should be in format host/path=svcname:svcport[,tls[=secret]]
+sfjbs@n1:~/src$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*:webcm:80 --dry-run=client -o yaml
+error: rule ckatcswebcm.lab/*:webcm:80 is invalid and should be in format host/path=svcname:svcport[,tls[=secret]]
+sfjbs@n1:~/src$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
+sfjbs@n1:~/src$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml >> appdeploy.yaml
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ cat appdeploy.yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from vijay</h1>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: webcm
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webcm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webcm
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        volumeMounts:
+          - name: foo
+            mountPath: "/usr/share/nginx/html/"
+      volumes:
+      - name: foo
+        configMap:
+           name: webcm
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webcm
+status:
+  loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
+sfjbs@n1:~/src$ kubectl apply -f appdeploy.yaml
+configmap/webcm configured
+deployment.apps/webcm configured
+service/webcm configured
+ingress.networking.k8s.io/webcm created
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from vijay</h1>
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl apply -f appdeploy.yaml
+configmap/webcm configured
+deployment.apps/webcm configured
+service/webcm configured
+ingress.networking.k8s.io/webcm configured
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          21h
+nodehello-57589d9d44-mb28l   1/1     Running   0          21h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          21h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          3d22h
+testpod-565f4b7cb5-jpltz     1/1     Running   0          3d21h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d21h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d21h
+webcm-58887c5758-2tph9       1/1     Running   0          5m54s
+webcm-58887c5758-qnb8f       1/1     Running   0          5m54s
+webcm-58887c5758-rrvt5       1/1     Running   0          5m54s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          21h
+nodehello-57589d9d44-mb28l   1/1     Running   0          21h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          21h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          3d22h
+testpod-565f4b7cb5-jpltz     1/1     Running   0          3d21h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d21h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d21h
+webcm-58887c5758-2tph9       1/1     Running   0          5m56s
+webcm-58887c5758-qnb8f       1/1     Running   0          5m56s
+webcm-58887c5758-rrvt5       1/1     Running   0          5m56s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          21h
+nodehello-57589d9d44-mb28l   1/1     Running   0          21h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          21h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          3d22h
+testpod-565f4b7cb5-jpltz     1/1     Running   0          3d21h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d21h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d21h
+webcm-58887c5758-2tph9       1/1     Running   0          6m2s
+webcm-58887c5758-qnb8f       1/1     Running   0          6m2s
+webcm-58887c5758-rrvt5       1/1     Running   0          6m2s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          21h
+nodehello-57589d9d44-mb28l   1/1     Running   0          21h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          21h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          3d22h
+testpod-565f4b7cb5-jpltz     1/1     Running   0          3d21h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d21h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d21h
+webcm-58887c5758-2tph9       1/1     Running   0          6m4s
+webcm-58887c5758-qnb8f       1/1     Running   0          6m4s
+webcm-58887c5758-rrvt5       1/1     Running   0          6m4s
+sfjbs@n1:~/src$ kubectl get cm
+NAME               DATA   AGE
+kube-root-ca.crt   1      4d19h
+webcm              1      16m
+sfjbs@n1:~/src$ kubectl get cm webcm -o yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from CKA class</h1>
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"index.html":"\u003ch1\u003eHello from CKA class\u003c/h1\u003e\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":null,"name":"webcm","namespace":"default"}}
+  creationTimestamp: "2022-11-08T04:18:50Z"
+  name: webcm
+  namespace: default
+  resourceVersion: "564162"
+  uid: 26f04340-c806-4347-90ba-0208d0de2053
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl get cm webcm -o yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from CKA class</h1>
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"index.html":"\u003ch1\u003eHello from CKA class\u003c/h1\u003e\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":null,"name":"webcm","namespace":"default"}}
+  creationTimestamp: "2022-11-08T04:18:50Z"
+  name: webcm
+  namespace: default
+  resourceVersion: "564162"
+  uid: 26f04340-c806-4347-90ba-0208d0de2053
+sfjbs@n1:~/src$ kubectl apply -f appdeploy.yaml
+configmap/webcm configured
+deployment.apps/webcm configured
+service/webcm configured
+ingress.networking.k8s.io/webcm configured
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ kubectl get deploy
+NAME        READY   UP-TO-DATE   AVAILABLE   AGE
+nodehello   3/3     3            3           21h
+testpod     2/2     2            2           3d22h
+testtcs     1/1     1            1           3d21h
+testtest    1/1     1            1           3d21h
+webcm       3/3     3            3           8m41s
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl ckatcswebcm.lab
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html
+sfjbs@n1:~/src$ kubectl get cm
+NAME               DATA   AGE
+kube-root-ca.crt   1      4d20h
+webcm              1      66m
+sfjbs@n1:~/src$ kubectl get cm webcm -o yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from CKA class from TCS</h1>
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"index.html":"\u003ch1\u003eHello from CKA class from TCS\u003c/h1\u003e\n"},"kind":"ConfigMap","metadata":{"annotations":{},"creationTimestamp":null,"name":"webcm","namespace":"default"}}
+  creationTimestamp: "2022-11-08T04:18:50Z"
+  name: webcm
+  namespace: default
+  resourceVersion: "564296"
+  uid: 26f04340-c806-4347-90ba-0208d0de2053
+sfjbs@n1:~/src$ kubectl describe cm webcm
+Name:         webcm
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+
+Data
+====
+index.html:
+----
+<h1>Hello from CKA class from TCS</h1>
+
+
+BinaryData
+====
+
+Events:  <none>
+sfjbs@n1:~/src$
+sfjbs@n1:~/src$ echo "vijay"
+vijay
+sfjbs@n1:~/src$ echo "vijay" | base64 -d
+�(�base64: invalid input
+sfjbs@n1:~/src$ echo "vijay" | base64
+dmlqYXkK
+sfjbs@n1:~/src$ cat index.html
+<h1>Hello from vijay</h1>
+sfjbs@n1:~/src$ cat index.html  | base64
+PGgxPkhlbGxvIGZyb20gdmlqYXk8L2gxPgo=
+sfjbs@n1:~/src$ echo PGgxPkhlbGxvIGZyb20gdmlqYXk8L2gxPgo= | base64 -d
+<h1>Hello from vijay</h1>
+sfjbs@n1:~/src$ kubectl create secret --help
+Create a secret using specified subcommand.
+
+Available Commands:
+  docker-registry   Create a secret for use with a Docker registry
+  generic           Create a secret from a local file, directory, or literal value
+  tls               Create a TLS secret
+
+Usage:
+  kubectl create secret [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src$ openssl --version
+Invalid command '--version'; type "help" for a list.
+sfjbs@n1:~/src$ openssl -v
+Invalid command '-v'; type "help" for a list.
+sfjbs@n1:~/src$ openssl version
+OpenSSL 1.1.1f  31 Mar 2020
+sfjbs@n1:~/src$ kubectl get ing
+NAME        CLASS   HOSTS             ADDRESS    PORTS   AGE
+nodehello   nginx   ckatcs.lab        10.1.0.5   80      22h
+testtest    nginx   abc.com           10.1.0.5   80      23h
+webcm       nginx   ckatcswebcm.lab   10.1.0.5   80      86m
+sfjbs@n1:~/src$ mkdir ssl
+sfjbs@n1:~/src$ cd ssl/
+sfjbs@n1:~/src/ssl$ ls
+sfjbs@n1:~/src/ssl$ openssl req -subj '/CN=ckatcswebcm.lab/O=tcs/C=IN' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout myykey.key -out mycert.crt
+Generating a RSA private key
+................................................................................................+++++
+.....+++++
+writing new private key to 'myykey.key'
+-----
+sfjbs@n1:~/src/ssl$ ls
+mycert.crt  myykey.key
+sfjbs@n1:~/src/ssl$ kubectl create secret tls --help
+Create a TLS secret from the given public/private key pair.
+
+ The public/private key pair must exist beforehand. The public key certificate must be .PEM encoded and match the given
+private key.
+
+Examples:
+  # Create a new TLS secret named tls-secret with the given key pair
+  kubectl create secret tls tls-secret --cert=path/to/tls.cert --key=path/to/tls.key
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --append-hash=false:
+        Append a hash of the secret to its name.
+
+    --cert='':
+        Path to PEM encoded public key certificate.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    --key='':
+        Path to private key associated with given certificate.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+Usage:
+  kubectl create secret tls NAME --cert=path/to/cert/file --key=path/to/key/file [--dry-run=server|client|none]
+[options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src/ssl$ kubectl create secret tls ing-tls --cert=mycert.crt --key=mykey.key --dry-run=client -o yaml
+error: Cannot read file mykey.key, open mykey.key: no such file or directory
+sfjbs@n1:~/src/ssl$ ls
+mycert.crt  myykey.key
+sfjbs@n1:~/src/ssl$ kubectl create secret tls ing-tls --cert=mycert.crt --key=myykey.key --dry-run=client -o yaml
+apiVersion: v1
+data:
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURTekNDQWpPZ0F3SUJBZ0lVV3NpNEFOcE1HQTRRcnFubEZzdVQyazc4M0RVd0RRWUpLb1pJaHZjTkFRRUwKQlFBd05URVlNQllHQTFVRUF3d1BZMnRoZEdOemQyVmlZMjB1YkdGaU1Rd3dDZ1lEVlFRS0RBTjBZM014Q3pBSgpCZ05WQkFZVEFrbE9NQjRYRFRJeU1URXdPREEyTURJeU5Wb1hEVEl6TVRFd09EQTJNREl5TlZvd05URVlNQllHCkExVUVBd3dQWTJ0aGRHTnpkMlZpWTIwdWJHRmlNUXd3Q2dZRFZRUUtEQU4wWTNNeEN6QUpCZ05WQkFZVEFrbE8KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF3WElHbmljS3lNSk5WbnFTT3V3UQo5Zk5CZXI2UW44bG1kUlVRejloWVdiQWtTUHpJZVNzK3MwSnhHc3lKQzU5T2FOaUxFaG5paE5sLzhwU2FHSFlmCkZmSHErckVGdXhtQVpaNnpEQUlrU0lLM2VhaVZJYzlWOHkyeGRUaDgrTjdodW5vWmkwMHBQNHpOZFRIWUhYZ2QKeEIvZXUxYzdqZGlseE5LbkpSUlhjMkN5SjlaeUw2Yk5MU3Y1THVwKzRFUEpCTmp4aE1VZWo5czk2OWFRQ2RuLwpKMExIakNDQ3ZHYzJEY2N5OGE4NG51amwrYmJxTGNMRGtuNE9nekNudTREVHluR2VZeEJ1QmsxZEVYYUdzaE9qCk1KSUdKc3lSVms0a3FMcS9pVHh1RzlCa0l3QVRSL2xBM3dNWmRIMW9UbFduK1cxYnczM2t6ZVdaOHJNQnovUFcKWXdJREFRQUJvMU13VVRBZEJnTlZIUTRFRmdRVXdYcnY0RjJ5eGtCOE90L0VqOWJMTERUWkdsY3dId1lEVlIwagpCQmd3Rm9BVXdYcnY0RjJ5eGtCOE90L0VqOWJMTERUWkdsY3dEd1lEVlIwVEFRSC9CQVV3QXdFQi96QU5CZ2txCmhraUc5dzBCQVFzRkFBT0NBUUVBTmZJVGpzcXk3cm9vTStUL3I2Z0tPaDRXWFgvekxWNmlhV29zRzlJeXE0RmIKQlVFZEZFajNwM3Y5SEdVODhhYWEwSTNJUWF3dnZZVlVuZkRsOVFTTWhnUnN2SkJzZmRGNmZGaVlzSlNtMFpUTQprdkpqKzJ4VVQxd0RhL2MraS9nTDFoeXQvSE1CUnFWNFNLNmlwUkh3akEyNkZXYXNxWkcwR1h4dHA3Y0RoSS8vCkozSDZoSlFDTnFoblYyTmlOZDNLdk55NHVVekxad25tdzNOekZhVnAvVjVWZDFMdG5NUGVKaWpReGxyZDl0M3oKOWJxS09sK0hoRUJCV2xmWFVkNFlOdzFiRVM2bS9NQ0tEZG1FM1hCQmZxSXQ0RVBZdXRJTFRYTkt5dElrS2g5UApuM1Z3UGhKWUtlZ3JnWm11S1dXOStDS0FobUM3UEpYYUVuVjFrbHA1RVE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRREJjZ2FlSndySXdrMVcKZXBJNjdCRDE4MEY2dnBDZnlXWjFGUkRQMkZoWnNDUkkvTWg1S3o2elFuRWF6SWtMbjA1bzJJc1NHZUtFMlgveQpsSm9ZZGg4VjhlcjZzUVc3R1lCbG5yTU1BaVJJZ3JkNXFKVWh6MVh6TGJGMU9IejQzdUc2ZWhtTFRTay9qTTExCk1kZ2RlQjNFSDk2N1Z6dU4yS1hFMHFjbEZGZHpZTEluMW5JdnBzMHRLL2t1Nm43Z1E4a0UyUEdFeFI2UDJ6M3IKMXBBSjJmOG5Rc2VNSUlLOFp6WU54ekx4cnppZTZPWDV0dW90d3NPU2ZnNkRNS2U3Z05QS2NaNWpFRzRHVFYwUgpkb2F5RTZNd2tnWW16SkZXVGlTb3VyK0pQRzRiMEdRakFCTkgrVURmQXhsMGZXaE9WYWY1YlZ2RGZlVE41Wm55CnN3SFA4OVpqQWdNQkFBRUNnZ0VBTGo2SERIbkMzemxyNlplRnE2WlJhNnFLWmNCMnJHd21IU2s3Q3FUcWdnNVUKcmtvWDFyZWExcG0wbGpaOU1KVVYxb1Nsd2w4RHdzU0lETUt2ajlkMUdQYnJPS0RuQU5KWTJuSTAxVk1SdjIvWQpVcklWYks2M0dsbzdDUTNHK211MXhMRjV0ODVyWlBEUkVRb29ZdXNiR282UDNYTStIbXZEUFNrcW9mZVo3RSt2CnNmaVNFU0dXc1hlbVdZVjJjUlg2OWdJdWFMRGYrLzZzdmFFUU92R0t3enUwcWxhT1VRMG0wYys3anpjWEdOQ0wKcEtUenY2VUdsUWg0c3doclJnNHdqbmJRcHZmbmR1ODlpeEFWSDcyVnFNRnFQZjFWTXVSWlNXZ2RxNGRRNU1PcgovRTFJdWs1c2tWZXE3cUhobUVldFNnZ1BwemlPWUtkcG9Fbzl5akNrNlFLQmdRRHdMa3dOZlNMRkV0eFRhY2t4CmExQVBoQ2c0ZUF1SnlmVDR4ditoNTExNmg5RW03ZFU0S0kwUWJlTU9qWVRjMmFTTWR2bHBWVmtRTzRvaThJWm8Kd0Fabml5YVp3aVdxYnBCTHQzUnR5Qk1oenczZjl6NWQxUU5JdVpGcU1QSlF1Q1VLcVJOZUk1clU4MFA4TWdlOAppc2ovVzM1OW9UQW1pWHZ1Rkc0aGwxNXBkd0tCZ1FET0w3aE83KzFwWkFQKzk3MEdMQ1p0VjM2aU9ZWllEakdOCm0zQm1CWkYwV2c1bFVjbEhhZnN3VDhSS0RsWTF6RHZVT0xudlMyYldXd0VZUFFxRVNnaWpDb3FMNFFLVXJ0a20KQ0g1Z2ZJdG41clAxMURCTzJzdGU4L1YzL2QwZW5SQVM1MllVeVlnbis0OVUxL2x6TVI4ZkwyK05ETWZIQ2RaSApmdm5URjhnMWRRS0JnUURrelRYbUk2OWJ6ZnZWK3BDUFk0dUJQSVNVUnNlM0c0MGk4Vy9VN0hOQXB1RzRGQmxxCnhqYWIwQkxkYWpPSHNFM3hBZVhYVWxibC85STROcW5VWUJtNXlmV2J4RGZkaERZeDZ6SWU0dHBXK3NoYzgwdVcKVjdZcE1aNDFheXRyZWdEUGh3SE1URjdUUG1zbGRRT3B1UXlCTnNmcEpnU1lzYUE5elhpY3gzWkpRUUtCZ1FDNwppdVpQVHFjWTlMTTV5R2R6NU5heklDRjhOMnkrVFhLL1JrS1BXY003SE9yNU45SW9GZnMzcjJad29lZkNtVmxXCktKN2ZUU3RtRUhMSGRFWkxtL2VOTFhwbHp5NEV4YUdZbWFNeDZqYjNNLzQrdlZtUGNDNEoyVWRPZEdnYmYydHUKZG5JQXVHc1RTeHJOWm9Gc1NLTHhQN2xzaDlKemRid2xYaGFvN25uYVBRS0JnRk5BN3F5c1lzOXdvQ3pDTjhJOAo5NVZENnBBVW5sWnZNRStHTFp1dFd1aHVDYzFRSXJaUkJ1cWNtN3kvaDJpNmJjRE9Ubkh1TnVhWUVSUzgvOURTCmRGcnlPckU2RENJWjQraXIrWGRxamNvT0p0dDFwTmFDRUYwdUwxNTRVM1ppU0dsVEhqbkFwQkZXSkMxbTg1TDEKaUNWMWcrZ21xeVRRNFZja0grV0ZnOXFMCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: ing-tls
+type: kubernetes.io/tls
+sfjbs@n1:~/src/ssl$ kubectl create secret tls ing-tls --cert=mycert.crt --key=myykey.key --dry-run=client -o yaml >> ../appdeploy.yaml
+sfjbs@n1:~/src/ssl$ vim ../appdeploy.yaml
+sfjbs@n1:~/src/ssl$ kubectl create ingress ing --help
+Create an ingress with the specified name.
+
+Aliases:
+ingress, ing
+
+Examples:
+  # Create a single ingress called 'simple' that directs requests to foo.com/bar to svc
+  # svc1:8080 with a tls secret "my-cert"
+  kubectl create ingress simple --rule="foo.com/bar=svc1:8080,tls=my-cert"
+
+  # Create a catch all ingress of "/path" pointing to service svc:port and Ingress Class as "otheringress"
+  kubectl create ingress catch-all --class=otheringress --rule="/path=svc:port"
+
+  # Create an ingress with two annotations: ingress.annotation1 and ingress.annotations2
+  kubectl create ingress annotated --class=default --rule="foo.com/bar=svc:port" \
+  --annotation ingress.annotation1=foo \
+  --annotation ingress.annotation2=bla
+
+  # Create an ingress with the same host and multiple paths
+  kubectl create ingress multipath --class=default \
+  --rule="foo.com/=svc:port" \
+  --rule="foo.com/admin/=svcadmin:portadmin"
+
+  # Create an ingress with multiple hosts and the pathType as Prefix
+  kubectl create ingress ingress1 --class=default \
+  --rule="foo.com/path*=svc:8080" \
+  --rule="bar.com/admin*=svc2:http"
+
+  # Create an ingress with TLS enabled using the default ingress certificate and different path types
+  kubectl create ingress ingtls --class=default \
+  --rule="foo.com/=svc:https,tls" \
+  --rule="foo.com/path/subpath*=othersvc:8080"
+
+  # Create an ingress with TLS enabled using a specific secret and pathType as Prefix
+  kubectl create ingress ingsecret --class=default \
+  --rule="foo.com/*=svc:8080,tls=secret1"
+
+  # Create an ingress with a default backend
+  kubectl create ingress ingdefault --class=default \
+  --default-backend=defaultsvc:http \
+  --rule="foo.com/*=svc:8080,tls=secret1"
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --annotation=[]:
+        Annotation to insert in the ingress object, in the format annotation=value
+
+    --class='':
+        Ingress Class to be used
+
+    --default-backend='':
+        Default service for backend, in format of svcname:port
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --rule=[]:
+        Rule in format host/path=service:port[,tls=secretname]. Paths containing the leading character '*' are
+        considered pathType=Prefix. tls argument is optional.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+Usage:
+  kubectl create ingress NAME --rule=host/path=service:port[,tls[=secret]]  [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src/ssl$ history | grep ingress
+   10  helm install ingress-nginx ingress-nginx/ingress-nginx --namespace=ingress --create-namespace=true    --set controller.kind=DaemonSet,controller.service.enabled=false    --set controller.hostNetwork=true,controller.publishService.enabled=false
+   11  helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+   12  helm install ingress-nginx ingress-nginx/ingress-nginx --namespace=ingress --create-namespace=true    --set controller.kind=DaemonSet,controller.service.enabled=false    --set controller.hostNetwork=true,controller.publishService.enabled=false
+  125  helm delete ingress-nginx -n ngress
+  126  helm delete ingress-nginx -n ingress
+  172  helm install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace=ingress --create-namespace=true --set controller.kind=DaemonSet,controller.service.enabled=false --set controller.hostNetwork=true,controller.publishService.enabled=false
+  173  kubectl get po -n ingress-nginx
+  174  kubectl get po -n ingress
+  175  kubectl get po -n ingress - o wide
+  176  kubectl get po -n ingress -o wide
+  177  kubectl get ds -n ingress
+  183  kubectl create ingress --help
+  184  kubectl create ingress testtest --rule=abc.com=testtest:80  -n default --dry-run=client -o yaml
+  185  kubectl create ingress testtest --rule=abc.com=testtest/:80  -n default --dry-run=client -o yaml
+  186  kubectl create ingress testtest --rule=abc.com/=testtest:80  -n default --dry-run=client -o yaml
+  187  kubectl create ingress testtest --rule=abc.com/=testtest:80  -n default
+  193  kubectl create ingress testtest --rule=abc.com/=testtest:80  -n default --dry-run=client -o yaml >ing.yaml
+  194  kubectl create ingress testtest --rule=abc.com/=testtest:80  -n default --help
+  195  kubectl get ingressclass
+  196  kubectl create ingress testtest --rule=abc.com/=testtest:80 --class=nginx -n default --dry-run=client -o yaml
+  197  kubectl create ingress testtest --rule=abc.com/*=testtest:80 --class=nginx -n default --dry-run=client -o yaml
+  198  kubectl create ingress testtest --rule=abc.com/*=testtest:80 --class=nginx -n default --dry-run=client -o yaml > ing.yaml
+  200  kubectl create ingress testtest --rule=abc.com/*=testtest:80 --class=nginx -n default
+  227  kubectl create ingress --help
+  231  kubectl create ingress nodehello --class=nginx --rule=ckatcs.lab/hello=nodehello:80 --dry-run=client -o yaml
+  232  kubectl create ingress nodehello --class=nginx --rule=ckatcs.lab/hello/*=nodehello:80 --dry-run=client -o yaml
+  233  kubectl create ingress nodehello --class=nginx --rule=ckatcs.lab/hello/*=nodehello:80 --dry-run=client -o yaml >ing2.yaml
+  237  kubectl create ingress nodehello --class=nginx --rule=ckatcs.lab/hello*=nodehello:80 --dry-run=client -o yaml
+  261  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80
+  266  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml
+  288  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml
+  289  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml >> deploy.yaml
+  305  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --annotations=[ nginx.ingress.kubernetes.io/rewrite-target: /]--dry-run=client -o yaml
+  306  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --annotations=["nginx.ingress.kubernetes.io/rewrite-target: /"]--dry-run=client -o yaml
+  307  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --annotation=["nginx.ingress.kubernetes.io/rewrite-target: /"]--dry-run=client -o yaml
+  308  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --annotation=["nginx.ingress.kubernetes.io/rewrite-target: /"] --dry-run=client -o yaml
+  309  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --annotation=["nginx.ingress.kubernetes.io/rewrite-target=/"] --dry-run=client -o yaml
+  310  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --annotation="nginx.ingress.kubernetes.io/rewrite-target=/" --dry-run=client -o yaml
+  399  kubectl create ingress webcm --class=nginx --rule --help
+  400  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*:webcm:80 --dry-run=client -o yaml
+  401  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml
+  402  kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml >> appdeploy.yaml
+  446  kubectl create ingress ing --help
+  447  history | grep ingress
+sfjbs@n1:~/src/ssl$ openssl req -subj '/CN=ckatcswebcm.lab/O=tcs/C=IN' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout myykey.key -out mycert.crt^C
+sfjbs@n1:~/src/ssl$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
+sfjbs@n1:~/src/ssl$
+sfjbs@n1:~/src/ssl$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80 --dry-run=client -o yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
+sfjbs@n1:~/src/ssl$ #kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80,tls= --dry-run=client -o yaml
+sfjbs@n1:~/src/ssl$ vim ../appdeploy.yaml
+sfjbs@n1:~/src/ssl$ kubectl create secret tls ing-tls --cert=mycert.crt --key=myykey.key --dry-run=client -o yaml
+apiVersion: v1
+data:
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURTekNDQWpPZ0F3SUJBZ0lVV3NpNEFOcE1HQTRRcnFubEZzdVQyazc4M0RVd0RRWUpLb1pJaHZjTkFRRUwKQlFBd05URVlNQllHQTFVRUF3d1BZMnRoZEdOemQyVmlZMjB1YkdGaU1Rd3dDZ1lEVlFRS0RBTjBZM014Q3pBSgpCZ05WQkFZVEFrbE9NQjRYRFRJeU1URXdPREEyTURJeU5Wb1hEVEl6TVRFd09EQTJNREl5TlZvd05URVlNQllHCkExVUVBd3dQWTJ0aGRHTnpkMlZpWTIwdWJHRmlNUXd3Q2dZRFZRUUtEQU4wWTNNeEN6QUpCZ05WQkFZVEFrbE8KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF3WElHbmljS3lNSk5WbnFTT3V3UQo5Zk5CZXI2UW44bG1kUlVRejloWVdiQWtTUHpJZVNzK3MwSnhHc3lKQzU5T2FOaUxFaG5paE5sLzhwU2FHSFlmCkZmSHErckVGdXhtQVpaNnpEQUlrU0lLM2VhaVZJYzlWOHkyeGRUaDgrTjdodW5vWmkwMHBQNHpOZFRIWUhYZ2QKeEIvZXUxYzdqZGlseE5LbkpSUlhjMkN5SjlaeUw2Yk5MU3Y1THVwKzRFUEpCTmp4aE1VZWo5czk2OWFRQ2RuLwpKMExIakNDQ3ZHYzJEY2N5OGE4NG51amwrYmJxTGNMRGtuNE9nekNudTREVHluR2VZeEJ1QmsxZEVYYUdzaE9qCk1KSUdKc3lSVms0a3FMcS9pVHh1RzlCa0l3QVRSL2xBM3dNWmRIMW9UbFduK1cxYnczM2t6ZVdaOHJNQnovUFcKWXdJREFRQUJvMU13VVRBZEJnTlZIUTRFRmdRVXdYcnY0RjJ5eGtCOE90L0VqOWJMTERUWkdsY3dId1lEVlIwagpCQmd3Rm9BVXdYcnY0RjJ5eGtCOE90L0VqOWJMTERUWkdsY3dEd1lEVlIwVEFRSC9CQVV3QXdFQi96QU5CZ2txCmhraUc5dzBCQVFzRkFBT0NBUUVBTmZJVGpzcXk3cm9vTStUL3I2Z0tPaDRXWFgvekxWNmlhV29zRzlJeXE0RmIKQlVFZEZFajNwM3Y5SEdVODhhYWEwSTNJUWF3dnZZVlVuZkRsOVFTTWhnUnN2SkJzZmRGNmZGaVlzSlNtMFpUTQprdkpqKzJ4VVQxd0RhL2MraS9nTDFoeXQvSE1CUnFWNFNLNmlwUkh3akEyNkZXYXNxWkcwR1h4dHA3Y0RoSS8vCkozSDZoSlFDTnFoblYyTmlOZDNLdk55NHVVekxad25tdzNOekZhVnAvVjVWZDFMdG5NUGVKaWpReGxyZDl0M3oKOWJxS09sK0hoRUJCV2xmWFVkNFlOdzFiRVM2bS9NQ0tEZG1FM1hCQmZxSXQ0RVBZdXRJTFRYTkt5dElrS2g5UApuM1Z3UGhKWUtlZ3JnWm11S1dXOStDS0FobUM3UEpYYUVuVjFrbHA1RVE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRREJjZ2FlSndySXdrMVcKZXBJNjdCRDE4MEY2dnBDZnlXWjFGUkRQMkZoWnNDUkkvTWg1S3o2elFuRWF6SWtMbjA1bzJJc1NHZUtFMlgveQpsSm9ZZGg4VjhlcjZzUVc3R1lCbG5yTU1BaVJJZ3JkNXFKVWh6MVh6TGJGMU9IejQzdUc2ZWhtTFRTay9qTTExCk1kZ2RlQjNFSDk2N1Z6dU4yS1hFMHFjbEZGZHpZTEluMW5JdnBzMHRLL2t1Nm43Z1E4a0UyUEdFeFI2UDJ6M3IKMXBBSjJmOG5Rc2VNSUlLOFp6WU54ekx4cnppZTZPWDV0dW90d3NPU2ZnNkRNS2U3Z05QS2NaNWpFRzRHVFYwUgpkb2F5RTZNd2tnWW16SkZXVGlTb3VyK0pQRzRiMEdRakFCTkgrVURmQXhsMGZXaE9WYWY1YlZ2RGZlVE41Wm55CnN3SFA4OVpqQWdNQkFBRUNnZ0VBTGo2SERIbkMzemxyNlplRnE2WlJhNnFLWmNCMnJHd21IU2s3Q3FUcWdnNVUKcmtvWDFyZWExcG0wbGpaOU1KVVYxb1Nsd2w4RHdzU0lETUt2ajlkMUdQYnJPS0RuQU5KWTJuSTAxVk1SdjIvWQpVcklWYks2M0dsbzdDUTNHK211MXhMRjV0ODVyWlBEUkVRb29ZdXNiR282UDNYTStIbXZEUFNrcW9mZVo3RSt2CnNmaVNFU0dXc1hlbVdZVjJjUlg2OWdJdWFMRGYrLzZzdmFFUU92R0t3enUwcWxhT1VRMG0wYys3anpjWEdOQ0wKcEtUenY2VUdsUWg0c3doclJnNHdqbmJRcHZmbmR1ODlpeEFWSDcyVnFNRnFQZjFWTXVSWlNXZ2RxNGRRNU1PcgovRTFJdWs1c2tWZXE3cUhobUVldFNnZ1BwemlPWUtkcG9Fbzl5akNrNlFLQmdRRHdMa3dOZlNMRkV0eFRhY2t4CmExQVBoQ2c0ZUF1SnlmVDR4ditoNTExNmg5RW03ZFU0S0kwUWJlTU9qWVRjMmFTTWR2bHBWVmtRTzRvaThJWm8Kd0Fabml5YVp3aVdxYnBCTHQzUnR5Qk1oenczZjl6NWQxUU5JdVpGcU1QSlF1Q1VLcVJOZUk1clU4MFA4TWdlOAppc2ovVzM1OW9UQW1pWHZ1Rkc0aGwxNXBkd0tCZ1FET0w3aE83KzFwWkFQKzk3MEdMQ1p0VjM2aU9ZWllEakdOCm0zQm1CWkYwV2c1bFVjbEhhZnN3VDhSS0RsWTF6RHZVT0xudlMyYldXd0VZUFFxRVNnaWpDb3FMNFFLVXJ0a20KQ0g1Z2ZJdG41clAxMURCTzJzdGU4L1YzL2QwZW5SQVM1MllVeVlnbis0OVUxL2x6TVI4ZkwyK05ETWZIQ2RaSApmdm5URjhnMWRRS0JnUURrelRYbUk2OWJ6ZnZWK3BDUFk0dUJQSVNVUnNlM0c0MGk4Vy9VN0hOQXB1RzRGQmxxCnhqYWIwQkxkYWpPSHNFM3hBZVhYVWxibC85STROcW5VWUJtNXlmV2J4RGZkaERZeDZ6SWU0dHBXK3NoYzgwdVcKVjdZcE1aNDFheXRyZWdEUGh3SE1URjdUUG1zbGRRT3B1UXlCTnNmcEpnU1lzYUE5elhpY3gzWkpRUUtCZ1FDNwppdVpQVHFjWTlMTTV5R2R6NU5heklDRjhOMnkrVFhLL1JrS1BXY003SE9yNU45SW9GZnMzcjJad29lZkNtVmxXCktKN2ZUU3RtRUhMSGRFWkxtL2VOTFhwbHp5NEV4YUdZbWFNeDZqYjNNLzQrdlZtUGNDNEoyVWRPZEdnYmYydHUKZG5JQXVHc1RTeHJOWm9Gc1NLTHhQN2xzaDlKemRid2xYaGFvN25uYVBRS0JnRk5BN3F5c1lzOXdvQ3pDTjhJOAo5NVZENnBBVW5sWnZNRStHTFp1dFd1aHVDYzFRSXJaUkJ1cWNtN3kvaDJpNmJjRE9Ubkh1TnVhWUVSUzgvOURTCmRGcnlPckU2RENJWjQraXIrWGRxamNvT0p0dDFwTmFDRUYwdUwxNTRVM1ppU0dsVEhqbkFwQkZXSkMxbTg1TDEKaUNWMWcrZ21xeVRRNFZja0grV0ZnOXFMCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: ing-tls
+type: kubernetes.io/tls
+sfjbs@n1:~/src/ssl$ kubectl create secret tls ing-tls --cert=mycert.crt --key=myykey.key
+secret/ing-tls created
+sfjbs@n1:~/src/ssl$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80,tls=ing-tls --dry-run=client -o yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - ckatcswebcm.lab
+    secretName: ing-tls
+status:
+  loadBalancer: {}
+sfjbs@n1:~/src/ssl$ vim ../appdeploy.yaml
+sfjbs@n1:~/src/ssl$ kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/*=webcm:80,tls=ing-tls --dry-run=client -o yaml >> ../appdeploy.yaml
+sfjbs@n1:~/src/ssl$ vim ../appdeploy.yaml
+sfjbs@n1:~/src/ssl$ kubectl get ing
+NAME        CLASS   HOSTS             ADDRESS    PORTS   AGE
+nodehello   nginx   ckatcs.lab        10.1.0.5   80      23h
+testtest    nginx   abc.com           10.1.0.5   80      24h
+webcm       nginx   ckatcswebcm.lab   10.1.0.5   80      97m
+sfjbs@n1:~/src/ssl$ kubectl apply -f ../appdeploy.yaml
+configmap/webcm configured
+deployment.apps/webcm configured
+service/webcm configured
+Warning: resource secrets/ing-tls is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+secret/ing-tls configured
+ingress.networking.k8s.io/webcm configured
+sfjbs@n1:~/src/ssl$ kubectl get ing
+NAME        CLASS   HOSTS             ADDRESS    PORTS     AGE
+nodehello   nginx   ckatcs.lab        10.1.0.5   80        23h
+testtest    nginx   abc.com           10.1.0.5   80        24h
+webcm       nginx   ckatcswebcm.lab   10.1.0.5   80, 443   97m
+sfjbs@n1:~/src/ssl$ curl ckatcswebcm.lab
+<html>
+<head><title>308 Permanent Redirect</title></head>
+<body>
+<center><h1>308 Permanent Redirect</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+sfjbs@n1:~/src/ssl$ curl https://ckatcswebcm.lab
+curl: (60) SSL certificate problem: self signed certificate
+More details here: https://curl.haxx.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+sfjbs@n1:~/src/ssl$ curl https://ckatcswebcm.lab -k
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src/ssl$ ls
+mycert.crt  myykey.key
+sfjbs@n1:~/src/ssl$ cd ..
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  ssl
+sfjbs@n1:~/src$ cat index.html
+<h1>Hello from vijay</h1>
+sfjbs@n1:~/src$ kubectl create secret --help
+Create a secret using specified subcommand.
+
+Available Commands:
+  docker-registry   Create a secret for use with a Docker registry
+  generic           Create a secret from a local file, directory, or literal value
+  tls               Create a TLS secret
+
+Usage:
+  kubectl create secret [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src$ kubectl create secret generic websecret --from-file=index.html --dry-run=client -o yaml
+apiVersion: v1
+data:
+  index.html: PGgxPkhlbGxvIGZyb20gdmlqYXk8L2gxPgo=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: websecret
+sfjbs@n1:~/src$ kubectl create secret generic websecret --from-file=index.html --dry-run=client -o yaml >> appdeploy.yaml
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl apply -f appdeploy.yaml
+configmap/webcm configured
+secret/websecret created
+deployment.apps/webcm configured
+service/webcm configured
+secret/ing-tls configured
+ingress.networking.k8s.io/webcm configured
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          23h
+nodehello-57589d9d44-mb28l   1/1     Running   0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          3d23h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5fc996895c-7w4x8       1/1     Running   0          16s
+webcm-5fc996895c-m8s4d       1/1     Running   0          19s
+webcm-5fc996895c-st2lv       1/1     Running   0          18s
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab -k
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/home.html -k
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.23.2</center>
+</body>
+</html>
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/home.html -k
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.23.2</center>
+</body>
+</html>
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/home.html -k
+<html>
+<head><title>404 Not Found</title></head>
+<body>
+<center><h1>404 Not Found</h1></center>
+<hr><center>nginx/1.23.2</center>
+</body>
+</html>
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  ssl
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          23h
+nodehello-57589d9d44-mb28l   1/1     Running   0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          3d23h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5fc996895c-7w4x8       1/1     Running   0          81s
+webcm-5fc996895c-m8s4d       1/1     Running   0          84s
+webcm-5fc996895c-st2lv       1/1     Running   0          83s
+sfjbs@n1:~/src$ history | grep tty
+  159  kubectl run -i --tty dnstest --image=busybox  --restart=Never -- sh
+  479  history | grep tty
+sfjbs@n1:~/src$ kubectl exec -it webcm-5fc996895c-7w4x8 -- ls
+bin                   media                 srv
+dev                   mnt                   sys
+docker-entrypoint.d   opt                   tmp
+docker-entrypoint.sh  proc                  usr
+etc                   root                  var
+home                  run
+lib                   sbin
+sfjbs@n1:~/src$ kubectl exec -it webcm-5fc996895c-7w4x8 -- ls /usr/share/nginx/html
+index.html
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl apply -f  appdeploy.yaml
+configmap/webcm configured
+secret/websecret configured
+deployment.apps/webcm configured
+service/webcm configured
+secret/ing-tls configured
+ingress.networking.k8s.io/webcm configured
+sfjbs@n1:~/src$ kubectl exec -it webcm-5fc996895c-7w4x8 -- ls /usr/share/nginx/html
+Error from server (NotFound): pods "webcm-5fc996895c-7w4x8" not found
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          23h
+nodehello-57589d9d44-mb28l   1/1     Running   0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5699759bc8-bpvx9       1/1     Running   0          12s
+webcm-5699759bc8-sl67l       1/1     Running   0          10s
+webcm-5699759bc8-xzj4x       1/1     Running   0          8s
+sfjbs@n1:~/src$ kubectl exec -it webcm-5699759bc8-sl67l -- ls /usr/share/nginx/html
+50x.html    home.html   index.html
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl apply -f  appdeploy.yaml
+configmap/webcm configured
+secret/websecret configured
+deployment.apps/webcm configured
+service/webcm configured
+secret/ing-tls configured
+ingress.networking.k8s.io/webcm configured
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS              RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running             0          23h
+nodehello-57589d9d44-mb28l   1/1     Running             0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running             0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running             0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running             0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running             0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running             0          3d23h
+webcm-5447f84b96-xht7v       1/1     Running             0          3s
+webcm-5447f84b96-z2spn       0/1     ContainerCreating   0          1s
+webcm-5699759bc8-bpvx9       0/1     Terminating         0          119s
+webcm-5699759bc8-sl67l       1/1     Running             0          117s
+webcm-5699759bc8-xzj4x       1/1     Running             0          115s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS              RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running             0          23h
+nodehello-57589d9d44-mb28l   1/1     Running             0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running             0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running             0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running             0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running             0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running             0          3d23h
+webcm-5447f84b96-nzqff       0/1     ContainerCreating   0          1s
+webcm-5447f84b96-xht7v       1/1     Running             0          5s
+webcm-5447f84b96-z2spn       1/1     Running             0          3s
+webcm-5699759bc8-sl67l       1/1     Running             0          119s
+webcm-5699759bc8-xzj4x       1/1     Terminating         0          117s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS              RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running             0          23h
+nodehello-57589d9d44-mb28l   1/1     Running             0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running             0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running             0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running             0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running             0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running             0          3d23h
+webcm-5447f84b96-nzqff       0/1     ContainerCreating   0          1s
+webcm-5447f84b96-xht7v       1/1     Running             0          5s
+webcm-5447f84b96-z2spn       1/1     Running             0          3s
+webcm-5699759bc8-sl67l       1/1     Running             0          119s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS              RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running             0          23h
+nodehello-57589d9d44-mb28l   1/1     Running             0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running             0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running             0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running             0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running             0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running             0          3d23h
+webcm-5447f84b96-nzqff       0/1     ContainerCreating   0          2s
+webcm-5447f84b96-xht7v       1/1     Running             0          6s
+webcm-5447f84b96-z2spn       1/1     Running             0          4s
+webcm-5699759bc8-sl67l       1/1     Running             0          2m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS        RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running       0          23h
+nodehello-57589d9d44-mb28l   1/1     Running       0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running       0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running       0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running       0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running       0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running       0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running       0          2s
+webcm-5447f84b96-xht7v       1/1     Running       0          6s
+webcm-5447f84b96-z2spn       1/1     Running       0          4s
+webcm-5699759bc8-sl67l       1/1     Terminating   0          2m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS        RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running       0          23h
+nodehello-57589d9d44-mb28l   1/1     Running       0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running       0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running       0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running       0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running       0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running       0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running       0          2s
+webcm-5447f84b96-xht7v       1/1     Running       0          6s
+webcm-5447f84b96-z2spn       1/1     Running       0          4s
+webcm-5699759bc8-sl67l       1/1     Terminating   0          2m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS        RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running       0          23h
+nodehello-57589d9d44-mb28l   1/1     Running       0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running       0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running       0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running       0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running       0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running       0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running       0          3s
+webcm-5447f84b96-xht7v       1/1     Running       0          7s
+webcm-5447f84b96-z2spn       1/1     Running       0          5s
+webcm-5699759bc8-sl67l       1/1     Terminating   0          2m1s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          23h
+nodehello-57589d9d44-mb28l   1/1     Running   0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          3s
+webcm-5447f84b96-xht7v       1/1     Running   0          7s
+webcm-5447f84b96-z2spn       1/1     Running   0          5s
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          23h
+nodehello-57589d9d44-mb28l   1/1     Running   0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          3s
+webcm-5447f84b96-xht7v       1/1     Running   0          7s
+webcm-5447f84b96-z2spn       1/1     Running   0          5s
+sfjbs@n1:~/src$ kubectl exec -it webcm-5447f84b96-xht7v -- ls /usr/share/nginx/html
+50x.html    home        index       index.html
+sfjbs@n1:~/src$ kubectl exec -it webcm-5447f84b96-xht7v -- ls /usr/share/nginx/html/home
+home.html
+sfjbs@n1:~/src$ kubectl exec -it webcm-5447f84b96-xht7v -- ls /usr/share/nginx/html/index
+index.html
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab -k
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/home -k
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.23.2</center>
+</body>
+</html>
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/home/home.html -k
+<h1>Hello from vijay</h1>
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/index -k
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.23.2</center>
+</body>
+</html>
+sfjbs@n1:~/src$ curl https://ckatcswebcm.lab/index/index.html -k
+<h1>Hello from CKA class from TCS</h1>
+sfjbs@n1:~/src$ vim appdeploy.yaml
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          23h
+nodehello-57589d9d44-mb28l   1/1     Running   0          23h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          23h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          4m37s
+webcm-5447f84b96-xht7v       1/1     Running   0          4m41s
+webcm-5447f84b96-z2spn       1/1     Running   0          4m39s
+sfjbs@n1:~/src$ kubectl get po -l app=appcm
+No resources found in default namespace.
+sfjbs@n1:~/src$ kubectl get po -l app=webcm
+NAME                     READY   STATUS    RESTARTS   AGE
+webcm-5447f84b96-nzqff   1/1     Running   0          5m19s
+webcm-5447f84b96-xht7v   1/1     Running   0          5m23s
+webcm-5447f84b96-z2spn   1/1     Running   0          5m21s
+sfjbs@n1:~/src$ kubectl describe po webcm-5447f84b96-nzqff
+Name:         webcm-5447f84b96-nzqff
+Namespace:    default
+Priority:     0
+Node:         n2/10.1.0.5
+Start Time:   Tue, 08 Nov 2022 06:42:30 +0000
+Labels:       app=webcm
+              pod-template-hash=5447f84b96
+Annotations:  <none>
+Status:       Running
+IP:           10.32.0.11
+IPs:
+  IP:           10.32.0.11
+Controlled By:  ReplicaSet/webcm-5447f84b96
+Containers:
+  nginx:
+    Container ID:   containerd://2e66356d81a8e56645d1f0f13e8c00397808eded22b9535fb052439445f93ebb
+    Image:          nginx:alpine
+    Image ID:       docker.io/library/nginx@sha256:2452715dd322b3273419652b7721b64aa60305f606ef7a674ae28b6f12d155a3
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Tue, 08 Nov 2022 06:42:31 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /usr/share/nginx/html/home from mysec (rw)
+      /usr/share/nginx/html/index from foo (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-bbbfc (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  foo:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      webcm
+    Optional:  false
+  mysec:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  websecret
+    Optional:    false
+  kube-api-access-bbbfc:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  5m50s  default-scheduler  Successfully assigned default/webcm-5447f84b96-nzqff to n2
+  Normal  Pulled     5m49s  kubelet            Container image "nginx:alpine" already present on machine
+  Normal  Created    5m49s  kubelet            Created container nginx
+  Normal  Started    5m49s  kubelet            Started container nginx
+sfjbs@n1:~/src$
+sfjbs@n1:~/src$ kubectl get po -l app=webcm
+NAME                     READY   STATUS    RESTARTS   AGE
+webcm-5447f84b96-nzqff   1/1     Running   0          6m21s
+webcm-5447f84b96-xht7v   1/1     Running   0          6m25s
+webcm-5447f84b96-z2spn   1/1     Running   0          6m23s
+sfjbs@n1:~/src$ kubectl get po -l app=testtcs
+NAME                       READY   STATUS    RESTARTS   AGE
+testtcs-54ddd9d578-4rqd5   1/1     Running   0          3d23h
+sfjbs@n1:~/src$ kubectl label --help
+Update the labels on a resource.
+
+  *  A label key and value must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and
+underscores, up to  63 characters each.
+  *  Optionally, the key can begin with a DNS subdomain prefix and a single '/', like example.com/my-app.
+  *  If --overwrite is true, then existing labels can be overwritten, otherwise attempting to overwrite a label will
+result in an error.
+  *  If --resource-version is specified, then updates will use this resource version, otherwise the existing
+resource-version will be used.
+
+Examples:
+  # Update pod 'foo' with the label 'unhealthy' and the value 'true'
+  kubectl label pods foo unhealthy=true
+
+  # Update pod 'foo' with the label 'status' and the value 'unhealthy', overwriting any existing value
+  kubectl label --overwrite pods foo status=unhealthy
+
+  # Update all pods in the namespace
+  kubectl label pods --all status=unhealthy
+
+  # Update a pod identified by the type and name in "pod.json"
+  kubectl label -f pod.json status=unhealthy
+
+  # Update pod 'foo' only if the resource is unchanged from version 1
+  kubectl label pods foo status=unhealthy --resource-version=1
+
+  # Update pod 'foo' by removing a label named 'bar' if it exists
+  # Does not require the --overwrite flag
+  kubectl label pods foo bar-
+
+Options:
+    --all=false:
+        Select all resources, in the namespace of the specified resource types
+
+    -A, --all-namespaces=false:
+        If true, check the specified action in all namespaces.
+
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-label':
+        Name of the manager used to track field ownership.
+
+    --field-selector='':
+        Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector
+        key1=value1,key2=value2). The server only supports a limited number of field queries per type.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to update the labels
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    --list=false:
+        If true, display the labels for a given resource.
+
+    --local=false:
+        If true, label will NOT contact api-server but run locally.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --overwrite=false:
+        If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --resource-version='':
+        If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only
+        valid when specifying a single resource.
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  kubectl label [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version]
+[options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src$
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          7m30s
+webcm-5447f84b96-xht7v       1/1     Running   0          7m34s
+webcm-5447f84b96-z2spn       1/1     Running   0          7m32s
+sfjbs@n1:~/src$ kubectl label po webcm-5447f84b96-nzqff disk=ssd
+pod/webcm-5447f84b96-nzqff labeled
+sfjbs@n1:~/src$ kubectl label po testtcs-54ddd9d578-4rqd5 disk=ssd
+pod/testtcs-54ddd9d578-4rqd5 labeled
+sfjbs@n1:~/src$ kubectl label po nodehello-57589d9d44-mb28l disk=ssd
+pod/nodehello-57589d9d44-mb28l labeled
+sfjbs@n1:~/src$ kubectl get po -l app=webcm
+NAME                     READY   STATUS    RESTARTS   AGE
+webcm-5447f84b96-nzqff   1/1     Running   0          8m53s
+webcm-5447f84b96-xht7v   1/1     Running   0          8m57s
+webcm-5447f84b96-z2spn   1/1     Running   0          8m55s
+sfjbs@n1:~/src$ kubectl get po -l disk=ssd
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          9m11s
+sfjbs@n1:~/src$ kubectl get po --show-label
+error: unknown flag: --show-label
+See 'kubectl get --help' for usage.
+sfjbs@n1:~/src$ kubectl get po --show-labels
+NAME                         READY   STATUS    RESTARTS   AGE     LABELS
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h     app=nodehello,pod-template-hash=57589d9d44
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h     app=nodehello,disk=ssd,pod-template-hash=57589d9d44
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h     app=nodehello,pod-template-hash=57589d9d44
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d      app=testpod,pod-template-hash=565f4b7cb5
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d      app=testpod,pod-template-hash=565f4b7cb5
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h   app=testtcs,disk=ssd,pod-template-hash=54ddd9d578
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h   app=testtest,pod-template-hash=7548b57756
+webcm-5447f84b96-nzqff       1/1     Running   0          9m53s   app=webcm,disk=ssd,pod-template-hash=5447f84b96
+webcm-5447f84b96-xht7v       1/1     Running   0          9m57s   app=webcm,pod-template-hash=5447f84b96
+webcm-5447f84b96-z2spn       1/1     Running   0          9m55s   app=webcm,pod-template-hash=5447f84b96
+sfjbs@n1:~/src$ kubectl get node --show-labels
+NAME   STATUS   ROLES           AGE     VERSION   LABELS
+n1     Ready    control-plane   4d21h   v1.24.7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=n1,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+n2     Ready    <none>          4d21h   v1.24.7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=n2,kubernetes.io/os=linux
+sfjbs@n1:~/src$ kubectl create deploy nodetest --image=nginx:alpine --help
+Create a deployment with the specified name.
+
+Aliases:
+deployment, deploy
+
+Examples:
+  # Create a deployment named my-dep that runs the busybox image
+  kubectl create deployment my-dep --image=busybox
+
+  # Create a deployment with a command
+  kubectl create deployment my-dep --image=busybox -- date
+
+  # Create a deployment named my-dep that runs the nginx image with 3 replicas
+  kubectl create deployment my-dep --image=nginx --replicas=3
+
+  # Create a deployment named my-dep that runs the busybox image and expose port 5701
+  kubectl create deployment my-dep --image=busybox --port=5701
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    --image=[]:
+        Image names to run.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --port=-1:
+        The port that this container exposes.
+
+    -r, --replicas=1:
+        Number of replicas to create. Default is 1.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+Usage:
+  kubectl create deployment NAME --image=image -- [COMMAND] [args...] [options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src$ kubectl create deploy nodetest --image=nginx:alpine --dry-run=client -o yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nodetest
+  name: nodetest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodetest
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nodetest
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        resources: {}
+status: {}
+sfjbs@n1:~/src$ kubectl create deploy nodetest --image=nginx:alpine --dry-run=client -o yaml > nodeselector.yaml
+sfjbs@n1:~/src$ vim nodeselector.yaml
+sfjbs@n1:~/src$ kubectl apply -f nodeselector.yaml
+deployment.apps/nodetest created
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          26s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          16m
+webcm-5447f84b96-xht7v       1/1     Running   0          16m
+webcm-5447f84b96-z2spn       1/1     Running   0          16m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          45s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          46s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          47s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          47s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          48s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          48s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    0/1     Pending   0          48s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          17m
+webcm-5447f84b96-xht7v       1/1     Running   0          17m
+webcm-5447f84b96-z2spn       1/1     Running   0          17m
+sfjbs@n1:~/src$ kubectl describe po nodetest-58cbd49495-j22b8
+Name:           nodetest-58cbd49495-j22b8
+Namespace:      default
+Priority:       0
+Node:           <none>
+Labels:         app=nodetest
+                pod-template-hash=58cbd49495
+Annotations:    <none>
+Status:         Pending
+IP:
+IPs:            <none>
+Controlled By:  ReplicaSet/nodetest-58cbd49495
+Containers:
+  nginx:
+    Image:        nginx:alpine
+    Port:         <none>
+    Host Port:    <none>
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-8kmpt (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False
+Volumes:
+  kube-api-access-8kmpt:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              disktype=ssd
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From               Message
+  ----     ------            ----  ----               -------
+  Warning  FailedScheduling  63s   default-scheduler  0/2 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/master: }, 2 node(s) didn't match Pod's node affinity/selector. preemption: 0/2 nodes are available: 2 Preemption is not helpful for scheduling.
+sfjbs@n1:~/src$ kubectl get node
+NAME   STATUS   ROLES           AGE     VERSION
+n1     Ready    control-plane   4d21h   v1.24.7
+n2     Ready    <none>          4d21h   v1.24.7
+sfjbs@n1:~/src$ kubectl label node n2 disktype=ssd
+node/n2 labeled
+sfjbs@n1:~/src$ kubectl describe po nodetest-58cbd49495-j22b8
+Name:         nodetest-58cbd49495-j22b8
+Namespace:    default
+Priority:     0
+Node:         n2/10.1.0.5
+Start Time:   Tue, 08 Nov 2022 07:00:50 +0000
+Labels:       app=nodetest
+              pod-template-hash=58cbd49495
+Annotations:  <none>
+Status:       Running
+IP:           10.32.0.10
+IPs:
+  IP:           10.32.0.10
+Controlled By:  ReplicaSet/nodetest-58cbd49495
+Containers:
+  nginx:
+    Container ID:   containerd://6958ff2894b76750d7072a68178246ca256a0a74ae03ae5dd4961e0a09d4f997
+    Image:          nginx:alpine
+    Image ID:       docker.io/library/nginx@sha256:2452715dd322b3273419652b7721b64aa60305f606ef7a674ae28b6f12d155a3
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Tue, 08 Nov 2022 07:00:51 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-8kmpt (ro)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  kube-api-access-8kmpt:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              disktype=ssd
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason            Age   From               Message
+  ----     ------            ----  ----               -------
+  Warning  FailedScheduling  116s  default-scheduler  0/2 nodes are available: 1 node(s) had untolerated taint {node-role.kubernetes.io/master: }, 2 node(s) didn't match Pod's node affinity/selector. preemption: 0/2 nodes are available: 2 Preemption is not helpful for scheduling.
+  Normal   Scheduled         4s    default-scheduler  Successfully assigned default/nodetest-58cbd49495-j22b8 to n2
+  Normal   Pulled            3s    kubelet            Container image "nginx:alpine" already present on machine
+  Normal   Created           3s    kubelet            Created container nginx
+  Normal   Started           3s    kubelet            Started container nginx
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    1/1     Running   0          2m7s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          18m
+webcm-5447f84b96-xht7v       1/1     Running   0          18m
+webcm-5447f84b96-z2spn       1/1     Running   0          18m
+sfjbs@n1:~/src$ kubectl get node --show-labels
+NAME   STATUS   ROLES           AGE     VERSION   LABELS
+n1     Ready    control-plane   4d21h   v1.24.7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=n1,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+n2     Ready    <none>          4d21h   v1.24.7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,disktype=ssd,kubernetes.io/arch=amd64,kubernetes.io/hostname=n2,kubernetes.io/os=linux
+sfjbs@n1:~/src$ kubectl label node n2 disktype=ssd-
+error: invalid label value: "disktype=ssd-": a valid label must be an empty string or consist of alphanumeric characters, '-', '_' or '.', and must start and end with an alphanumeric character (e.g. 'MyValue',  or 'my_value',  or '12345', regex used for validation is '(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?')
+sfjbs@n1:~/src$ kubectl label node n2 disktype=ssd^C
+sfjbs@n1:~/src$ kubectl label --help
+Update the labels on a resource.
+
+  *  A label key and value must begin with a letter or number, and may contain letters, numbers, hyphens, dots, and
+underscores, up to  63 characters each.
+  *  Optionally, the key can begin with a DNS subdomain prefix and a single '/', like example.com/my-app.
+  *  If --overwrite is true, then existing labels can be overwritten, otherwise attempting to overwrite a label will
+result in an error.
+  *  If --resource-version is specified, then updates will use this resource version, otherwise the existing
+resource-version will be used.
+
+Examples:
+  # Update pod 'foo' with the label 'unhealthy' and the value 'true'
+  kubectl label pods foo unhealthy=true
+
+  # Update pod 'foo' with the label 'status' and the value 'unhealthy', overwriting any existing value
+  kubectl label --overwrite pods foo status=unhealthy
+
+  # Update all pods in the namespace
+  kubectl label pods --all status=unhealthy
+
+  # Update a pod identified by the type and name in "pod.json"
+  kubectl label -f pod.json status=unhealthy
+
+  # Update pod 'foo' only if the resource is unchanged from version 1
+  kubectl label pods foo status=unhealthy --resource-version=1
+
+  # Update pod 'foo' by removing a label named 'bar' if it exists
+  # Does not require the --overwrite flag
+  kubectl label pods foo bar-
+
+Options:
+    --all=false:
+        Select all resources, in the namespace of the specified resource types
+
+    -A, --all-namespaces=false:
+        If true, check the specified action in all namespaces.
+
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --field-manager='kubectl-label':
+        Name of the manager used to track field ownership.
+
+    --field-selector='':
+        Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector
+        key1=value1,key2=value2). The server only supports a limited number of field queries per type.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files identifying the resource to update the labels
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    --list=false:
+        If true, display the labels for a given resource.
+
+    --local=false:
+        If true, label will NOT contact api-server but run locally.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --overwrite=false:
+        If true, allow labels to be overwritten, otherwise reject label updates that overwrite existing labels.
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --resource-version='':
+        If non-empty, the labels update will only succeed if this is the current resource-version for the object. Only
+        valid when specifying a single resource.
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+Usage:
+  kubectl label [--overwrite] (-f FILENAME | TYPE NAME) KEY_1=VAL_1 ... KEY_N=VAL_N [--resource-version=version]
+[options]
+
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src$
+sfjbs@n1:~/src$ kubectl label node n2 disktype-
+node/n2 unlabeled
+sfjbs@n1:~/src$ kubectl get node --show-labels
+NAME   STATUS   ROLES           AGE     VERSION   LABELS
+n1     Ready    control-plane   4d21h   v1.24.7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=n1,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+n2     Ready    <none>          4d21h   v1.24.7   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=n2,kubernetes.io/os=linux
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-j22b8    1/1     Running   0          3m45s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl delete po nodetest-58cbd49495-j22b8
+pod "nodetest-58cbd49495-j22b8" deleted
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          3s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl label node n1 disktype=ssd
+node/n1 labeled
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          19s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          21s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          22s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          22s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          23s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          23s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          24s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          24s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          25s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          20m
+webcm-5447f84b96-z2spn       1/1     Running   0          20m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          37s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          21m
+webcm-5447f84b96-z2spn       1/1     Running   0          21m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    0/1     Pending   0          37s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          20m
+webcm-5447f84b96-xht7v       1/1     Running   0          21m
+webcm-5447f84b96-z2spn       1/1     Running   0          21m
+sfjbs@n1:~/src$ kubectl label node n2 disktype=ssd
+node/n2 labeled
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    1/1     Running   0          52s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          21m
+webcm-5447f84b96-xht7v       1/1     Running   0          21m
+webcm-5447f84b96-z2spn       1/1     Running   0          21m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    1/1     Running   0          53s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          21m
+webcm-5447f84b96-xht7v       1/1     Running   0          21m
+webcm-5447f84b96-z2spn       1/1     Running   0          21m
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    1/1     Running   0          54s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          21m
+webcm-5447f84b96-xht7v       1/1     Running   0          21m
+webcm-5447f84b96-z2spn       1/1     Running   0          21m
+sfjbs@n1:~/src$ kubectl top pod -l webcm
+No resources found in default namespace.
+sfjbs@n1:~/src$ kubectl top pod -l app=webcm
+NAME                     CPU(cores)   MEMORY(bytes)
+webcm-5447f84b96-nzqff   0m           2Mi
+webcm-5447f84b96-xht7v   0m           2Mi
+webcm-5447f84b96-z2spn   0m           2Mi
+sfjbs@n1:~/src$ kubectl get storageclass
+No resources found
+sfjbs@n1:~/src$ kubectl get pv
+No resources found
+sfjbs@n1:~/src$ kubectl get pvc
+No resources found in default namespace.
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  ssl
+sfjbs@n1:~/src$ vim nodeselector.yaml
+sfjbs@n1:~/src$ sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-58cbd49495-5jgtp    1/1     Running   0          19m
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          3d23h
+testtest-7548b57756-r2p4t    1/1     Running   0          3d23h
+webcm-5447f84b96-nzqff       1/1     Running   0          40m
+webcm-5447f84b96-xht7v       1/1     Running   0          40m
+webcm-5447f84b96-z2spn       1/1     Running   0          40m
+sfjbs@n1:~/src$ kubectl create --help
+Create a resource from a file or from stdin.
+
+ JSON and YAML formats are accepted.
+
+Examples:
+  # Create a pod using the data in pod.json
+  kubectl create -f ./pod.json
+
+  # Create a pod based on the JSON passed into stdin
+  cat pod.json | kubectl create -f -
+
+  # Edit the data in registry.yaml in JSON then create the resource using the edited data
+  kubectl create -f registry.yaml --edit -o json
+
+Available Commands:
+  clusterrole           Create a cluster role
+  clusterrolebinding    Create a cluster role binding for a particular cluster role
+  configmap             Create a config map from a local file, directory or literal value
+  cronjob               Create a cron job with the specified name
+  deployment            Create a deployment with the specified name
+  ingress               Create an ingress with the specified name
+  job                   Create a job with the specified name
+  namespace             Create a namespace with the specified name
+  poddisruptionbudget   Create a pod disruption budget with the specified name
+  priorityclass         Create a priority class with the specified name
+  quota                 Create a quota with the specified name
+  role                  Create a role with single rule
+  rolebinding           Create a role binding for a particular role or cluster role
+  secret                Create a secret using specified subcommand
+  service               Create a service using a specified subcommand
+  serviceaccount        Create a service account with the specified name
+  token                 Request a service account token
+
+Options:
+    --allow-missing-template-keys=true:
+        If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to
+        golang and jsonpath output formats.
+
+    --dry-run='none':
+        Must be "none", "server", or "client". If client strategy, only print the object that would be sent, without
+        sending it. If server strategy, submit server-side request without persisting the resource.
+
+    --edit=false:
+        Edit the API resource before creating
+
+    --field-manager='kubectl-create':
+        Name of the manager used to track field ownership.
+
+    -f, --filename=[]:
+        Filename, directory, or URL to files to use to create the resource
+
+    -k, --kustomize='':
+        Process the kustomization directory. This flag can't be used together with -f or -R.
+
+    -o, --output='':
+        Output format. One of: (json, yaml, name, go-template, go-template-file, template, templatefile, jsonpath,
+        jsonpath-as-json, jsonpath-file).
+
+    --raw='':
+        Raw URI to POST to the server.  Uses the transport specified by the kubeconfig file.
+
+    -R, --recursive=false:
+        Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests
+        organized within the same directory.
+
+    --save-config=false:
+        If true, the configuration of current object will be saved in its annotation. Otherwise, the annotation will
+        be unchanged. This flag is useful when you want to perform kubectl apply on this object in the future.
+
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+
+    --show-managed-fields=false:
+        If true, keep the managedFields when printing objects in JSON or YAML format.
+
+    --template='':
+        Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format
+        is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+
+    --validate='strict':
+        Must be one of: strict (or true), warn, ignore (or false).              "true" or "strict" will use a schema to validate
+        the input and fail the request if invalid. It will perform server side validation if ServerSideFieldValidation
+        is enabled on the api-server, but will fall back to less reliable client-side validation if not.                "warn" will
+        warn about unknown or duplicate fields without blocking the request if server-side field validation is enabled
+        on the API server, and behave as "ignore" otherwise.            "false" or "ignore" will not perform any schema
+        validation, silently dropping any unknown or duplicate fields.
+
+    --windows-line-endings=false:
+        Only relevant if --edit=true. Defaults to the line ending native to your platform.
+
+Usage:
+  kubectl create -f FILENAME [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+sfjbs@n1:~/src$ wget https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/storage/pv-volume.yaml
+--2022-11-08 07:24:50--  https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/storage/pv-volume.yaml
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.109.133, 185.199.110.133, 185.199.111.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.109.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 229 [text/plain]
+Saving to: ‘pv-volume.yaml’
+
+pv-volume.yaml                         100%[============================================================================>]     229  --.-KB/s    in 0s
+
+2022-11-08 07:24:51 (8.09 MB/s) - ‘pv-volume.yaml’ saved [229/229]
+
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  pv-volume.yaml  ssl
+sfjbs@n1:~/src$ vim pv-volume.yaml
+sfjbs@n1:~/src$ vim pv-volume.yaml
+sfjbs@n1:~/src$ wget https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/storage/pv-claim.yaml
+--2022-11-08 07:26:30--  https://raw.githubusercontent.com/kubernetes/website/main/content/en/examples/pods/storage/pv-claim.yaml
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 189 [text/plain]
+Saving to: ‘pv-claim.yaml’
+
+pv-claim.yaml                          100%[============================================================================>]     189  --.-KB/s    in 0s
+
+2022-11-08 07:26:31 (5.53 MB/s) - ‘pv-claim.yaml’ saved [189/189]
+
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  pv-claim.yaml  pv-volume.yaml  ssl
+sfjbs@n1:~/src$ cat pv-volume.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app-data
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/srv/app-data"
+sfjbs@n1:~/src$ vim pv-claim.yaml
+sfjbs@n1:~/src$ kubectl apply -f pv-volume.yaml
+persistentvolume/app-data created
+sfjbs@n1:~/src$ kubectl apply -f pv-claim.yaml
+persistentvolumeclaim/app-data created
+sfjbs@n1:~/src$ kubectl get pvc
+NAME       STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+app-data   Bound    app-data   1Gi        RWO            manual         5s
+sfjbs@n1:~/src$ kubectl get pvc,pv
+NAME                             STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/app-data   Bound    app-data   1Gi        RWO            manual         22s
+
+NAME                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
+persistentvolume/app-data   1Gi        RWO            Retain           Bound    default/app-data   manual                  27s
+sfjbs@n1:~/src$ vim pv-
+pv-claim.yaml   pv-volume.yaml
+sfjbs@n1:~/src$ vim pv-volume.yaml
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  pv-claim.yaml  pv-volume.yaml  ssl
+sfjbs@n1:~/src$ cat appdeploy.yaml
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from CKA class from TCS</h1>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: webcm
+---
+apiVersion: v1
+data:
+  home.html: PGgxPkhlbGxvIGZyb20gdmlqYXk8L2gxPgo=
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: websecret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webcm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webcm
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        volumeMounts:
+          - name: foo
+            mountPath: "/usr/share/nginx/html/index"
+          - name: mysec
+            mountPath: "/usr/share/nginx/html/home"
+      volumes:
+      - name: foo
+        configMap:
+           name: webcm
+      - name: mysec
+        secret:
+           secretName: websecret
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webcm
+status:
+  loadBalancer: {}
+---
+
+apiVersion: v1
+data:
+  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURTekNDQWpPZ0F3SUJBZ0lVV3NpNEFOcE1HQTRRcnFubEZzdVQyazc4M0RVd0RRWUpLb1pJaHZjTkFRRUwKQlFBd05URVlNQllHQTFVRUF3d1BZMnRoZEdOemQyVmlZMjB1YkdGaU1Rd3dDZ1lEVlFRS0RBTjBZM014Q3pBSgpCZ05WQkFZVEFrbE9NQjRYRFRJeU1URXdPREEyTURJeU5Wb1hEVEl6TVRFd09EQTJNREl5TlZvd05URVlNQllHCkExVUVBd3dQWTJ0aGRHTnpkMlZpWTIwdWJHRmlNUXd3Q2dZRFZRUUtEQU4wWTNNeEN6QUpCZ05WQkFZVEFrbE8KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF3WElHbmljS3lNSk5WbnFTT3V3UQo5Zk5CZXI2UW44bG1kUlVRejloWVdiQWtTUHpJZVNzK3MwSnhHc3lKQzU5T2FOaUxFaG5paE5sLzhwU2FHSFlmCkZmSHErckVGdXhtQVpaNnpEQUlrU0lLM2VhaVZJYzlWOHkyeGRUaDgrTjdodW5vWmkwMHBQNHpOZFRIWUhYZ2QKeEIvZXUxYzdqZGlseE5LbkpSUlhjMkN5SjlaeUw2Yk5MU3Y1THVwKzRFUEpCTmp4aE1VZWo5czk2OWFRQ2RuLwpKMExIakNDQ3ZHYzJEY2N5OGE4NG51amwrYmJxTGNMRGtuNE9nekNudTREVHluR2VZeEJ1QmsxZEVYYUdzaE9qCk1KSUdKc3lSVms0a3FMcS9pVHh1RzlCa0l3QVRSL2xBM3dNWmRIMW9UbFduK1cxYnczM2t6ZVdaOHJNQnovUFcKWXdJREFRQUJvMU13VVRBZEJnTlZIUTRFRmdRVXdYcnY0RjJ5eGtCOE90L0VqOWJMTERUWkdsY3dId1lEVlIwagpCQmd3Rm9BVXdYcnY0RjJ5eGtCOE90L0VqOWJMTERUWkdsY3dEd1lEVlIwVEFRSC9CQVV3QXdFQi96QU5CZ2txCmhraUc5dzBCQVFzRkFBT0NBUUVBTmZJVGpzcXk3cm9vTStUL3I2Z0tPaDRXWFgvekxWNmlhV29zRzlJeXE0RmIKQlVFZEZFajNwM3Y5SEdVODhhYWEwSTNJUWF3dnZZVlVuZkRsOVFTTWhnUnN2SkJzZmRGNmZGaVlzSlNtMFpUTQprdkpqKzJ4VVQxd0RhL2MraS9nTDFoeXQvSE1CUnFWNFNLNmlwUkh3akEyNkZXYXNxWkcwR1h4dHA3Y0RoSS8vCkozSDZoSlFDTnFoblYyTmlOZDNLdk55NHVVekxad25tdzNOekZhVnAvVjVWZDFMdG5NUGVKaWpReGxyZDl0M3oKOWJxS09sK0hoRUJCV2xmWFVkNFlOdzFiRVM2bS9NQ0tEZG1FM1hCQmZxSXQ0RVBZdXRJTFRYTkt5dElrS2g5UApuM1Z3UGhKWUtlZ3JnWm11S1dXOStDS0FobUM3UEpYYUVuVjFrbHA1RVE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+  tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2Z0lCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktnd2dnU2tBZ0VBQW9JQkFRREJjZ2FlSndySXdrMVcKZXBJNjdCRDE4MEY2dnBDZnlXWjFGUkRQMkZoWnNDUkkvTWg1S3o2elFuRWF6SWtMbjA1bzJJc1NHZUtFMlgveQpsSm9ZZGg4VjhlcjZzUVc3R1lCbG5yTU1BaVJJZ3JkNXFKVWh6MVh6TGJGMU9IejQzdUc2ZWhtTFRTay9qTTExCk1kZ2RlQjNFSDk2N1Z6dU4yS1hFMHFjbEZGZHpZTEluMW5JdnBzMHRLL2t1Nm43Z1E4a0UyUEdFeFI2UDJ6M3IKMXBBSjJmOG5Rc2VNSUlLOFp6WU54ekx4cnppZTZPWDV0dW90d3NPU2ZnNkRNS2U3Z05QS2NaNWpFRzRHVFYwUgpkb2F5RTZNd2tnWW16SkZXVGlTb3VyK0pQRzRiMEdRakFCTkgrVURmQXhsMGZXaE9WYWY1YlZ2RGZlVE41Wm55CnN3SFA4OVpqQWdNQkFBRUNnZ0VBTGo2SERIbkMzemxyNlplRnE2WlJhNnFLWmNCMnJHd21IU2s3Q3FUcWdnNVUKcmtvWDFyZWExcG0wbGpaOU1KVVYxb1Nsd2w4RHdzU0lETUt2ajlkMUdQYnJPS0RuQU5KWTJuSTAxVk1SdjIvWQpVcklWYks2M0dsbzdDUTNHK211MXhMRjV0ODVyWlBEUkVRb29ZdXNiR282UDNYTStIbXZEUFNrcW9mZVo3RSt2CnNmaVNFU0dXc1hlbVdZVjJjUlg2OWdJdWFMRGYrLzZzdmFFUU92R0t3enUwcWxhT1VRMG0wYys3anpjWEdOQ0wKcEtUenY2VUdsUWg0c3doclJnNHdqbmJRcHZmbmR1ODlpeEFWSDcyVnFNRnFQZjFWTXVSWlNXZ2RxNGRRNU1PcgovRTFJdWs1c2tWZXE3cUhobUVldFNnZ1BwemlPWUtkcG9Fbzl5akNrNlFLQmdRRHdMa3dOZlNMRkV0eFRhY2t4CmExQVBoQ2c0ZUF1SnlmVDR4ditoNTExNmg5RW03ZFU0S0kwUWJlTU9qWVRjMmFTTWR2bHBWVmtRTzRvaThJWm8Kd0Fabml5YVp3aVdxYnBCTHQzUnR5Qk1oenczZjl6NWQxUU5JdVpGcU1QSlF1Q1VLcVJOZUk1clU4MFA4TWdlOAppc2ovVzM1OW9UQW1pWHZ1Rkc0aGwxNXBkd0tCZ1FET0w3aE83KzFwWkFQKzk3MEdMQ1p0VjM2aU9ZWllEakdOCm0zQm1CWkYwV2c1bFVjbEhhZnN3VDhSS0RsWTF6RHZVT0xudlMyYldXd0VZUFFxRVNnaWpDb3FMNFFLVXJ0a20KQ0g1Z2ZJdG41clAxMURCTzJzdGU4L1YzL2QwZW5SQVM1MllVeVlnbis0OVUxL2x6TVI4ZkwyK05ETWZIQ2RaSApmdm5URjhnMWRRS0JnUURrelRYbUk2OWJ6ZnZWK3BDUFk0dUJQSVNVUnNlM0c0MGk4Vy9VN0hOQXB1RzRGQmxxCnhqYWIwQkxkYWpPSHNFM3hBZVhYVWxibC85STROcW5VWUJtNXlmV2J4RGZkaERZeDZ6SWU0dHBXK3NoYzgwdVcKVjdZcE1aNDFheXRyZWdEUGh3SE1URjdUUG1zbGRRT3B1UXlCTnNmcEpnU1lzYUE5elhpY3gzWkpRUUtCZ1FDNwppdVpQVHFjWTlMTTV5R2R6NU5heklDRjhOMnkrVFhLL1JrS1BXY003SE9yNU45SW9GZnMzcjJad29lZkNtVmxXCktKN2ZUU3RtRUhMSGRFWkxtL2VOTFhwbHp5NEV4YUdZbWFNeDZqYjNNLzQrdlZtUGNDNEoyVWRPZEdnYmYydHUKZG5JQXVHc1RTeHJOWm9Gc1NLTHhQN2xzaDlKemRid2xYaGFvN25uYVBRS0JnRk5BN3F5c1lzOXdvQ3pDTjhJOAo5NVZENnBBVW5sWnZNRStHTFp1dFd1aHVDYzFRSXJaUkJ1cWNtN3kvaDJpNmJjRE9Ubkh1TnVhWUVSUzgvOURTCmRGcnlPckU2RENJWjQraXIrWGRxamNvT0p0dDFwTmFDRUYwdUwxNTRVM1ppU0dsVEhqbkFwQkZXSkMxbTg1TDEKaUNWMWcrZ21xeVRRNFZja0grV0ZnOXFMCi0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0K
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: ing-tls
+type: kubernetes.io/tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - ckatcswebcm.lab
+    secretName: ing-tls
+status:
+  loadBalancer: {}
+---
+sfjbs@n1:~/src$ :q!
+:q!: command not found
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  pv-claim.yaml  pv-volume.yaml  ssl
+sfjbs@n1:~/src$ vim vim nodeselector.yaml
+2 files to edit
+sfjbs@n1:~/src$ vim nodeselector.yaml
+sfjbs@n1:~/src$ kubectl get pvc
+NAME       STATUS   VOLUME     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+app-data   Bound    app-data   1Gi        RWO            manual         6m13s
+sfjbs@n1:~/src$ vim nodeselector.yaml
+sfjbs@n1:~/src$ kubectl apply -f nodeselector.yaml
+deployment.apps/nodetest configured
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-584595b66d-77f6l    1/1     Running   0          4s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d1h
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          4d
+testtest-7548b57756-r2p4t    1/1     Running   0          4d
+webcm-5447f84b96-nzqff       1/1     Running   0          53m
+webcm-5447f84b96-xht7v       1/1     Running   0          53m
+webcm-5447f84b96-z2spn       1/1     Running   0          53m
+sfjbs@n1:~/src$ kubectl expose deploy nodetest --port=80 --target-port=80 --type=NodePort
+service/nodetest exposed
+sfjbs@n1:~/src$ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+nodehello-57589d9d44-4tzsh   1/1     Running   0          24h
+nodehello-57589d9d44-mb28l   1/1     Running   0          24h
+nodehello-57589d9d44-rcqsc   1/1     Running   0          24h
+nodetest-584595b66d-77f6l    1/1     Running   0          61s
+testpod-565f4b7cb5-hwgdz     1/1     Running   0          4d1h
+testpod-565f4b7cb5-jpltz     1/1     Running   0          4d
+testtcs-54ddd9d578-4rqd5     1/1     Running   0          4d
+testtest-7548b57756-r2p4t    1/1     Running   0          4d
+webcm-5447f84b96-nzqff       1/1     Running   0          54m
+webcm-5447f84b96-xht7v       1/1     Running   0          54m
+webcm-5447f84b96-z2spn       1/1     Running   0          54m
+sfjbs@n1:~/src$ kubectl get svc
+NAME         TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP      192.168.0.1     <none>        443/TCP        4d22h
+nodehello    ClusterIP      192.168.0.251   <none>        80/TCP         24h
+nodetest     NodePort       192.168.0.71    <none>        80:30045/TCP   9s
+testpod      NodePort       192.168.0.191   <none>        80:31487/TCP   4d
+testtcs      LoadBalancer   192.168.0.192   <pending>     80:31642/TCP   4d
+testtest     ClusterIP      192.168.0.234   <none>        80/TCP         4d
+webcm        ClusterIP      192.168.0.237   <none>        80/TCP         3h6m
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  pv-claim.yaml  pv-volume.yaml  ssl
+sfjbs@n1:~/src$ cat pv-volume.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: app-data
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/srv/app-data"
+sfjbs@n1:~/src$ cat pv-claim.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: app-data
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+sfjbs@n1:~/src$ cat nodeselector.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nodetest
+  name: nodetest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodetest
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nodetest
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        volumeMounts:
+          - mountPath: "/usr/share/nginx/html"
+            name: task-pv-storage
+      nodeSelector:
+         disktype: ssd
+      volumes:
+      - name: task-pv-storage
+        persistentVolumeClaim:
+          claimName: app-data
+sfjbs@n1:~/src$ history | grep etcd
+  335  etcd
+  337  kubectl -n exec etcd-n1 -- sh
+  338  kubectl -n kube-system exec etcd-n1 -- sh
+  339  kubectl -n kube-system attach etcd-n1
+  340  etcdctl
+  341  wget https://github.com/etcd-io/etcd/releases/download/v3.4.22/etcd-v3.4.22-linux-amd64.tar.gz
+  343  tar -xvf etcd-v3.4.22-linux-amd64.tar.gz
+  345  cd etcd-v3.4.22-linux-amd64/
+  349  rm -f etcd-v3.4.22-linux-amd*
+  351  rm -f etcd-v3.4.22-linux-amd64/
+  353  rm -rf etcd-v3.4.22-linux-amd6*
+  576  history | grep etcd
+sfjbs@n1:~/src$ ls
+appdeploy.yaml  index.html  nodeselector.yaml  pv-claim.yaml  pv-volume.yaml  ssl
+sfjbs@n1:~/src$ cd
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ mkdir etcd
+sfjbs@n1:~$ cd etcd
+sfjbs@n1:~/etcd$ ls
+sfjbs@n1:~/etcd$ wget https://github.com/etcd-io/etcd/releases/download/v3.4.22/etcd-v3.4.22-linux-amd64.tar.gz
+--2022-11-08 10:03:29--  https://github.com/etcd-io/etcd/releases/download/v3.4.22/etcd-v3.4.22-linux-amd64.tar.gz
+Resolving github.com (github.com)... 20.207.73.82
+Connecting to github.com (github.com)|20.207.73.82|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://objects.githubusercontent.com/github-production-release-asset-2e65be/11225014/b39f8286-5cdb-4515-ad99-cd60ba36f985?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20221108%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221108T100329Z&X-Amz-Expires=300&X-Amz-Signature=53167684c3b3a01755f3a2657669dc51f63eb61ff13daf27defb630f35730e2c&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=11225014&response-content-disposition=attachment%3B%20filename%3Detcd-v3.4.22-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream [following]
+--2022-11-08 10:03:29--  https://objects.githubusercontent.com/github-production-release-asset-2e65be/11225014/b39f8286-5cdb-4515-ad99-cd60ba36f985?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20221108%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221108T100329Z&X-Amz-Expires=300&X-Amz-Signature=53167684c3b3a01755f3a2657669dc51f63eb61ff13daf27defb630f35730e2c&X-Amz-SignedHeaders=host&actor_id=0&key_id=0&repo_id=11225014&response-content-disposition=attachment%3B%20filename%3Detcd-v3.4.22-linux-amd64.tar.gz&response-content-type=application%2Foctet-stream
+Resolving objects.githubusercontent.com (objects.githubusercontent.com)... 185.199.108.133, 185.199.109.133, 185.199.110.133, ...
+Connecting to objects.githubusercontent.com (objects.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15212663 (15M) [application/octet-stream]
+Saving to: ‘etcd-v3.4.22-linux-amd64.tar.gz’
+
+etcd-v3.4.22-linux-amd64.tar.gz        100%[============================================================================>]  14.51M  20.0MB/s    in 0.7s
+
+2022-11-08 10:03:31 (20.0 MB/s) - ‘etcd-v3.4.22-linux-amd64.tar.gz’ saved [15212663/15212663]
+
+sfjbs@n1:~/etcd$ ls
+etcd-v3.4.22-linux-amd64.tar.gz
+sfjbs@n1:~/etcd$ tar xvf etcd-v3.4.22-linux-amd64.tar.gz
+etcd-v3.4.22-linux-amd64/
+etcd-v3.4.22-linux-amd64/etcd
+etcd-v3.4.22-linux-amd64/etcdctl
+etcd-v3.4.22-linux-amd64/README.md
+etcd-v3.4.22-linux-amd64/README-etcdctl.md
+etcd-v3.4.22-linux-amd64/READMEv2-etcdctl.md
+etcd-v3.4.22-linux-amd64/Documentation/
+etcd-v3.4.22-linux-amd64/Documentation/README.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/README.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-1-0-alpha-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-2-0-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-2-0-rc-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-2-2-0-rc-memory-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-3-demo-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-3-watch-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/benchmarks/etcd-storage-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/branch_management.md
+etcd-v3.4.22-linux-amd64/Documentation/demo.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/api_concurrency_reference_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/api_grpc_gateway.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/api_reference_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/rpc.swagger.json
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/v3election.swagger.json
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/apispec/swagger/v3lock.swagger.json
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/experimental_apis.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/grpc_naming.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/interacting_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/limit.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-guide/local_cluster.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/discovery_protocol.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/logging.md
+etcd-v3.4.22-linux-amd64/Documentation/dev-internal/release.md
+etcd-v3.4.22-linux-amd64/Documentation/dl_build.md
+etcd-v3.4.22-linux-amd64/Documentation/docs.md
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/README.md
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/mixin.libsonnet
+etcd-v3.4.22-linux-amd64/Documentation/etcd-mixin/test.yaml
+etcd-v3.4.22-linux-amd64/Documentation/faq.md
+etcd-v3.4.22-linux-amd64/Documentation/integrations.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/
+etcd-v3.4.22-linux-amd64/Documentation/learning/api.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/api_guarantees.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/data_model.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/design-auth-v3.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/design-client.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/design-learner.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/glossary.md
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-01.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-02.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-03.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-04.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-05.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-06.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-07.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-08.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/client-balancer-figure-09.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/etcd.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-01.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-02.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-03.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-04.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-05.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-06.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-07.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-08.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-09.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-10.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-11.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-12.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/img/server-learner-figure-13.png
+etcd-v3.4.22-linux-amd64/Documentation/learning/why.md
+etcd-v3.4.22-linux-amd64/Documentation/metrics.md
+etcd-v3.4.22-linux-amd64/Documentation/metrics/
+etcd-v3.4.22-linux-amd64/Documentation/metrics/latest
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.0
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.1
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.10
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.11
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.12
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.13
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.14
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.15
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.16
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.17
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.18
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.19
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.2
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.20
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.3
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.4
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.5
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.6
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.7
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.8
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.1.9
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.0
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.1
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.10
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.11
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.12
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.13
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.14
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.15
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.16
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.17
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.18
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.19
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.2
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.20
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.21
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.22
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.23
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.24
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.25
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.3
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.4
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.5
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.6
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.7
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.8
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.2.9
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.0
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.1
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.10
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.2
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.3
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.4
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.5
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.6
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.7
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.8
+etcd-v3.4.22-linux-amd64/Documentation/metrics/v3.3.9
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/authentication.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/clustering.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/container.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/etcd-sample-grafana.png
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/etcd3_alert.rules
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/etcd3_alert.rules.yml
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/failures.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/gateway.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/grafana.json
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/grpc_proxy.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/hardware.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/maintenance.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/monitoring.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/performance.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/recovery.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/runtime-configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/runtime-reconf-design.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/security.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/supported-platform.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/v2-migration.md
+etcd-v3.4.22-linux-amd64/Documentation/op-guide/versioning.md
+etcd-v3.4.22-linux-amd64/Documentation/platforms/
+etcd-v3.4.22-linux-amd64/Documentation/platforms/aws.md
+etcd-v3.4.22-linux-amd64/Documentation/platforms/container-linux-systemd.md
+etcd-v3.4.22-linux-amd64/Documentation/platforms/freebsd.md
+etcd-v3.4.22-linux-amd64/Documentation/production-users.md
+etcd-v3.4.22-linux-amd64/Documentation/reporting_bugs.md
+etcd-v3.4.22-linux-amd64/Documentation/rfc/
+etcd-v3.4.22-linux-amd64/Documentation/rfc/v3api.md
+etcd-v3.4.22-linux-amd64/Documentation/triage/
+etcd-v3.4.22-linux-amd64/Documentation/triage/PRs.md
+etcd-v3.4.22-linux-amd64/Documentation/triage/issues.md
+etcd-v3.4.22-linux-amd64/Documentation/tuning.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_0.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_1.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_2.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_3.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_4.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrade_3_5.md
+etcd-v3.4.22-linux-amd64/Documentation/upgrades/upgrading-etcd.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/
+etcd-v3.4.22-linux-amd64/Documentation/v2/04_to_2_snapshot_migration.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/README.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/admin_guide.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/api_v3.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/auth_api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/authentication.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/backward_compatibility.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/README.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-1-0-alpha-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-2-0-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-2-0-rc-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-2-2-0-rc-memory-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-3-demo-benchmarks.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-3-watch-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/benchmarks/etcd-storage-memory-benchmark.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/branch_management.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/clustering.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/dev/
+etcd-v3.4.22-linux-amd64/Documentation/v2/dev/release.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/discovery_protocol.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/docker_guide.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/errorcode.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/etcd_alert.rules
+etcd-v3.4.22-linux-amd64/Documentation/v2/etcd_alert.rules.yml
+etcd-v3.4.22-linux-amd64/Documentation/v2/faq.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/glossary.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/internal-protocol-versioning.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/libraries-and-tools.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/members_api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/metrics.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/other_apis.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/platforms/
+etcd-v3.4.22-linux-amd64/Documentation/v2/platforms/freebsd.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/production-users.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/proxy.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/reporting_bugs.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/rfc/
+etcd-v3.4.22-linux-amd64/Documentation/v2/rfc/v3api.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/runtime-configuration.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/runtime-reconf-design.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/security.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/tuning.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/upgrade_2_1.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/upgrade_2_2.md
+etcd-v3.4.22-linux-amd64/Documentation/v2/upgrade_2_3.md
+sfjbs@n1:~/etcd$ ls
+etcd-v3.4.22-linux-amd64  etcd-v3.4.22-linux-amd64.tar.gz
+sfjbs@n1:~/etcd$ cd etcd-v3.4.22-linux-amd64/
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ls
+Documentation  README-etcdctl.md  README.md  READMEv2-etcdctl.md  etcd  etcdctl
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ./etcdctl
+NAME:
+        etcdctl - A simple command line client for etcd3.
+
+USAGE:
+        etcdctl [flags]
+
+VERSION:
+        3.4.22
+
+API VERSION:
+        3.4
+
+
+COMMANDS:
+        alarm disarm            Disarms all alarms
+        alarm list              Lists all alarms
+        auth disable            Disables authentication
+        auth enable             Enables authentication
+        check datascale         Check the memory usage of holding data for different workloads on a given server endpoint.
+        check perf              Check the performance of the etcd cluster
+        compaction              Compacts the event history in etcd
+        defrag                  Defragments the storage of the etcd members with given endpoints
+        del                     Removes the specified key or range of keys [key, range_end)
+        elect                   Observes and participates in leader election
+        endpoint hashkv         Prints the KV history hash for each endpoint in --endpoints
+        endpoint health         Checks the healthiness of endpoints specified in `--endpoints` flag
+        endpoint status         Prints out the status of endpoints specified in `--endpoints` flag
+        get                     Gets the key or a range of keys
+        help                    Help about any command
+        lease grant             Creates leases
+        lease keep-alive        Keeps leases alive (renew)
+        lease list              List all active leases
+        lease revoke            Revokes leases
+        lease timetolive        Get lease information
+        lock                    Acquires a named lock
+        make-mirror             Makes a mirror at the destination etcd cluster
+        member add              Adds a member into the cluster
+        member list             Lists all members in the cluster
+        member promote          Promotes a non-voting member in the cluster
+        member remove           Removes a member from the cluster
+        member update           Updates a member in the cluster
+        migrate                 Migrates keys in a v2 store to a mvcc store
+        move-leader             Transfers leadership to another etcd cluster member.
+        put                     Puts the given key into the store
+        role add                Adds a new role
+        role delete             Deletes a role
+        role get                Gets detailed information of a role
+        role grant-permission   Grants a key to a role
+        role list               Lists all roles
+        role revoke-permission  Revokes a key from a role
+        snapshot restore        Restores an etcd member snapshot to an etcd directory
+        snapshot save           Stores an etcd node backend snapshot to a given file
+        snapshot status         Gets backend snapshot status of a given file
+        txn                     Txn processes all the requests in one transaction
+        user add                Adds a new user
+        user delete             Deletes a user
+        user get                Gets detailed information of a user
+        user grant-role         Grants a role to a user
+        user list               Lists all users
+        user passwd             Changes password of user
+        user revoke-role        Revokes a role from a user
+        version                 Prints the version of etcdctl
+        watch                   Watches events stream on keys or prefixes
+
+OPTIONS:
+      --cacert=""                               verify certificates of TLS-enabled secure servers using this CA bundle
+      --cert=""                                 identify secure client using this TLS certificate file
+      --command-timeout=5s                      timeout for short running command (excluding dial timeout)
+      --debug[=false]                           enable client-side debug logging
+      --dial-timeout=2s                         dial timeout for client connections
+  -d, --discovery-srv=""                        domain name to query for SRV records describing cluster endpoints
+      --discovery-srv-name=""                   service name to query when using DNS discovery
+      --endpoints=[127.0.0.1:2379]              gRPC endpoints
+  -h, --help[=false]                            help for etcdctl
+      --hex[=false]                             print byte strings as hex encoded strings
+      --insecure-discovery[=true]               accept insecure SRV records describing cluster endpoints
+      --insecure-skip-tls-verify[=false]        skip server certificate verification (CAUTION: this option should be enabled only for testing purposes)
+      --insecure-transport[=true]               disable transport security for client connections
+      --keepalive-time=2s                       keepalive time for client connections
+      --keepalive-timeout=6s                    keepalive timeout for client connections
+      --key=""                                  identify secure client using this TLS key file
+      --password=""                             password for authentication (if this option is used, --user option shouldn't include password)
+      --user=""                                 username[:password] for authentication (prompt if password is not supplied)
+  -w, --write-out="simple"                      set the output format (fields, json, protobuf, simple, table)
+
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl get po -n kube-system
+NAME                              READY   STATUS    RESTARTS     AGE
+coredns-6d4b75cb6d-sppph          1/1     Running   0            5d
+coredns-6d4b75cb6d-vvq47          1/1     Running   0            5d
+etcd-n1                           1/1     Running   0            5d
+kube-apiserver-n1                 1/1     Running   0            5d
+kube-controller-manager-n1        1/1     Running   0            5d
+kube-proxy-b8g9q                  1/1     Running   0            5d
+kube-proxy-swgrp                  1/1     Running   0            5d
+kube-scheduler-n1                 1/1     Running   0            5d
+metrics-server-7fbb5f69c6-65pqq   1/1     Running   0            5d
+weave-net-rt6lz                   2/2     Running   1 (5d ago)   5d
+weave-net-rxrvm                   2/2     Running   1 (5d ago)   5d
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl describe po etcd-n1 -n kube-system
+Name:                 etcd-n1
+Namespace:            kube-system
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Node:                 n1/10.1.0.4
+Start Time:           Thu, 03 Nov 2022 09:13:11 +0000
+Labels:               component=etcd
+                      tier=control-plane
+Annotations:          kubeadm.kubernetes.io/etcd.advertise-client-urls: https://10.1.0.4:2379
+                      kubernetes.io/config.hash: 28956d93ed11b93b3f7683680faf9641
+                      kubernetes.io/config.mirror: 28956d93ed11b93b3f7683680faf9641
+                      kubernetes.io/config.seen: 2022-11-03T09:13:10.950396764Z
+                      kubernetes.io/config.source: file
+                      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+Status:               Running
+IP:                   10.1.0.4
+IPs:
+  IP:           10.1.0.4
+Controlled By:  Node/n1
+Containers:
+  etcd:
+    Container ID:  containerd://08081fed01ae4b37f42027dddf8c792ea1df2b447c0ac1c8f6b7d1b8e2300f74
+    Image:         k8s.gcr.io/etcd:3.5.3-0
+    Image ID:      k8s.gcr.io/etcd@sha256:13f53ed1d91e2e11aac476ee9a0269fdda6cc4874eba903efd40daf50c55eee5
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      etcd
+      --advertise-client-urls=https://10.1.0.4:2379
+      --cert-file=/etc/kubernetes/pki/etcd/server.crt
+      --client-cert-auth=true
+      --data-dir=/var/lib/etcd
+      --experimental-initial-corrupt-check=true
+      --initial-advertise-peer-urls=https://10.1.0.4:2380
+      --initial-cluster=n1=https://10.1.0.4:2380
+      --key-file=/etc/kubernetes/pki/etcd/server.key
+      --listen-client-urls=https://127.0.0.1:2379,https://10.1.0.4:2379
+      --listen-metrics-urls=http://127.0.0.1:2381
+      --listen-peer-urls=https://10.1.0.4:2380
+      --name=n1
+      --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+      --peer-client-cert-auth=true
+      --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+      --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      --snapshot-count=10000
+      --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    State:          Running
+      Started:      Thu, 03 Nov 2022 09:13:03 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        100m
+      memory:     100Mi
+    Liveness:     http-get http://127.0.0.1:2381/health delay=10s timeout=15s period=10s #success=1 #failure=8
+    Startup:      http-get http://127.0.0.1:2381/health delay=10s timeout=15s period=10s #success=1 #failure=24
+    Environment:  <none>
+    Mounts:
+      /etc/kubernetes/pki/etcd from etcd-certs (rw)
+      /var/lib/etcd from etcd-data (rw)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  etcd-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/pki/etcd
+    HostPathType:  DirectoryOrCreate
+  etcd-data:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/etcd
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute op=Exists
+Events:            <none>
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ETCDCTL_API=3
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ETCDCTL_API=3; ./etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot-save
+Error: unknown command "snapshot-save" for "etcdctl"
+Run 'etcdctl --help' for usage.
+Error: unknown command "snapshot-save" for "etcdctl"
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ETCDCTL_API=3; ./etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save
+Error: snapshot save expects one argument
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ETCDCTL_API=3; ./etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save  /root/snapetcd.db
+Error: open /etc/kubernetes/pki/etcd/server.key: permission denied
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ETCDCTL_API=3; sudo ./etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/
+etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save  /root/snapetcd.db
+{"level":"info","ts":1667902131.1763685,"caller":"snapshot/v3_snapshot.go:119","msg":"created temporary db file","path":"/root/snapetcd.db.part"}
+{"level":"info","ts":"2022-11-08T10:08:51.183Z","caller":"clientv3/maintenance.go:200","msg":"opened snapshot stream; downloading"}
+{"level":"info","ts":1667902131.1832802,"caller":"snapshot/v3_snapshot.go:127","msg":"fetching snapshot","endpoint":"https://127.0.0.1:2379"}
+{"level":"info","ts":"2022-11-08T10:08:51.243Z","caller":"clientv3/maintenance.go:208","msg":"completed snapshot read; closing"}
+{"level":"info","ts":1667902131.2562647,"caller":"snapshot/v3_snapshot.go:142","msg":"fetched snapshot","endpoint":"https://127.0.0.1:2379","size":"3.7 MB","took":0.079670093}
+{"level":"info","ts":1667902131.2564251,"caller":"snapshot/v3_snapshot.go:152","msg":"saved","path":"/root/snapetcd.db"}
+Snapshot saved at /root/snapetcd.db
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl get po --show-labels -n kube-system
+NAME                              READY   STATUS    RESTARTS       AGE    LABELS
+coredns-6d4b75cb6d-sppph          1/1     Running   0              5d1h   k8s-app=kube-dns,pod-template-hash=6d4b75cb6d
+coredns-6d4b75cb6d-vvq47          1/1     Running   0              5d1h   k8s-app=kube-dns,pod-template-hash=6d4b75cb6d
+etcd-n1                           1/1     Running   0              5d1h   component=etcd,tier=control-plane
+kube-apiserver-n1                 1/1     Running   0              5d1h   component=kube-apiserver,tier=control-plane
+kube-controller-manager-n1        1/1     Running   0              5d1h   component=kube-controller-manager,tier=control-plane
+kube-proxy-b8g9q                  1/1     Running   0              5d1h   controller-revision-hash=547546f9bf,k8s-app=kube-proxy,pod-template-generation=1
+kube-proxy-swgrp                  1/1     Running   0              5d1h   controller-revision-hash=547546f9bf,k8s-app=kube-proxy,pod-template-generation=1
+kube-scheduler-n1                 1/1     Running   0              5d1h   component=kube-scheduler,tier=control-plane
+metrics-server-7fbb5f69c6-65pqq   1/1     Running   0              5d1h   k8s-app=metrics-server,pod-template-hash=7fbb5f69c6
+weave-net-rt6lz                   2/2     Running   1 (5d1h ago)   5d1h   controller-revision-hash=7866976d94,name=weave-net,pod-template-generation=1
+weave-net-rxrvm                   2/2     Running   1 (5d1h ago)   5d1h   controller-revision-hash=7866976d94,name=weave-net,pod-template-generation=1
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl get po -l component=etcd -n kube-system
+NAME      READY   STATUS    RESTARTS   AGE
+etcd-n1   1/1     Running   0          5d1h
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl get po -l component=etcd -n kube-system -o raw
+error: unable to match a printer suitable for the output format "raw", allowed formats are: custom-columns,custom-columns-file,go-template,go-template-file,json,jsonpath,jsonpath-as-json,jsonpath-file,name,template,templatefile,wide,yaml
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl get po -l component=etcd -n kube-system -o name
+pod/etcd-n1
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ kubectl describe $(kubectl get po -l component=etcd -n kube-system -o name) -n kube-system
+Name:                 etcd-n1
+Namespace:            kube-system
+Priority:             2000001000
+Priority Class Name:  system-node-critical
+Node:                 n1/10.1.0.4
+Start Time:           Thu, 03 Nov 2022 09:13:11 +0000
+Labels:               component=etcd
+                      tier=control-plane
+Annotations:          kubeadm.kubernetes.io/etcd.advertise-client-urls: https://10.1.0.4:2379
+                      kubernetes.io/config.hash: 28956d93ed11b93b3f7683680faf9641
+                      kubernetes.io/config.mirror: 28956d93ed11b93b3f7683680faf9641
+                      kubernetes.io/config.seen: 2022-11-03T09:13:10.950396764Z
+                      kubernetes.io/config.source: file
+                      seccomp.security.alpha.kubernetes.io/pod: runtime/default
+Status:               Running
+IP:                   10.1.0.4
+IPs:
+  IP:           10.1.0.4
+Controlled By:  Node/n1
+Containers:
+  etcd:
+    Container ID:  containerd://08081fed01ae4b37f42027dddf8c792ea1df2b447c0ac1c8f6b7d1b8e2300f74
+    Image:         k8s.gcr.io/etcd:3.5.3-0
+    Image ID:      k8s.gcr.io/etcd@sha256:13f53ed1d91e2e11aac476ee9a0269fdda6cc4874eba903efd40daf50c55eee5
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      etcd
+      --advertise-client-urls=https://10.1.0.4:2379
+      --cert-file=/etc/kubernetes/pki/etcd/server.crt
+      --client-cert-auth=true
+      --data-dir=/var/lib/etcd
+      --experimental-initial-corrupt-check=true
+      --initial-advertise-peer-urls=https://10.1.0.4:2380
+      --initial-cluster=n1=https://10.1.0.4:2380
+      --key-file=/etc/kubernetes/pki/etcd/server.key
+      --listen-client-urls=https://127.0.0.1:2379,https://10.1.0.4:2379
+      --listen-metrics-urls=http://127.0.0.1:2381
+      --listen-peer-urls=https://10.1.0.4:2380
+      --name=n1
+      --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt
+      --peer-client-cert-auth=true
+      --peer-key-file=/etc/kubernetes/pki/etcd/peer.key
+      --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+      --snapshot-count=10000
+      --trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt
+    State:          Running
+      Started:      Thu, 03 Nov 2022 09:13:03 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:        100m
+      memory:     100Mi
+    Liveness:     http-get http://127.0.0.1:2381/health delay=10s timeout=15s period=10s #success=1 #failure=8
+    Startup:      http-get http://127.0.0.1:2381/health delay=10s timeout=15s period=10s #success=1 #failure=24
+    Environment:  <none>
+    Mounts:
+      /etc/kubernetes/pki/etcd from etcd-certs (rw)
+      /var/lib/etcd from etcd-data (rw)
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+Volumes:
+  etcd-certs:
+    Type:          HostPath (bare host directory volume)
+    Path:          /etc/kubernetes/pki/etcd
+    HostPathType:  DirectoryOrCreate
+  etcd-data:
+    Type:          HostPath (bare host directory volume)
+    Path:          /var/lib/etcd
+    HostPathType:  DirectoryOrCreate
+QoS Class:         Burstable
+Node-Selectors:    <none>
+Tolerations:       :NoExecute op=Exists
+Events:            <none>
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ ETCDCTL_API=3; sudo ./etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save  /root/snapetcd.db^C
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ sudo bash
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# cd /etc/kubernetes/
+root@n1:/etc/kubernetes# ls
+admin.conf  controller-manager.conf  kubelet.conf  manifests  pki  scheduler.conf
+root@n1:/etc/kubernetes# cd manifests/
+root@n1:/etc/kubernetes/manifests# ls
+etcd.yaml  kube-apiserver.yaml  kube-controller-manager.yaml  kube-scheduler.yaml
+root@n1:/etc/kubernetes/manifests# cd
+root@n1:~# ls
+snap  snapetcd.db
+root@n1:~# cd /home/sfjbs/etcd/etcd-v3.4.22-linux-amd64
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ls
+Documentation  README-etcdctl.md  README.md  READMEv2-etcdctl.md  etcd  etcdctl
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ETCDCTL_API=3; ./etcdctl --datadir=/opt/snapshot restore /root/snapetcd.db
+Error: unknown command "restore" for "etcdctl"
+Run 'etcdctl --help' for usage.
+Error: unknown command "restore" for "etcdctl"
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ETCDCTL_API=3; ./etcdctl --datadir=/opt/ snapshot restore /root/snapetcd.db
+Error: unknown flag: --datadir
+NAME:
+        snapshot restore - Restores an etcd member snapshot to an etcd directory
+
+USAGE:
+        etcdctl snapshot restore <filename> [options] [flags]
+
+OPTIONS:
+      --data-dir=""                                             Path to the data directory
+  -h, --help[=false]                                            help for restore
+      --initial-advertise-peer-urls="http://localhost:2380"     List of this member's peer URLs to advertise to the rest of the cluster
+      --initial-cluster="default=http://localhost:2380"         Initial cluster configuration for restore bootstrap
+      --initial-cluster-token="etcd-cluster"                    Initial cluster token for the etcd cluster during restore bootstrap
+      --name="default"                                          Human-readable name for this member
+      --skip-hash-check[=false]                                 Ignore snapshot integrity hash value (required if copied from data directory)
+      --wal-dir=""                                              Path to the WAL directory (use --data-dir if none given)
+
+GLOBAL OPTIONS:
+      --cacert=""                               verify certificates of TLS-enabled secure servers using this CA bundle
+      --cert=""                                 identify secure client using this TLS certificate file
+      --command-timeout=5s                      timeout for short running command (excluding dial timeout)
+      --debug[=false]                           enable client-side debug logging
+      --dial-timeout=2s                         dial timeout for client connections
+  -d, --discovery-srv=""                        domain name to query for SRV records describing cluster endpoints
+      --discovery-srv-name=""                   service name to query when using DNS discovery
+      --endpoints=[127.0.0.1:2379]              gRPC endpoints
+      --hex[=false]                             print byte strings as hex encoded strings
+      --insecure-discovery[=true]               accept insecure SRV records describing cluster endpoints
+      --insecure-skip-tls-verify[=false]        skip server certificate verification (CAUTION: this option should be enabled only for testing purposes)
+      --insecure-transport[=true]               disable transport security for client connections
+      --keepalive-time=2s                       keepalive time for client connections
+      --keepalive-timeout=6s                    keepalive timeout for client connections
+      --key=""                                  identify secure client using this TLS key file
+      --password=""                             password for authentication (if this option is used, --user option shouldn't include password)
+      --user=""                                 username[:password] for authentication (prompt if password is not supplied)
+  -w, --write-out="simple"                      set the output format (fields, json, protobuf, simple, table)
+
+
+Error: unknown flag: --datadir
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# mkdir /opt/etcd
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ETCDCTL_API=3; ./etcdctl --data-dir=/opt/etcd snapshot restore /root/snapetcd.db
+Error: data-dir "/opt/etcd" exists
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ETCDCTL_API=3; ./etcdctl --data-dir=/opt/etcd/v1 snapshot restore /root/snapetcd.db
+{"level":"info","ts":1667903310.6785073,"caller":"snapshot/v3_snapshot.go:296","msg":"restoring snapshot","path":"/root/snapetcd.db","wal-dir":"/opt/etcd/v1/member/wal","data-dir":"/opt/etcd/v1","snap-dir":"/opt/etcd/v1/member/snap"}
+{"level":"info","ts":1667903310.7127602,"caller":"mvcc/kvstore.go:388","msg":"restored last compact revision","meta-bucket-name":"meta","meta-bucket-name-key":"finishedCompactRev","restored-compact-revision":592864}
+{"level":"info","ts":1667903310.7238483,"caller":"membership/cluster.go:392","msg":"added member","cluster-id":"cdf818194e3a8c32","local-member-id":"0","added-peer-id":"8e9e05c52164694d","added-peer-peer-urls":["http://localhost:2380"]}
+{"level":"info","ts":1667903310.7414436,"caller":"snapshot/v3_snapshot.go:309","msg":"restored snapshot","path":"/root/snapetcd.db","wal-dir":"/opt/etcd/v1/member/wal","data-dir":"/opt/etcd/v1","snap-dir":"/opt/etcd/v1/member/snap"}
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ls
+Documentation  README-etcdctl.md  README.md  READMEv2-etcdctl.md  etcd  etcdctl
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ls /opt/etcd/v1
+member
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# ls /opt/etcd/v1/member/
+snap  wal
+root@n1:/home/sfjbs/etcd/etcd-v3.4.22-linux-amd64# cd
+root@n1:~# ls
+snap  snapetcd.db
+root@n1:~# exit
+sfjbs@n1:~/etcd/etcd-v3.4.22-linux-amd64$ cd
+sfjbs@n1:~$ ls
+deploy.yaml  etcd  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ rm -rf etcd
+sfjbs@n1:~$ ls
+deploy.yaml  ing.yaml  ing2.yaml  src  test.yaml
+sfjbs@n1:~$ sudo bash
+root@n1:/home/sfjbs# cd /etc/kubernetes/manifests/
+root@n1:/etc/kubernetes/manifests# vim etcd.yaml
+root@n1:/etc/kubernetes/manifests# exit
+sfjbs@n1:~$ client_loop: send disconnect: Connection reset
+PS C:\Users\vijay>
