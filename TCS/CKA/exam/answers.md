@@ -220,6 +220,14 @@ Create a new ClusterRole named deployment-clusterrole, which only allows to crea
  DaemonSet
 Create a new ServiceAccount named cicd-token in the existing namespace app-team1.
 Bind the new ClusterRole deployment-clusterrole to the new ServiceAccount cicd-token, limited to the namespace app-team1.
+- **Answer**
+
+```
+kubectl create ns app-team1  #only in lab
+kubectl create serviceaccount  cicd-token -n  app-team1
+kubectl create clusterrole deployment-clusterrole  --resource=Deployment,StatefulSet,DaemonSet  --verb=create
+kubectl create  rolebinding  deployment-cluster  --serviceaccount=app-team1:cicd-token  --clusterrole=deployment-clusterrole  
+```
 
 ### Q13.
 Create a new NetworkPolicy named allow-port-from-namespace in the existing namespace fubar.
