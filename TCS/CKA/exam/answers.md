@@ -209,4 +209,47 @@ systemctl restart kubelet
 ```
 kubectl uncordon <node-name>
 ```
-Done!
+
+### Q12.
+You have been asked to create a new ClusterRole for a deployment pipeline and bind it to a specific ServiceAccount scoped to a specific
+namespace.
+Task -
+Create a new ClusterRole named deployment-clusterrole, which only allows to create the following resource types:
+ Deployment
+ Stateful Set
+ DaemonSet
+Create a new ServiceAccount named cicd-token in the existing namespace app-team1.
+Bind the new ClusterRole deployment-clusterrole to the new ServiceAccount cicd-token, limited to the namespace app-team1.
+
+### Q13.
+Create a new NetworkPolicy named allow-port-from-namespace in the existing namespace fubar.
+Ensure that the new NetworkPolicy allows Pods in namespace internal to connect to port 9000 of Pods in namespace fubar.
+Further ensure that the new NetworkPolicy:
+ does not allow access to Pods, which don't listen on port 9000
+ does not allow access from Pods, which are not in namespace internal
+ 
+### Q14.
+Reconfigure the existing deployment front-end and add a port specification named http exposing port 80/tcp of the existing container nginx.
+Create a new service named front-end-svc exposing the container port http.
+Configure the new service to also expose the individual Pods via a NodePort on the nodes on which they are scheduled.
+
+### Q15.
+Check to see how many nodes are ready (not including nodes tainted NoSchedule) and write the number to /opt/KUSC00402/kusc00402.txt.
+### Q16.
+Add a sidecar container named sidecar, using the busybox image, to the existing Pod big-corp-app. The new sidecar container has to run the
+following command:
+
+Use a Volume, mounted at /var/log, to make the log file big-corp-app.log available to the sidecar container.
+
+### Q17.
+
+Create a new PersistentVolumeClaim:
+✑ Name: pv-volume
+✑ Class: csi-hostpath-sc
+✑ Capacity: 10Mi
+Create a new Pod which mounts the PersistentVolumeClaim as a volume:
+✑ Name: web-server
+✑ Image: nginx
+✑ Mount path: /usr/share/nginx/html
+Configure the new Pod to have ReadWriteOnce access on the volume.
+Finally, using kubectl edit or kubectl patch expand the PersistentVolumeClaim to a capacity of 70Mi and record that change.
