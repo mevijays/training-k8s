@@ -183,6 +183,7 @@ SSH in to master node
 sudo bash
 apt-mark unhold kubeadm kubelet
 apt install kubeadm=1.25.3-00 kubelet=kubeadm=1.25.3-00 -y
+apt-mark hold kubeadm kubelet
 kubeadm upgrade apply v1.25.3
 systemctl daemon-reload
 systemctl restart kubelet
