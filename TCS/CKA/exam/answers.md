@@ -176,9 +176,10 @@ systemctl start etcd # in exam
 mv /root/etcd.yaml /etc/kubernetes/manifests/   # in lab
 ```
 ### Q12.
+***Master upgrade***
 Upgrade the control plane to newer version
 
-SSH in to master node
+- SSH in to master node  # This qestion asked in exam
 ```
 sudo bash
 apt-mark unhold kubeadm kubelet
@@ -188,3 +189,24 @@ kubeadm upgrade apply v1.25.3
 systemctl daemon-reload
 systemctl restart kubelet
 ```
+***Worker upgrade***
+- Drain the node -step from kubectl
+```
+kubectl drain <node-name> --ignore-daemonsets  --delete-emptydir-data
+```
+- SSH in to worker node  ## for a lab purpose only. we do this one by one on all the nodes
+
+```
+apt-mark unhold kubeadm kubelet
+apt install kubeadm=1.25.3-00 kubelet=1.25.3-00 -y
+kubeadm upgrade node
+apt-mark hold kubeadm kubelet
+systemctl daemon-reload
+systemctl restart kubelet
+```
+
+- Uncordon node -step from kubectl
+```
+kubectl uncordon <node-name>
+```
+Done!
