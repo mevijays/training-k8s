@@ -227,20 +227,90 @@ Ensure that the new NetworkPolicy allows Pods in namespace internal to connect t
 Further ensure that the new NetworkPolicy:
  does not allow access to Pods, which don't listen on port 9000
  does not allow access from Pods, which are not in namespace internal
- 
+ - **Answer**
+check the label for ns internal
+```
+kubectl get ns --show-labels
+```
+Now prepare the policy
+```
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-port-from-namespace
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          project: corp-net
+    ports:
+    - protocol: TCP
+      port: 9000
+
+```
 ### Q14.
 Reconfigure the existing deployment front-end and add a port specification named http exposing port 80/tcp of the existing container nginx.
 Create a new service named front-end-svc exposing the container port http.
 Configure the new service to also expose the individual Pods via a NodePort on the nodes on which they are scheduled.
+- **Answer**
+
+get the deployment yaml out 
+```
+kubectl get deploy webapp -o yaml > test.yaml
+```
+now modify the port and apply config back
+```
+kubectl apply -f test.yaml
+```
+Lets expose service on port 80 and type as nodeport
+```
+kubectl expose deploy webapp --port=80 --target-port=80 -type=NodePort
+```
 
 ### Q15.
 Check to see how many nodes are ready (not including nodes tainted NoSchedule) and write the number to /opt/KUSC00402/kusc00402.txt.
+
+- **Answer**
+Check the nodes
+```
+kubectl get node
+```
+describe each nodes to check the taint as nodescedule 
+```
+kubectl describe node
+```
+get the node does not have the taint. write the count.
+
+
 ### Q16.
 Add a sidecar container named sidecar, using the busybox image, to the existing Pod big-corp-app. The new sidecar container has to run the
 following command:
-
+["/bin/sh",  "-c",  "tail n+1 /var/log/lagecy-app.log"]
 Use a Volume, mounted at /var/log, to make the log file big-corp-app.log available to the sidecar container.
+- **Answer**
 
+get the yaml out
+```
+kubectl get po side-car -o yaml > side.yml
+```
+now add line
+```
+  - name: adapter-container
+    image: busybox
+    command: ["/bin/sh",  "-c",  "tail n+1 /var/log/lagecy-app.log"]
+    volumeMounts:
+        - mountPath: /var/log
+          name: shared-logs
+```
+Now apply changes
+```
+kubectl apply  -f  side.yml
+```
 ### Q17.
 
 Create a new PersistentVolumeClaim:
