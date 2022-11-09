@@ -181,7 +181,7 @@ Upgrade the control plane to newer version
 SSH in to master node
 ```
 sudo bash
-apt unmask kubeadm kubelet
+apt-mark unhold kubeadm kubelet
 apt install kubeadm=1.25.3-00 kubelet=kubeadm=1.25.3-00 -y
 kubeadm upgrade apply v1.25.3
 systemctl daemon-reload
