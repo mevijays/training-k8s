@@ -1,4 +1,6 @@
-# Trainings
+# Trainings   
+[![pages-build-deployment](https://github.com/mevijays/training-k8s/actions/workflows/pages/pages-build-deployment/badge.svg?branch=main)](https://github.com/mevijays/training-k8s/actions/workflows/pages/pages-build-deployment)   
+
 ### Table of training documents 
 - [Docker and Kubernetes Content](docker-k8s.md)
 - [Setup 1 master 1 node k8s practice lab cluster](https://mevijay.com/blog/k8ssetup/)
