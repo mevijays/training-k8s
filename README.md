@@ -9,3 +9,4 @@
 - [ Setup docker container registry2 and ui](setup-registry.md)
 - [ Setup NFS server for k8s Lab](setup-nfs.md)
 - [ Setup local-path-provisioner](local-path-provisioner.md)
+- [Docker-compose setup and operation](docker-compose.md)
