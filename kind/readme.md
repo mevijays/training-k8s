@@ -8,11 +8,14 @@
  - Kind config file.
  - Setup kind cluster
  ### **Docker Installation**
-Docker setup steps based on your linux flavor can be find in here. 
+- Docker setup steps based on your linux flavor can be find in here. 
 
 1. Steps for Ubuntu [Click here](https://docs.docker.com/engine/install/ubuntu/)
 1. Steps for Fedora [Click here](https://docs.docker.com/engine/install/fedora/)
 1. Steps for RHEL/CentOS [Click here](https://docs.docker.com/engine/install/rhel/)
+
+- One script install is also possible here-
+[ Script install ](../dockersetup.md)
 
 ### **Kind Setup**
 
@@ -42,11 +45,11 @@ nodes:
     extraPortMappings:
     - containerPort: 80
       hostPort: 80
-      listenAddress: "127.0.0.1"
+      listenAddress: "0.0.0.0"
       protocol: TCP
     - containerPort: 443
       hostPort: 443
-      listenAddress: "127.0.0.1"
+      listenAddress: "0.0.0.0"
       protocol: TCP
     kubeadmConfigPatches:
     - |
@@ -73,7 +76,15 @@ check the cluster status
 kind get clusters
 
 docker ps
-
+```
+To manage the cluster you need kubectl command. Get it setup with this process defined-
+```
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+```
+Now check kind status with kubectl command.
+```
 kubectl get node
 ```
 
@@ -112,11 +123,11 @@ nodes:
     extraPortMappings:
     - containerPort: 80
       hostPort: 80
-      listenAddress: "127.0.0.1"
+      listenAddress: "0.0.0.0"
       protocol: TCP
     - containerPort: 443
       hostPort: 443
-      listenAddress: "127.0.0.1"
+      listenAddress: "0.0.0.0"
       protocol: TCP
     kubeadmConfigPatches:
     - |
@@ -126,7 +137,7 @@ nodes:
           node-labels: "ingress-ready=true"
 networking:
   kubeProxyMode: "ipvs"
-  apiServerAddress: "0.0.0.0"
+  apiServerAddress: "192.168.56.101"
   apiServerPort: 6443
 
 ```
