@@ -11,3 +11,4 @@
 - [ Setup NFS server for k8s Lab](setup-nfs.md)
 - [ Setup local-path-provisioner](local-path-provisioner.md)
 - [Docker-compose setup and operation](docker-compose.md)
+- [Statefullset Doc](statefulset.md)
