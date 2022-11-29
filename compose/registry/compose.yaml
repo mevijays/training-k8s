@@ -1,0 +1,19 @@
+services:
+  registry:
+    image: registry:2.7
+    restart: always
+    expose:
+      -  5000
+    volumes:
+      - doc_vol:/var/lib/registry
+  registry_ui:
+    image: joxit/docker-registry-ui:latest
+    restart: always
+    ports:
+      - 80:80
+    environment:
+      REGISTRY_TITLE: 'My LAB' 
+      NGINX_PROXY_PASS_URL: http://registry:5000 
+
+volumes:
+  doc_vol:
