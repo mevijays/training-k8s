@@ -51,7 +51,7 @@ volumes:
 docker-compose up -d 
 ```
 - to start , stop  & restart the stack-
-```
+
 ```
 docker-compose stop
 
