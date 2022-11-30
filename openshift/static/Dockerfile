@@ -1,4 +1,4 @@
-FROM weepee-registry/static-webserver
+FROM nginx:latest
 
 # Your App
-ADD app /app
+ADD app /usr/share/nginx/html
