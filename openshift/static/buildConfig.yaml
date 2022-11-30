@@ -1,0 +1,24 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: example
+  namespace: default
+spec:
+  source:
+    git:
+      ref: main
+      uri: 'https://github.com/mevijays/training-k8s.git'
+    type: Git
+    contextDir: openshift/static/
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'static-webserver:latest'
+        namespace: default
+      env: []
+  output:
+    to:
+      kind: ImageStreamTag
+      name: static:latest
