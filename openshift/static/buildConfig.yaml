@@ -1,24 +1,138 @@
-apiVersion: build.openshift.io/v1
-kind: BuildConfig
-metadata:
-  name: example
-  namespace: default
-spec:
-  source:
-    git:
-      ref: main
-      uri: 'https://github.com/mevijays/training-k8s.git'
-    type: Git
-    contextDir: openshift/static/
-  strategy:
-    type: Docker
-    dockerStrategy:
-      from:
+apiVersion: v1
+items:
+- apiVersion: image.openshift.io/v1
+  generation: 0
+  image:
+    dockerImageLayers: null
+    dockerImageMetadata: null
+    metadata:
+      creationTimestamp: null
+  kind: ImageStreamTag
+  lookupPolicy:
+    local: false
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/imported-from: ibmdb:latest
+    creationTimestamp: null
+    labels:
+      app: ibmdb
+      app.kubernetes.io/component: ibmdb
+      app.kubernetes.io/instance: ibmdb
+    name: ibmdb:latest
+  tag:
+    annotations: null
+    from:
+      kind: DockerImage
+      name: ibmdb:latest
+    generation: null
+    importPolicy: {}
+    name: latest
+    referencePolicy:
+      type: ""
+- apiVersion: build.openshift.io/v1
+  kind: BuildConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ibmdb
+      app.kubernetes.io/component: ibmdb
+      app.kubernetes.io/instance: ibmdb
+    name: ibmdb
+  spec:
+    nodeSelector: null
+    output:
+      to:
         kind: ImageStreamTag
-        name: 'static-webserver:latest'
-        namespace: default
-      env: []
-  output:
-    to:
-      kind: ImageStreamTag
-      name: static:latest
+        name: ibmdb:latest
+    postCommit: {}
+    resources: {}
+    source:
+      contextDir: openshift/static
+      git:
+        uri: https://github.com/mevijays/training-k8s
+      type: Git
+    strategy:
+      dockerStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nginx:latest
+          namespace: openshift
+      type: Docker
+    triggers:
+    - github:
+        secret: ywLzIOgA70_cLsOf6ri5
+      type: GitHub
+    - generic:
+        secret: UUK95fRqPZ3Phm9HaliF
+      type: Generic
+    - type: ConfigChange
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"ibmdb:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"ibmdb\")].image"}]'
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ibmdb
+      app.kubernetes.io/component: ibmdb
+      app.kubernetes.io/instance: ibmdb
+    name: ibmdb
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        deployment: ibmdb
+    strategy: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          deployment: ibmdb
+      spec:
+        containers:
+        - image: ' '
+          name: ibmdb
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: ibmdb
+      app.kubernetes.io/component: ibmdb
+      app.kubernetes.io/instance: ibmdb
+    name: ibmdb
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 8443-tcp
+      port: 8443
+      protocol: TCP
+      targetPort: 8443
+    selector:
+      deployment: ibmdb
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
