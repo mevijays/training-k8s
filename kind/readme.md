@@ -150,3 +150,84 @@ kubectl expose deploy webapp --port=8080 --target-port=80
 kubectl create ingress webapp --class=nginx --rule="abc.lan/*=webappp:80"
 ```
 Now make an entry in hosts file for abc.lan and check in browser.
+
+### Ingress with config map in nginx:1.22
+
+```
+apiVersion: v1
+data:
+  index.html: |
+    <h1>Hello from testing CM mount</h1>
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: foo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webcm
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: webcm
+    spec:
+      containers:
+      - image: nginx:alpine
+        name: nginx
+        volumeMounts:
+          - name: foo
+            mountPath: "/usr/share/nginx/html/"
+      volumes:
+      - name: foo
+        configMap:
+           name: foo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: webcm
+  name: webcm
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webcm
+status:
+  loadBalancer: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  creationTimestamp: null
+  name: webcm
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ckatcswebcm.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: webcm
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}
+```
