@@ -1,4 +1,4 @@
-FROM docker.io/library/nginx:1.22
+FROM nginx:latest
 
 # Your App
-ADD app /usr/share/nginx/html
+ADD app/*.html /usr/share/nginx/html/
