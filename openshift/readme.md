@@ -12,7 +12,15 @@ To do it in two steps use:
 oc new-build --name myapp <repository-url>
 oc new-app myapp
 ```
-### Example
+### Example dockerfile build from github 
+- Perform a dry-run
 ```
-oc new-app https://github.com/mevijays/training-k8s --context-dir=openshift/static --dry-run -o yaml
+oc new-app --name=ibmdb https://github.com/mevijays/training-k8s --context-dir=openshift/static --dry-run -o yaml
 ```
+- Now deploy 
+```
+oc new-app --name=ibmdb https://github.com/mevijays/training-k8s --context-dir=openshift/static 
+```
+- Now expose route 
+```
+oc expose svc/ibmdb
