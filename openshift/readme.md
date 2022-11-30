@@ -12,3 +12,7 @@ To do it in two steps use:
 oc new-build --name myapp <repository-url>
 oc new-app myapp
 ```
+### Example
+```
+oc new-app https://github.com/mevijays/training-k8s --context-dir=openshift/static --dry-run -o yaml
+```
