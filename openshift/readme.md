@@ -1,6 +1,14 @@
 # Openshift 
 To start with you can enable trial from here [Redhat openshift developer sandbox ](https://developers.redhat.com/developer-sandbox)
-# Build
+
+## Deployment of Application
+```
+oc create deploy myapp --image=nginx:latest
+oc expose deploy myapp --port=8080 --target-port=80
+oc expose svc/myapp
+oc get route
+```
+## Build
 It would be easier to use ``oc new-build`` and then ``oc new-app`` if you really need to set this up as two steps for some reason. If you just want to setup the build and deployment in one go, just use ``oc new-app``.
 
 For example, to setup build and deployment in one go use:
