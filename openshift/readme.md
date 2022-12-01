@@ -24,3 +24,8 @@ oc new-app --name=ibmdb https://github.com/mevijays/training-k8s --context-dir=o
 - Now expose route 
 ```
 oc expose svc/ibmdb
+
+### Import external registry images in openshift
+```
+oc import-image  hello-k8s:latest --from=docker.io/sharmavijay86/hello-k8s:latest --confirm
+```
