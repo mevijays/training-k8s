@@ -1,6 +1,20 @@
 #!/bin/sh
 set -o errexit
+# setup kind binary
+if [[ ! -f "/usr/local/bin/kind" ]]
+then
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+fi
 
+# setup kubectl
+if [[ ! -f "/usr/local/bin/kubectl" ]]
+then
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv ./kubectl /usr/local/bin/
+fi
 # create registry container unless it already exists
 reg_name='kind-registry'
 reg_port='5001'
