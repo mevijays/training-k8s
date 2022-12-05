@@ -231,3 +231,5 @@ spec:
 status:
   loadBalancer: {}
 ```
+### ETCD backup and restore
+[ETCD Backup and restore process](etcd-bkp-restore.md)
