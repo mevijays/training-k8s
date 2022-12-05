@@ -5,10 +5,14 @@ nodes:
     extraPortMappings:
     - containerPort: 80
       hostPort: 80
-      listenAddress: "127.0.0.1"
+      listenAddress: "0.0.0.0"
       protocol: TCP
     - containerPort: 443
       hostPort: 443
+      listenAddress: "0.0.0.0"
+      protocol: TCP
+    - containerPort: 2379
+      hostPort: 2379
       listenAddress: "127.0.0.1"
       protocol: TCP
     kubeadmConfigPatches:
@@ -19,5 +23,5 @@ nodes:
           node-labels: "ingress-ready=true"
 networking:
   kubeProxyMode: "ipvs"
-  apiServerAddress: "0.0.0.0"
+  apiServerAddress: "192.168.1.2"
   apiServerPort: 6443
