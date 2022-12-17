@@ -2,57 +2,54 @@
 
 Create your first Dockerfile:
 
-    Dockerfile Commands:
-
+### Dockerfile Commands:
+```
 FROM
 ENV
 WORKDIR
 RUN
 ENTRYPOINT
 CMD
-
-    Understand how CMD and ENTRYPOINT interact
-
 COPY
 ADD
 EXPOSE
-
-FROM
-
+```
+### FROM
+```
 FROM <image> [AS <name>]
-
+```
 FROM is used to define the base image to start the build process. Every Dockerfile must start with the FROM instruction. The idea behind this is that you need a starting point to build your image.
-
+```
 FROM ubuntu
-
+```
 It means our project require ubuntu as a parent image.
-ENV
-
+### ENV
+```
 ENV <key> <value>
-
+```
 This command used to set the environment variables that is required to run the project.
 
 ENV sets the environment variables, which can be used in the Dockerfile and any scripts that it calls. These are persistent with the container too and they can be referenced at any time.
-
+```
 ENV HTTP_PORT="9000"
-
+```
 We provided HTTP_PORT as an environment variable.
-WORKDIR
-
+### WORKDIR
+```
 WORKDIR /path/to/workdir
-
+```
 WORKDIR tells Docker that the rest of the commands will be run in the context of the /app folder inside the image.
-
+```
 WORKDIR /app
-
+```
 It will create the app directory in the container.
-RUN
+### RUN
 
 RUN has 2 forms:
-
+```
     RUN <command> (shell form, the command is run in a shell, which by default is /bin/sh -c on Linux or cmd /S /C on Windows)
     RUN ["executable", "param1", "param2"] (exec form)
-
+```
 The RUN instruction will execute any commands in a new layer on top of the current image and commit the results. The resulting committed image will be used for the next step in the Dockerfile.
 
 The RUN command runs within the container at build time.
