@@ -12,3 +12,4 @@
 - [ Setup local-path-provisioner](local-path-provisioner.md)
 - [Docker-compose setup and operation](docker-compose.md)
 - [Statefullset Doc](statefulset.md)
+- [Dockerfile components](docs/dockerfile.md.md)
