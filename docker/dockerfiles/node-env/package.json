@@ -1,0 +1,27 @@
+{
+  "name": "docker-environment-read",
+  "version": "1.0.0",
+  "description": "ENV and ARG example",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbachi/docker-environment-read.git"
+  },
+  "keywords": [
+    "Docker",
+    "env"
+  ],
+  "author": "Bhargav Bachina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bbachi/docker-environment-read/issues"
+  },
+  "homepage": "https://github.com/bbachi/docker-environment-read#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
