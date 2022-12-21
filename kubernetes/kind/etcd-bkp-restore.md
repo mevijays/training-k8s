@@ -1,4 +1,38 @@
 # ETCD back and restore process
+### Setup config for kind here.
+```
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+    - containerPort: 80
+      hostPort: 80
+      listenAddress: "0.0.0.0"
+      protocol: TCP
+    - containerPort: 443
+      hostPort: 443
+      listenAddress: "0.0.0.0"
+      protocol: TCP
+    - containerPort: 2379
+      hostPort: 2379
+      listenAddress: "127.0.0.1"
+      protocol: TCP
+    kubeadmConfigPatches:
+    - |
+      kind: InitConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "ingress-ready=true"
+networking:
+  kubeProxyMode: "ipvs"
+  apiServerAddress: "${host_ip}"
+  apiServerPort: 6443
+containerdConfigPatches:
+- |-
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${reg_port}"]
+    endpoint = ["http://${reg_name}:5000"]
+```
 
 ### Backup process   
 - Bellow script can perform a snapshot on host machine running kind container
