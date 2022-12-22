@@ -87,7 +87,10 @@ Now check kind status with kubectl command.
 ```
 kubectl get node
 ```
-
+## Setup metric
+```
+kubectl apply -f https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.github.io/master/blog/k8ssetup/components.yaml
+```
 ## Setup Ingress
 
 1. Install nginx ingress
