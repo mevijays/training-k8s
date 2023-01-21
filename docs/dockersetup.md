@@ -29,7 +29,12 @@ sudo usermod -aG docker vijay
 to validate just run the id command and you will see docker also as a group for the user
 
 validate installation with this command
+
 ```bash
+docker ps
+```
+and
+```
 id vijay
 uid=1000(vijay) gid=1000(vijay) groups=1000(vijay),4(adm),20(dialout),24(cdrom),25(floppy),27(sudo),29(audio),30(dip),44(video),46(plugdev),117(netdev),118(lxd),998(docker)
 ```
