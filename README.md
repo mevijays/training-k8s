@@ -1,6 +1,6 @@
 # Trainings   
 [![pages-build-deployment](https://github.com/mevijays/training-k8s/actions/workflows/pages/pages-build-deployment/badge.svg?branch=main)](https://github.com/mevijays/training-k8s/actions/workflows/pages/pages-build-deployment)
-[![GitHub Super-Linter](https://github.com/mevijays/training-k8s/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![GitHub Super-Linter](https://github.com/mevijays/training-k8s/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/marketplace/actions/super-linter) ![GitHub repo size](https://img.shields.io/github/repo-size/mevijays/training-k8s?style=flat-square) ![GitHub forks](https://img.shields.io/github/forks/mevijays/training-k8s) ![GitHub last commit](https://img.shields.io/github/last-commit/mevijays/training-k8s)
 ### Table of training documents 
 - [Docker and Kubernetes Content](docs/docker-k8s.md)
 - [Setup 1 master 1 node k8s practice lab cluster](https://mevijay.com/blog/k8ssetup/)
