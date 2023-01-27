@@ -15,3 +15,4 @@
 - [Docker-compose setup and operation](docs/docker-compose.md)
 - [Statefullset Doc](docs/statefulset.md)
 - [Dockerfile components](docs/dockerfile.md)
+- [Kubernetes cheat sheet and shortcuts](kubernetes/k8s-shortcuts-cheat-sheet.md)
