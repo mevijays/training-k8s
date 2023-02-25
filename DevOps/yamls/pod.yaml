@@ -7,7 +7,7 @@ metadata:
   name: test
 spec:
   containers:
-  - image: repo.k8s.mevijay.dev/library/nginx:1.22
+  - image: reg.k8s.mevijay.dev/library/nginx:1.22
     name: test
     resources: {}
   dnsPolicy: ClusterFirst
