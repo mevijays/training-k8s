@@ -20,51 +20,15 @@ podTemplate(label: 'mypod', serviceAccount: 'jenkins-ci', containers: [
         stage('Get latest version of code') {
           git branch: 'main', credentialsId: 'github', url: 'https://github.com/mevijays/training-k8s'
         }
-        stage('Setup parameters') {
-                script { 
-                    properties([
-                        parameters([
-                            choice(
-                                choices: ['APPLY', 'DELETE'], 
-                                name: 'PARAMETER01'
-                            )
-
-                        ])
-                    ])
-                
-                 }
-        }
-        stage("Check out the code") {
-            git branch: 'main', credentialsId: 'github', url: 'https://github.com/mevijays/training-k8s'
-        }
         stage('Deploy application') {
-            when {
-                expression { 
-                   return params.PARAMETER01 == 'APPLY'
-                }
-            }
-            steps {
               container('k8s-helm') {  
                   sh 'ls'
                   sh 'pwd'
                   sh 'kubectl apply -f DevOps/yamls -n app'
-              }
-                
-            }
+               }
+            
         }
-         stage('Uninstall application') {
-            when {
-                expression { 
-                   return params.PARAMETER01 == 'DELETE'
-                }
-            }
-            steps {
-              container('k8s-helm') {  
-                  sh 'kubectl delete -f DevOps/yamls -n app'
-              }
-                
-            }
-        }     
+  
         stage('Check running containers') {
             container('k8s-helm') { 
                 sh 'kubectl get pods -n app'  
