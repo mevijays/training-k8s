@@ -1,0 +1,55 @@
+pipeline {
+  agent any
+   stages {
+   stage("Code Checkout") {
+            steps {
+              git branch: 'main', credentialsId: 'github', url: 'https://github.com/mevijays/training-k8s'
+                  }
+              }
+ 
+   stage('Build with Kaniko') {
+
+   agent {
+     kubernetes {
+      label 'kaniko-builder'
+      yaml """
+kind: Pod
+metadata:
+  name: kaniko
+spec:
+  containers:
+  - name: jnlp
+    workingDir: /home/jenkins
+  - name: kaniko
+    workingDir: /home/jenkins
+    image: gcr.io/kaniko-project/executor:debug
+    imagePullPolicy: Always
+    command:
+    - /busybox/cat
+    tty: true
+    volumeMounts:
+      - name: docker-config
+        mountPath: /kaniko/.docker
+  volumes:
+    - name: docker-config
+      configMap:
+        name: docker-config
+"""
+    }
+   }
+      environment {
+        PATH = "/busybox:/kaniko:$PATH"
+      }
+      steps {
+        container(name: 'kaniko', shell: '/busybox/sh') {
+            
+          sh "/kaniko/executor --dockerfile `pwd`/docker/dockerfiles/alpine-nginx/Dockerfile --context `pwd` --verbosity debug --destination reg.k8s.mevijay.dev/library/test1:${env.BUILD_ID}"
+          
+        }
+      }
+    }
+
+   
+  } //stages
+
+} //pipeline
