@@ -6,7 +6,7 @@ Values file.
 #jenkins-valus.yaml
 controller:
   #  serviceType: LoadBalancer
-  adminPassword: redhat123
+  adminPassword: ''
   #additionalPlugins:
   #- git:4.11.5
   ingress:
