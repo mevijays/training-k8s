@@ -29,10 +29,7 @@ jobs:
       id: msgin
       run: |
         python3 app.py ${{ github.event.inputs.ASK }}
-    - name: have outputs
-      id: msgoutme
-      run: |
-         cat demo.txt
+
     - name: results
       run: |
-        echo "::notice title=Your Answer::${{ steps.msgoutme.outputs }}"
+        echo "$(cat demo.txt) :rocket:" >> $GITHUB_STEP_SUMMARY
