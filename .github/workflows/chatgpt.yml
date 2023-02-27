@@ -29,7 +29,8 @@ jobs:
       id: msgin
       run: |
         python3 app.py ${{ github.event.inputs.ASK }}
-
+    - name: notice
+      run: echo ${{ ::notice title=Result::Your message bellow }}
     - uses: actions/upload-artifact@v3
       with:
         name: my-result
