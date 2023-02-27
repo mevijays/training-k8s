@@ -31,9 +31,8 @@ jobs:
         python3 app.py ${{ github.event.inputs.ASK }}
     - name: notice
       run: |
-        ls
-        pwd
         echo "::notice title=Result::Your message bellow"
+        cat result.txt
     - uses: actions/upload-artifact@v3
       with:
         name: my-result
