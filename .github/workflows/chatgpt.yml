@@ -29,3 +29,6 @@ jobs:
       id: msg
       run: |
         python3 app.py ${{ github.event.inputs.ASK }}
+    - name: results
+      run: |
+        echo "::notice title=Your Anshwer::${{ steps.msg.outputs }}"
