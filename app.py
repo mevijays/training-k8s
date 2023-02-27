@@ -12,4 +12,8 @@ completions = openai.Completion.create(
     temperature=0.5,
 )
 message = completions.choices[0].text
-print(message)
+original_stdout = sys.stdout
+with open('demo.txt', 'w') as f:
+    sys.stdout = f
+    print(message)
+    sys.stdout = original_stdout 
