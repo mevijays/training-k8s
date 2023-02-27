@@ -32,4 +32,4 @@ jobs:
 
     - name: results
       run: |
-        echo "$(cat demo.txt) :rocket:" >> $GITHUB_STEP_SUMMARY
+        echo $(cat demo.txt)
