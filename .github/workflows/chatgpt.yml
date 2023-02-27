@@ -32,7 +32,7 @@ jobs:
     - name: have outputs
       id: msgoutme
       run: |
-         echo "test=$(cat demo.txt)" >> $GITHUB_OUTPUT
+         cat demo.txt
     - name: results
       run: |
-        echo "::notice title=Your Answer::${{ steps.msgoutme.outputs.test }}"
+        echo "::notice title=Your Answer::${{ steps.msgoutme.outputs }}"
