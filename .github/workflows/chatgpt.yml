@@ -26,9 +26,13 @@ jobs:
       run: |
         pip install openai
     - name: Run the execution
-      id: msg
+      id: msgin
       run: |
         python3 app.py ${{ github.event.inputs.ASK }}
+    - name: store output
+      id: msgout
+      run: |
+        echo "test=steps.msg.outputs" >> "$GITHUB_OUTPUT"
     - name: results
       run: |
-        echo "::notice title=Your Anshwer::${{ steps.msg.outputs }}"
+        echo "::notice title=Your Anshwer::${{ steps.msgout.outputs.test }}"
