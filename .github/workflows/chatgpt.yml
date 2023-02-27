@@ -1,12 +1,31 @@
 name: OpenAPI
 
-on: workflow_dispatch
-
+on: 
+  workflow_dispatch:
+    inputs:
+      ASK:
+        default: "what is my ip?"
+        required: true
+        description: "Ask your question in msg"
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+env:
+  OPENAI_KEY: '${{ secrets.OPENAI_KEY }}'      
 jobs:
   greeting:
     runs-on: mylab-vm
-
+    environment: production
+    defaults:
+      run:
+        shell: bash
     steps:
+    - name: Checkout
+      uses: actions/checkout@v3
     - name: Environment setup
       run: |
         pip install openai
+    - name: Run the execution
+      id: msg
+      run: |
+        python3 app.py ${{ github.event.inputs.ASK }}
