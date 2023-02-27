@@ -1,0 +1,12 @@
+name: OpenAPI
+
+on: workflow_dispatch
+
+jobs:
+  greeting:
+    runs-on: mylab-vm
+
+    steps:
+    - name: Environment setup
+      run: |
+        pip install openai
