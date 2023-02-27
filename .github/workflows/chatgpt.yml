@@ -32,7 +32,7 @@ jobs:
     - name: store output
       id: msgout
       run: |
-        echo "test=steps.msg.outputs" >> "$GITHUB_OUTPUT"
+        echo "test=${{ steps.msg.outputs }}" >> "$GITHUB_OUTPUT"
     - name: results
       run: |
         echo "::notice title=Your Anshwer::${{ steps.msgout.outputs.test }}"
