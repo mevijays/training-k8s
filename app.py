@@ -13,7 +13,7 @@ completions = openai.Completion.create(
 )
 message = completions.choices[0].text
 original_stdout = sys.stdout
-with open('demo.txt', 'w') as f:
+with open('result.txt', 'w') as f:
     sys.stdout = f
     print(message)
     sys.stdout = original_stdout 
