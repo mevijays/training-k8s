@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       ASK:
-        default: "what is my ip?"
+        default: "\"what is my ip?\""
         required: true
         description: "Ask your question in msg"
 permissions:
@@ -13,7 +13,7 @@ permissions:
 env:
   OPENAI_KEY: '${{ secrets.OPENAI_KEY }}'      
 jobs:
-  greeting:
+  chatbot:
     runs-on: mylab-vm
     environment: production
     defaults:
