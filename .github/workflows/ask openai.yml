@@ -1,9 +1,11 @@
 name: Ask OpenAI
 
 on:
-  push:
-    branches:
-      - master
+ workflow_dispatch:
+   inputs:
+     question:
+       description: 'The question to ask OpenAI'
+       required: true
 
 jobs:
   ask_openai:
@@ -14,9 +16,5 @@ jobs:
       with:
         question: ${{ inputs.question }}
     - name: Print Answer
-      run: echo "The answer is: ${{ steps.ask_openai.outputs.answer }}"
+      run: echo "::notice title=Your asnwer is - ::${{ steps.ask_openai.outputs.answer }}"
 
-inputs:
-  question:
-    description: 'The question to ask OpenAI'
-    required: true
