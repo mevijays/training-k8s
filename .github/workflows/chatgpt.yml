@@ -30,6 +30,7 @@ jobs:
       run: |
         python3 app.py ${{ github.event.inputs.ASK }}
 
-    - name: results
-      run: |
-        echo $(cat demo.txt)
+    - uses: actions/upload-artifact@v3
+      with:
+        name: my-result
+        path: ./result.txt
