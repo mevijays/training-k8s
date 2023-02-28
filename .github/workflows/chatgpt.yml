@@ -14,7 +14,7 @@ env:
   OPENAI_KEY: '${{ secrets.OPENAI_KEY }}'      
 jobs:
   chatbot:
-    runs-on: mylab-vm
+    runs-on: mylab-docker
     environment: production
     defaults:
       run:
