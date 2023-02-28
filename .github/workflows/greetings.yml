@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   greeting:
-    runs-on: self-hosted
+    runs-on: mylab-win
     permissions:
       issues: write
       pull-requests: write
