@@ -9,9 +9,9 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-     - uses: Amadevus/pwsh-script@v2
+     - name: greeting to world
        id: my-script
-       with:
-         script: '1 + 1'
-     - run: echo "${{ steps.my-script.outputs.result }}"
+       run: Write-Host 'Hello, World!'
+         
+     #- run: echo "${{ steps.my-script.outputs.result }}"
        
