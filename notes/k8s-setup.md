@@ -245,4 +245,7 @@ kubectl wait \
 	--all CustomResourceDefinition \
 	--namespace=monitoring
 kubectl apply -f manifests/
+
+kubectl create ingress grafana --rule="grafana.mylab.lan/*=grafana:3000" --class=nginx -n monitoring
+
 ```
