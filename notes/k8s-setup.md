@@ -233,15 +233,16 @@ kubectl create -f https://raw.githubusercontent.com/rancher/local-path-provision
 
 ## Setup monitoring with prometheus and grafana
 
-- Download the hlem chart values.yaml file for both grafana and prometheus.   
 ```
-wget https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.github.io/master/blog/k8ssetup/grafana-values.yaml
-wget https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.github.io/master/blog/k8ssetup/prometheus-values.yaml
-```
-- Updates values based on your case. mainly the ingress part and storage part.
-- Run the helm commands to deploy it all.
-```
-helm install prometheus prometheus --repo=https://prometheus-community.github.io/helm-charts -n prometheus --create-namespace
-helm install grafana grafana --repo=https://grafana.github.io/helm-charts  -f grafana-values.yaml -n prometheus
-```
+sudo apt install git -y
+git clone https://github.com/prometheus-operator/kube-prometheus.git
 
+cd kube-prometheus
+
+kubectl apply --server-side -f manifests/setup
+kubectl wait \
+	--for condition=Established \
+	--all CustomResourceDefinition \
+	--namespace=monitoring
+kubectl apply -f manifests/
+```
