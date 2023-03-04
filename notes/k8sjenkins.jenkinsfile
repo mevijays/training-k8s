@@ -1,0 +1,15 @@
+pipeline {
+    agent {
+        label "mynode"
+    }
+    stages {
+        stage('kubectl dryrun'){
+            steps {
+               withKubeConfig(credentialsId: 'kubectl', serverUrl: 'https://192.168.153.101:6443') {
+                    sh 'kubectl get po'
+                }
+            }
+            
+        }
+    }
+}
