@@ -3,10 +3,16 @@ pipeline {
         label "mynode"
     }
     stages {
+        stage('code checkout'){
+            steps {
+            git branch: 'main', url: 'https://git.k8s.mevijay.dev/vijay/mindtech.git'
+            }
+        }
         stage('kubectl dryrun'){
             steps {
                withKubeConfig(credentialsId: 'kubectl', serverUrl: 'https://192.168.153.101:6443') {
-                    sh 'kubectl get po'
+                    sh 'kubectl apply -f yamls'
+                    
                 }
             }
             
