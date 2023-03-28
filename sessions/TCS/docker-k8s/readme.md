@@ -7,44 +7,65 @@ Program Duration: 40 Hours
 - Docker
 - Docker Architecture
 - Managing Containers
+  -  Container lifecycle
+  -  Container network
+  -  Container storage
 - Inspecting Containers
+  - Container logs
+  - Inspectiion of container and components
 - Interacting with Running Containers
+  - Commonds inside container
+  - Resource limits and update
+  - Environment variable use
+  - exposing container ports
+  - Mounting volumes
 
 #### Day 2:    Building Docker Images
 - Installing Sample Containers
-- Docker Build Files
+- Docker Build Files ( Dockerfile )
 - Passing Parameters to Build Files
-- Container Build Process
+- Container image build process
 - Build File Layers
 - Building and Running the Image
 - Container Registries
 - Docker Hub
+- Docker registry v2
 - Docker Compose
 - Docker Volumes and Use Cases
 - Other Docker Commands
 
-#### Day 3: Docker Hub and Kubernity Fundamentals:
-- Container Registries
-- Docker Hub
-- Docker Compose
-- Docker Volumes and Use Cases
-- Other Docker Commands   
-- Welcome & Introduction
+#### Day 3: Docker Hub and Kubernetes Fundamentals:
+- Introduction to kubernetes
 - From Monolith to Microservices
+- kubectl
+- namespace
+- POD, Deployment, statfullset and daemonset
+- Manifest yaml file
+- Kubernetes contexts
+- Kubernetes API
 
 #### Day 4: Installation and hands on:
 - Container Orchestration
-- Kubernetes
+- Kubernetes components
+- kubeadm and kubelet
+- Kubernetes networking and CNI
+- Replicaset and autoscaling
 - Kubernetes Architecture - Overview
 - Installing Kubernetes
 - Understand installed component and uses
+- ingress controller setup.
  
-#### Day 5: Setting Up a Single Node Kubernetes Cluster Using Minikube
-- Accessing Minikube
+#### Day 5: Setting Up a Single Node Kubernetes Cluster Using Kind
+- Accessing Kind
 - Kubernetes Building Blocks
-- Services
+- Services and types (NodePort, LB, ClusterIP)
+- Connectivity between pods
+- Ingress traffic managment
 - Deploying a Stand-Alone Application
-- Kubernetes Volume Management
+- Kubernetes Volume Management - storageclass, pv, pvc
+- Configmap and secrets
+- Helm chart and helm deployment
+- upgrade and rollback
 
 #### On Completion of this program: The participants will be able to learn
 - Fundamental of docker and Kubernetes.
