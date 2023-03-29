@@ -1,0 +1,82 @@
+Class - Docker
+
+docker registry ?
+docker registry is centralized repo space where venders/developers are publishing container images to reditribute across.
+
+Software distribution 
+hub.docker.com
+ docker run -d nginx:latest
+ docker run -d nginx:1.22
+ docker run -d nginx:1.22
+
+Lifecycle mgmt -  create, run, destroy
+
+container image  life cycle - pull, remove
+
+pull images from registry to local: docker pull
+delete container image locally from local filesystem: docker image rm or docker rmi
+to list down all the images available in localfilesystem: docker image ls or docker images
+
+docker -q hack:---
+-q argument with docker container and image gives us only container or image id. we can perform build actions on container and images with -q option. example-
+
+docker start `docker ps -aq`
+docker stop `docker ps -q`
+docker rm `docker ps -q`
+docker rmi `docker images -q`
+
+PRUNE- ( images, container, volume, network ) - the command deletes - cleanup all the resources given with.
+example- 
+docker image prune --all
+docker container prune
+docker network prune
+docker volume prune
+
+----------
+Docker networking
+
+too connect container port to host port and interface we do NAT. i.e. port mapping. example
+
+docker run -d --name netpod1 -p 8081:80 nginx:1.22
+
+now ehen i access host ip wwith port 8081 in above example, i am actually accessing the container netpod1.
+
+excercise :1
+
+lab: create a container named as tcsweb1 from image nginx:1.22 and do a port mapping from host with port 9090
+
+share docker ps command
+
+validate by curl localhost:9090do
+
+----troubleshooting docker
+docker <network,container,image,volume> inspect <name>
+docker logs <container name/id>
+
+example :
+ docker run -d --name mydb -e MYSQL_ROOT_PASSWORD=redhat123 -e MYNAME=tcsclass  mysql:8
+ docker logs mydb
+ create database <dbname>;
+----
+create a mysql:8 container with root password as tcspass container name as tcsdb. get into the container and create database name as tcsappdb.
+
+paste output of 
+docker ps 
+show databases; query from inside container.
+
+Answer:
+create container: docker run --name tcsdb -d -e MYSQL_ROOT_PASSWORD=tcspass mysql:8
+get into container: docker exec -it tcsdb bash
+login to mysql prompt: mysql -u root -ptcspass
+create database:  create database tcsappdb;
+validate database created: show databases;
+
+
+
+
+
+
+
+
+
+
