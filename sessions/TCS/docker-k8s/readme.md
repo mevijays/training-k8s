@@ -13,6 +13,7 @@ Program Duration: 40 Hours
 - Inspecting Containers
   - Container logs
   - Inspectiion of container and components
+  - Prune the container, image, volume, network
 - Interacting with Running Containers
   - Commonds inside container
   - Resource limits and update
