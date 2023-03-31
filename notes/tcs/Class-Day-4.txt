@@ -1,0 +1,121 @@
+Class-Day-4
+
+Dockerfile
+
+FROM 
+RUN
+COPY
+ADD
+WORKDIR
+USER
+CMD
+ENTRYPOINT
+
+Linux script/command execution
+
+CMD         -  echo "Hello world"       - shell form
+CMD         -  ["echo", "Hello world"]  - exec form
+ENTRYPOINT  -  echo "Hello world"       - shell form
+ENTRYPOINT  -  ["echo", "Hello world"]  - exec form
+
+
+CMD - Docker CMD defines the default executables of docker image. the CMD can be replaced / overrite by giving arguments
+ENTRYPOINT is the other instructions used to configure how the container will run. entrypoint cannot be overwritten by passing argument instead appended.
+
+-----------
+pushing images in to registry 
+tagging correct images
+
+docker.io/sharmavijay86
+
+localhost:80
+
+tag image=  <registryurl>/<reponame>/<imageName>:<version>
+
+docker build -t docker.io/sharmavijay86/cmddocker:v1 . -f cmddockerfile
+docker build -t localhost/repo/cmddocker:v1 . -f cmddockerfile
+
+docker push localhost/repo/cmddocker:v1
+docker push docker.io/sharmavijay86/cmddocker:v1
+
+=> registry authentication 
+user: demo
+pass: Admin@123
+
+need of cred ( or docker login)
+- if repo is private 
+    - pull
+    - push
+- if repo is public 
+    - push
+
+Excercise - 
+
+Create a docker file with alpine image 
+
+run apk update
+and write CMD as "hello from tcs docker lab"
+
+build an image tag it correctly
+do docker login against a repo and push it.
+
+reg1- reg.k8s.mevijay.dev/myrepo/image:v1
+reg2- docker.io/<lginid>/image:v1
+
+--------------
+inspect, logs
+
+performance check
+docker stats - https://docs.docker.com/engine/reference/commandline/stats/#:~:text=The%20docker%20stats%20command%20returns,do%20not%20return%20any%20data.
+docker top 
+
+
+
+---- Limiting capacity for container while running it ---
+
+docker run
+
+CPU:
+  -  --cpus=1              - 1cpu = 1024 share
+  -  --cpu-shares="512"
+memory:
+  -   --memory="1g"  -   --memory="30m"
+
+we can limit memory and cpu 
+
+example: docker run --name limitpod -d --hostname limitpod --cpu-shares="128" --memory="128m" nginx:1.22
+we can update the container with capacity in runtime. but memoery value should be less than what we have applied during container creation.
+
+example: docker update --restart=always --memory="64m" limitpod
+
+excercise-
+
+create a container named as tcslimitpod 
+limit cpu as 128 share
+limit memory as 64m
+use image- nginx:1.23
+mark container to restart always.
+--DockerCompose
+
+
+docker-compose -f filename up -d
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
