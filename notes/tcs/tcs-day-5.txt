@@ -1,0 +1,98 @@
+tcs-day-5
+
+---
+multistage container build-
+This is a build type in which one image is being used to build the artifact from source code and then other stage can copy generated artifacts to build final image
+
+example task-
+first stage to create a file named index.html and put contents as "hello world from class"
+second stage use nginximage to copy the generated file and place in /usr/share/nginx/html
+
+
+Dockerfile
+
+FROM 
+COPY
+ADD
+RUN
+CMD
+WORKDIR
+
+----- kubernetes -----
+Orchestration ===
+Orcestrator is a software which schedule given workload to defined workers nodes and manage, control the workload as well as workers to achieve HA and redundancy.
+
+Kubernetes
+
+CRI - container runtime interface - these are container engine softwares example docker, rkt, containerd, crio which enable container run.
+
+- coredns - 2
+- control-manager -1
+- etcd -1
+- kubeproxy   each node x 1
+- api server  -1
+- scheduler -1
+
+Types of kubernetes
+1- managed - all components are being managed by the provider.  even the upgrade and secuirty patches too.
+     GKE, EKS, AKS
+
+2- unmanaged - every component we are managing including infra and application.
+       -  enterprise supported/ licensed 
+           example - openshift, vmware tanzu, rancher
+       -  oss / self supported 
+           kubeadm, k3s, kind* , okd , rancher oss, tanzu community 
+
+-----
+KIND - kubernetes in docker
+
+kind is a binary tool. we can write our cluster config in yaml. 
+We can create / delete k8s 
+
+docker rm `docker ps -aq`   
+docker volume rm `docker volume ls -q`
+
+kind1<------context1 [api address-192.168.1.1, credentials(clientcert,key, CA cert)]
+kind2<------context2* [api address-192.168.1.2, credentials]
+
+k8s contexts is getting stored in a single ~/.kube/config
+
+context
+   - clusters
+        clustername
+        CA cert
+        cluster api address
+
+   - contexts
+       context name
+       cluster name
+       user name
+   - current-context - 
+   - users
+       user-name 
+       user cert
+       user key
+
+
+
+user is running kubectl to work with context
+
+list available contexts : kubectl config get-contexts
+change context : kubectl config set current-context <contextname>
+
+--Create basic kind cluster
+config file-
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+
+command-
+1- kind create cluster --name kind --config kind-config.yaml
+2- kind create cluster --name k8s --config kind-config.yaml
+
+cat .kube/config
+
+list down all the pod in all the namespaces
+kubectl get po -A
