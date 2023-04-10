@@ -1,0 +1,75 @@
+TCS-Day-10
+-------Topics----------
+serviceAccounts
+Rolebindings , role and clusterrole
+PV & PVC
+storageclass & provisioner
+Statefullset manifests
+Helm charts
+online shop projects
+CKA related information
+--------------------
+
+RBAC - role based access control
+Identity (authentication)    - Users, groups, serviceAccount
+Access (authorization)       - roles and permissions
+
+Kubernetes
+Serviceaccounts - program accounts or technical accounts which can be associated to a pod deployment etc.
+The serviceaccount we can assign specific roles or clusterroles and the pod associated with the SA will get those privileges.
+Roles-       - roles are namespace specific permissions    
+ClusterRoles - cluster specific permissions
+- default roles
+- custom roles
+     1. view
+     2. admin
+     3. clusteradmin
+Rolebinding   namespace based
+
+ kubectl create rolebinding NAME --clusterrole=NAME|--role=NAME [--user=username] [--group=groupname]
+[--serviceaccount=namespace:serviceaccountname]
+
+clusterrolebinding - cluster level , namespace
+
+ kubectl create clusterrolebinding NAME --clusterrole=NAME [--user=username] [--group=groupname]
+[--serviceaccount=namespace:serviceaccountname]
+
+Excercise- 
+create a namespace as app
+create a serviceacount as websa in app namespace
+create a role as nsadmin and give verbs as all and to all resources in app namespace
+create a rolebinding with role nsadmin and SA websa in namespace app
+
+Validate: kubectl -n app get sa,role,rolebinding
+
+-- provisioner  - a program api which can act on any volume claim request and create persistent volume from upstream storage and assign it to a PVC
+-- pv      - persistent volume
+-- pvc     - persistent volume claim - demand to storage volume
+
+VOLUMEBINDINGMODE: waitforfirstconsumer,  Immediate
+LAB-
+Create a pvc for storageclass standard and request storage space as 256mb
+Create a pod and mount the pvc at /data.
+
+ref:
+wget https://raw.githubusercontent.com/rancher/local-path-provisioner/master/examples/pvc/pvc.yaml
+wget https://raw.githubusercontent.com/rancher/local-path-provisioner/master/examples/pod/pod.yaml
+
+------------
+PVC vs PVC templates
+
+StS:
+wget https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/pod-example/statefullset.yaml
+change storageclass
+change the replicas as 1
+change the image as nginx:1.22
+
+----
+Enable helm binary command in linux client machine
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+sudo bash get_helm.sh
+create sample helm chart: helm create web
+deploy helm chart : helm install myapp .
+upgrade helm chart with new values:  helm upgrade myapp .
+
+------------------
