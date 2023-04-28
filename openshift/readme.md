@@ -1,5 +1,15 @@
 # Openshift 
 To start with you can enable trial from here [Redhat openshift developer sandbox ](https://developers.redhat.com/developer-sandbox)
+## Setup OC command in local machine
+```
+https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/openshift-client-linux.tar.gz
+tar -xvf openshift-client-linux.tar.gz
+cd openshift-client-linux
+chmod +x oc
+sudo mv oc /usr/local/bin/
+```
+Now copy the oc login command and token from openshift console.
+
 
 ## Deployment of Application
 ```
