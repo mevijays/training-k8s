@@ -13,7 +13,7 @@ Now copy the oc login command and token from openshift console.
 
 ## Deployment of Application
 ```
-oc create deploy myapp --image=nginx:latest
+oc create deploy myapp --image=nginxinc/nginx-unprivileged
 oc expose deploy myapp --port=8080 --target-port=80
 oc expose svc/myapp
 oc get route
