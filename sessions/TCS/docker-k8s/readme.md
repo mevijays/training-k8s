@@ -44,6 +44,8 @@ Program Duration: 40 Hours
 - Manifest yaml file
 - Kubernetes contexts
 - Kubernetes API
+- Troubleshooting the application pods- Events, Logs, metrics.
+- Pod states, Use of private registry with pullsecret .
 
 #### Day 4: Installation and hands on:
 - Container Orchestration
@@ -67,6 +69,9 @@ Program Duration: 40 Hours
 - Configmap and secrets
 - Helm chart and helm deployment
 - upgrade and rollback
+- Monitoring stack - prometheus, grafana, node exporter
+- Cert manager Integration, Self-signed issuer and ACME authority.
+- Cert manager integration with Ingress.
 
 
 #### On Completion of this program: The participants will be able to learn
