@@ -1,0 +1,103 @@
+Class-Day-3
+-----Day-3---------
+
+--- Restart policies of container
+coronology - restart docker host
+shutdown Docker engine
+poweroff for system
+poweron of system
+docker engine start
+- always   - --restart=always
+- Never - -  --restart=no
+- onFailure  --restart=on-failure
+- unless-stopped --restart=unless-stopped - 
+
+policy will start a stopped container unless it was in stopped state before the docker daemon was stopped.
+
+
+1- Excercise -  Create a container name as dontoff from image nginx:1.22 set the restart policy as always . reboot your host machine and check if container is back after host reboot.
+
+Commands inside container.
+= Run a container with command
+docker run -itd  --name test alpine:3.18 sh
+
+where -i= interactive, -d= ditached mode, -t= with terminal & sh is a command to run after container running and inside container command
+
+How to execute a container terminal?
+
+ docker exec -it test sh  | where test is my container name
+
+ 1- we want to run a command inside container but want to delete container when command execution finished.
+ ```docker run -it  --rm alpine:3.18 sh```
+ 2- We want  a command for cleanup of container images network volume.
+
+docker container prune 
+docker image  prune --all
+docker volume prune 
+docker network prune 
+
+2- Excercise : please check the output of nginx:1.24  image for /etc/nginx
+
+-- running container with defined cpu memory
+
+docker run -d --name limitpod --cpus=0.5 --memory=64m nginx:1.24 
+
+docker update --cpus=1 --memory=128m --restart=always limitpod
+vcpu - 4 - 
+
+Excercise: create a nginx:1.23 container name as limitme give -c 1 -m 512m . 
+after done try updating cpu and memory to 0.5 and 64m respectively.
+
+100% - by one process
+can second process run or will go in queue.
+---------------
+Environment variable
+
+KEY: Value
+ROOT_PASSWORD=pas
+ROOT_PASSWORD=pass123
+ROOT_PASSWORD=redhat
+ROOT_PASSWORD=pas345
+example mysql database: 
+
+Excercise: create a database container of mysql:8 give the name as tcsdb give the password as tcspass
+
+share output of | docker ps
+
+Volume
+ - 1 statless  - 
+ - 2 stateful
+
+monolyth - LAMP- linuxbox- php, mysql, apache, - single VM
+
+php
+apache
+mysql
+
+- static part is mysql files. 
+- dynamic part is /var/lib/mysql
+
+Ephemeral - volumes
+ custom - volume
+
+/var/lib/docker/containers
+/var/lib/docker/containers/mydb/var/lib/mysql/
+
+/var/lib/docker/volumes/myvol
+
+
+mount -t xfs /dev/sdb1 /data/nginx
+
+mysql -u root -ppassword
+
+
+docker run -v /data/nginx:/usr/share/nginx/html nginx:1.22
+
+Excercises:
+  1- create a volume name as mydb , then create a container of mysql:8 name as mydb rootapssword as redhat . create a database inside the container name as tcsdb. 
+  Now delete the container . recreate container with same volume mount and check if we have the previously created database tcsdb is available.
+  
+  2- create a directory in home dir /home/sfjbs/htdocs . create a nginx:1.24 container and mount it to /usr/share/nginx/html. create a HTML file index.html inside htdocs folder write content as welcome to docker.
+
+
+

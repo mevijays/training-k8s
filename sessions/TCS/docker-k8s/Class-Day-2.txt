@@ -1,0 +1,134 @@
+Class
+command
+managment command
+common command
+
+Docker     : docker
+kuberneter : kubectl 
+aws        : aws 
+
+docker --help
+   container
+   image
+   volume
+   network
+
+
+Life cycle container
+
+
+Create:
+   - docker container create <image>   : creates container but don't run
+   - docker create <image>             : creates container but don't run
+   - docker run -d <image>               : creates container and run
+       status command:
+       docker start
+       docker stop
+       docker restart
+       docker rm
+       docker info 
+       docker version
+
+1-Excercise : 
+  1- create a container from image nginx:1.22 and dont run. | docker create nginx:1.22
+  2- create a container from image nginx:1.23 and run in ditached mode | docker run -d nginx:1.22
+
+share the output of command: docker container list --all
+
+2-Excercise:
+Delete both the above container. 
+share the output of docker ps -a
+
+3-Excercise: Create a container of image nginx:1.24  with name as testpod.
+
+-- offtopic-----
+0 kernel
+ 1 systemd
+    23 nginx
+    24 tomcat
+0 kernel
+  1 systemd
+    23 docker
+         234 cont-1-nginx
+         235 cont-2-nginx
+----------------
+troubleshooting-
+
+- info     - server level - docker daemon/environment information
+- event    - server level - docker events happened e.g. docker container/image/object creation/deletion 
+- inspect  - docker level - inspect the docker object.low level information of object
+- log      - docker level - prints log of a container
+
+run this  to install jq - sudo apt install jq -y
+
+docker run -d --name hello-k8s sharmavijay86/hello-k8s:v1
+
+--------- Docker networks-------------
+
+
+Portmapping or D-nating is a process of exposing your container port to the docker host eth on some random unique port id example  eth0:8080-->container1:80
+
+cmd: docker run -d --name testpod -p 8080:80 nginx:1.24
+
+Excercise: Create acontainer name as mywebnat from image nginx:1.22. expose the container port 80 to docker host port on 9090.
+Validation:  access with http url and validate.
+
+----------Container images------------
+
+Linux:
+   - EE  - SUSE, RHEL
+   - CE  - openSuse, FEDORA, Centos, Rockeylinux
+--- registry servers---
+   1- SaaS based  - vender specific supported and hosted in cloud.
+        - hub.docker.com
+        - gcr.io
+        - acr.io
+        - ecr.io 
+        - ghcr.io
+
+   2- Hosted registry:
+   		1- EE - vmware harbor, nexus sonatype, jfrog artifactory
+   		2- CE - docker registryv2
+
+container image url: FQDN of registry+repo+imagename+ tag
+
+               docker.io/library/nginx:1.23
+               docker.io/library/nginx:1.24
+
+docker.io  = docker registry server url
+library    = image repository
+nginx      = image name
+:1.23      = tag of image or version of image
+
+
+docker pull nginx:1.23   - by default if we dont give fqdn url of an image, it start looking towards docker.io
+
+docker pull <image> - to download container image from registry to local
+docker push <image> - to upload a build image to registry from local
+docker build        - build a custom image
+docker tag          - tag the name reference of an image
+
+reg.k8s.mevijay.dev/library/nginx:v1
+
+List images: docker images, docker image list,  docker image ls
+delete image: docker rmi <imageid>, docker image rm <imageid>
+
+Excercise. 
+Pull the image reg.k8s.mevijay.dev/library/nginx:v1 and create a container name as myprivpod expose port on 9191 to host.
+
+.....
+
+
+
+
+
+
+
+
+
+
+delete:
+update:
+show/ display/ view :
+
+Restart policy:
