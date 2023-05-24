@@ -1,0 +1,140 @@
+Class-day-4
+Dedup- storage terminology-
+NAS- network attached storage - NFS, CIFS. - capacity 10GB
+iso image downloaded 
+
+/user1/ubuntu.iso  2GB
+/user2/ubuntu.iso
+/user3/ubuntu.iso
+/user4/ubuntu.iso
+
+total 10Gb and consumed - 2GB
+-----Container image layers---
+Day-1 task
+1) base image layer --- alpine
+2) install nginx
+3) add html files with msg - hello world
+
+Day-2 task
+
+1) base image layer --- alpine
+2) install nginx
+3) add html files with msg - hello from tcs
+
+base image as python3.8
+code of .py file
+
+alpine
+add python3.8
+add py files
+
+
+Dockerfile
+
+COmponents of DOckerfile
+
+FROM  alpine:3.18
+ENV   FNAME=VIJAY
+WORKDIR  /app
+RUN        apk update && apk add python3 && apk add python3-pip3
+RUN        apk update 
+ENTRYPOINT       echo hello
+CMD              nginx
+COPY  src dest
+ADD   src dest
+EXPOSE 5000
+
+
+docker build 
+
+
+src   current host directory where your DOckerfile and src code files are 
+dest any path inside image
+
+docker.io/library/nginx:1.23
+docker build -t <tag or image referanceurl> . -f Dockerfile
+
+docker.io/library/myapp:v1
+
+localhost/repo/myapp:v1
+localhost/repo/myapp:v2
+localhost/repo/mynginx:v1
+
+Excercise. Build a docker image from a Dockerfile where, 
+               1- use base image as alpine:3.18
+               2- install python and pip packages
+               3 create and add a sample hello world python flask program file 
+               4- push the image with tag localhost/repo/flaskapp:v1
+               5- deploy the image with container name as webapp
+https://github.com/mevijays/training-k8s/tree/main/docker/dockerfiles/flask
+docker build -t localhost/repo/myapp:v3 . 
+docker run -d  --name flask  -p 8080:5000 localhost/repo/myapp:v3
+
+Excercise:  Build an image with html files as source code from nginx:1.24 as base image. Run this image  
+            as container.
+
+index.html:
+<h1> hello from docker</h1>
+
+Dockerfile:
+FROM nginx:1.24
+COPY . /usr/share/nginx/html/
+
+---------------------------------------------
+Registry:
+   1- SaaS - docker.io, ghcr.io
+   2- hosted
+       i- EE - vmware harbor, sonatype nexus, jfrog artifactory
+       ii- CE- docker registry, 
+
+Repository:
+   1- private:  pushed images are available to pull and use with credentials only.
+   2- Public:   pushed image is available to pull from anyone without credentials.
+         Credentials required?
+            Private-PUSH : YES
+            Public- PUSH : YES
+            Private- PULL: YES
+            Public - PULL: NO
+registry: reg.k8s.mevijay.dev
+user id : demo
+password: Admin@123
+
+private repo :  reg.k8s.mevijay.dev/myrepo
+Public repo  :  reg.k8s.mevijay.dev/library
+
+
+
+Assignment:
+Build an image with html files as source code from nginx:1.24 as base image. Run this image  
+            as container.
+
+index.html:
+<h1>I am image pushed in private repo</h1>
+
+Dockerfile:
+FROM nginx:1.24
+COPY . /usr/share/nginx/html/
+
+do docker login and push image as :  reg.k8s.mevijay.dev/myrepo/vijay:v1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
