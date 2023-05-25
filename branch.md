@@ -48,13 +48,12 @@
         branch bugfix
         checkout bugfix
         commit
-        merge release
+        checkout release
+        merge bugfix
         checkout main
         commit id:"release-v1" tag:"release-v1"
         checkout release
-        commit
         merge main
-        commit
         checkout develop
         merge release
         commit
