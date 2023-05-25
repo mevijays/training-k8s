@@ -58,5 +58,5 @@
         merge release
         commit
         checkout main
-        commit
+        commit id:"releasev2" tag:"release-v2"
  ```
