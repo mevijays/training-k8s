@@ -38,10 +38,10 @@
         commit id:"create release"
         branch release
         checkout release
-        commit
+        commit id:"bugfix checkout"
         branch bugfix
         checkout bugfix
-        commit
+        commit id:"BUGFIX-A"
         checkout release
         merge bugfix
         checkout main
