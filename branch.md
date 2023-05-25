@@ -41,7 +41,7 @@
         commit id:"merge to main"
         checkout develop
         merge main
-        commit
+        commit id:"create release"
         branch release
         checkout release
         commit
