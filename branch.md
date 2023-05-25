@@ -8,7 +8,7 @@
         checkout hotfix
         commit id:"fix-A"
         checkout develop
-        commit id:"ash" tag:"merge to develop"
+        commit id:"merge to develop" tag:"merge to develop"
         branch featureB
         checkout featureB
         commit id:"JIRA-A"
@@ -18,22 +18,21 @@
         checkout hotfix
         merge develop
         checkout develop
-        commit type:REVERSE
         checkout featureB
         commit id:"JIRA-B"
         checkout main
         merge hotfix
         commit
         checkout featureB
-        commit
+        commit id:"JIRA-C"
         checkout develop
         commit
         branch featureA
-        commit
+        commit id:"JIRA-CRC"
         checkout featureA
-        commit
+        commit id:"JIRA-RCL"
         checkout featureB
-        commit
+        commit id:"JIRA-D"
         checkout develop
         merge featureA
         checkout develop
