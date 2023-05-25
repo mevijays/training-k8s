@@ -6,23 +6,21 @@
         branch develop
         branch hotfix
         checkout hotfix
-        commit
+        commit id:"fix-A"
         checkout develop
-        commit
         commit id:"ash" tag:"merge to develop"
         branch featureB
         checkout featureB
-        commit tag:"test"
+        commit id:"JIRA-A"
         checkout main
         checkout hotfix
-        commit type:NORMAL id:"test2"
+        commit type:NORMAL id:"fix-B"
         checkout hotfix
         merge develop
         checkout develop
         commit type:REVERSE
-        commit id:"vijay"
         checkout featureB
-        commit
+        commit id:"JIRA-B"
         checkout main
         merge hotfix
         commit
@@ -38,9 +36,7 @@
         commit
         checkout develop
         merge featureA
-        commit id:"merge to main"
         checkout develop
-        merge main
         commit id:"create release"
         branch release
         checkout release
