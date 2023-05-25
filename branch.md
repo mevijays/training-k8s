@@ -58,4 +58,6 @@
         checkout develop
         merge release
         commit
+        checkout main
+        commit
  ```
