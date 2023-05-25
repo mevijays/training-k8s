@@ -22,11 +22,10 @@
         commit id:"JIRA-B"
         checkout main
         merge hotfix
-        commit
         checkout featureB
         commit id:"JIRA-C"
         checkout develop
-        commit
+        commit id:"feature checkout"
         branch featureA
         commit id:"JIRA-CRC"
         checkout featureA
