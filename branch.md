@@ -1,5 +1,16 @@
 
  ```mermaid
+ %%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
+              'tagLabelColor': '#ff0000',
+              'tagLabelBackground': '#00ff00',
+              'tagLabelBorder': '#0000ff',
+              'tagLabelFontSize': '18px'
+       } } }%%
+ %%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
+              'commitLabelColor': '#000000',
+              'commitLabelBackground': '#00ff00',
+              'commitLabelFontSize': '14px'
+       } } }%%
        gitGraph
         commit id: "Start"
         commit id: "Branch from main"
@@ -8,7 +19,7 @@
         checkout hotfix
         commit id:"fix-A"
         checkout develop
-        commit id:"merge to develop" tag:"merge to develop"
+        commit id:"merge to develop" type: HIGHLIGHT
         branch featureB
         checkout featureB
         commit id:"JIRA-A"
@@ -31,7 +42,7 @@
         checkout featureA
         commit id:"JIRA-RCL"
         checkout featureB
-        commit id:"JIRA-D"
+        commit id:"JIRA-D" type: REVERSE
         checkout develop
         merge featureA
         checkout develop
