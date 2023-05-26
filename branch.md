@@ -4,9 +4,10 @@
               'tagLabelColor': '#ff0000',
               'tagLabelBackground': '#00ff00',
               'tagLabelBorder': '#0000ff',
-              'tagLabelFontSize': '18px'
-       } } }%%
- %%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
+              'tagLabelFontSize': '18px',
+              'git2': '#ff0000',
+              'git3': '#00FFFF',
+              'git4': '#00FFFF',
               'commitLabelColor': '#000000',
               'commitLabelBackground': '#00ff00',
               'commitLabelFontSize': '14px'
