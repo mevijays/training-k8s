@@ -8,6 +8,7 @@
               'git2': '#ff0000',
               'git3': '#00FFFF',
               'git4': '#00FFFF',
+              'git5': '#228B22',
               'commitLabelColor': '#000000',
               'commitLabelBackground': '#00ff00',
               'commitLabelFontSize': '14px'
@@ -57,12 +58,12 @@
         checkout release
         merge bugfix
         checkout main
-        commit id:"release-v1" tag:"release-v1"
+        commit id:"release-v1" tag:"release-v1" type: HIGHLIGHT
         checkout release
         merge main
         checkout develop
         merge release
         commit
         checkout main
-        commit id:"releasev2" tag:"release-v2"
+        commit id:"releasev2" tag:"release-v2" type: REVERSE
  ```
