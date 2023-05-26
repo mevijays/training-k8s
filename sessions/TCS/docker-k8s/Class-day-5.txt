@@ -1,0 +1,124 @@
+Class-Day-5
+
+- assignment
+- multi-stage build docker
+- docker compose
+- kubernetes
+
+----------------------------------
+
+image = image id[numerical] - alias name
+
+docker images 
+123 - myimg:v1
+123 - localhost/repo/myimg:v1
+123 - reg.k8s.mevijay.dev/repo/myimg:v1
+
+docker tag myimg:v1 localhost/repo/myimg:v1
+docker tag myimg:v1 reg.k8s.mevijay.dev/repo/myimg:v1
+
+docker push localhost/repo/myimg:v1
+docker push reg.k8s.mevijay.dev/repo/myimg:v1
+
+docker rmi reg.k8s.mevijay.dev/repo/myimg:v1  - ??? result - untagging
+
+-----Multistage build Dockerfile------
+java microservice building process
+
+java source code-----> compiling/building [maven||gradle]-----output=.jar or .war file  : intermediate step
+
+run the java program -----> jar file + jre----- program run   : final outcome step.
+
+-----------------
+Goal:
+1- create a html file
+2- use html file with nginx to form a final container image-
+
+effort:
+
+A) create html manually & use DOckerfile to copy step from host path to inside nginx  docker image
+B) create html file inside a docker container automatically and use this generated index.html file with second/final nginx container to build final container image
+
+---
+LAB:
+A)Manual step
+  index.html:
+  <h1>I am image pushed in private repo</h1>
+
+B)Dockerfile:
+  FROM nginx:1.24
+  COPY . /usr/share/nginx/html/
+
+-Multistage Dockerfile
+FROM alpine:3.18  as vijay
+WORKDIR /app
+RUN echo '<h1>I am image pushed in private repo</h1>'  > index.html
+
+FROM nginx:1.24
+COPY --from=vijay /app/index.html /usr/share/nginx/html/
+
+Excercise:
+  create a multistage container build where-
+    1- index.html file generated with content as ' hi i am multistage build container'
+    2- use nginx 1.24 to build final container image name as reg.k8s.mevijay.de/myrepo/multi:yourname
+    3- push the image in registry
+
+compose: A yaml file with container running / configuration instructions in to it.
+
+docker-compose.yaml
+services:
+  db:
+    image: mariadb:10.6.4-focal
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    expose:
+      - 3306
+      - 33060
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 8080:80
+    restart: always
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+volumes:
+  db_data:
+
+
+docker compose up -d
+
+docker compose = docker 
+up = run
+
+----------------------------------
+---------Kubernetes---------------
+Pros in Docker
+
+1- easy to deploy, patch
+2- easy to manage applications.
+
+Problem with only docker host for production
+1- lack in HA
+2- scalability
+3- managment of host
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+Class-Day6
+Kubernetes
+--------
+1- managed kubernetes - control plane installation/patching/upgrade is managed by provider
+      Example:
+        - EKS
+        - GKE
+        - AKS
+2- un-managed kubernetes
+      CE- KUBEADM
+          KIND   - k8s in docker-  [docker in docker, nested docker]
+          k3s, k3d
+      EE- Openshift by redhat
+          vmware TANZU
+          Suse Rancher
+-------------------------------
+monolith and micro  services
+KIND it is binary
+
+kind configuration
+
+control-plane
+worker1
+worker2
+worker3
+
+KIND install.....
+
+docker container rm <list id of all container>
+docker image prune -a
+docker container prune 
+docker volume prune -a
+docker network prune
+
+start KIND binary install
+
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.19.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+
+----kind-simple.yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+
+
+ kind create cluster --name kind --config kind-simple.yaml
+ -------Kubectl----
+ Kubectl does API call to kubernetes server API interface (6443)
+ with each kubectl get call we can give resource name. But ! since it is an api resurces, the resource name should be displayed how it is there in api defined.
+ To get the exact api resources names. we use the command
+
+ kubectl api-resources
+
+ kubectl run nginx --image nginx:1.24
+
+ docker run --name nginx  nginx:1.23
+
+ To create a pod name as nginx from  image as nginx:1.34
+ 
+ kubectl run nginx --image nginx:1.24
+ 
+ To get list of pods in default NS
+ 
+ kubectl get po
+ 
+ To get list of pods in specific NS
+ 
+ kubectl get po -n <namespace>
+ 
+ To get list of pods in all namespaces
+ 
+ kubectl get po -A
+ kubectl get po --all-namespaces
+ 
+ To create a namespace
+ 
+ kubectl create ns <name>
+ 
+ To create a pod in specific NS
+ 
+ kubectl run nginx --image nginx:1.24  -n <NS name>
+
