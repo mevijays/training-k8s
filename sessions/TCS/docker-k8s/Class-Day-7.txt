@@ -1,0 +1,170 @@
+Day-7-tcs.txt
+--------------------------------------
+Create kind cluster with 1 master and 1 node
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+  - role: worker
+
+kind create cluster --name kind2 --config kind-simple.yaml
+
+validate nodes with: kubectl get nodes
+
+kube-config and contexts---:
+When you create the cluster, a crdential file ( context) gets created in ~/.kube/config
+
+content in context
+
+clusters:
+  - cluster:
+       server: https://<k8s-api>:6443
+    name: kind
+contexts:
+  - context:
+      cluster: kind
+      namespace: default
+      user: kube-admin-kind
+current-context: context1
+kind: config
+users:
+  - name: kind-kind
+    user:
+
+-------
+how do we modify context file references?
+WHat if i accedently deleted the context file ?
+----------
+Get the list of conext:      kubectl config get-contexts
+change the current context:  kubectl config set current-context <context name>
+--
+Excercise:
+change context to kind 2 and create a pod kind2 from image nginx:1.24
+
+change context to kind  and create a pod kind from image nginx:1.24
+
+----------------
+
+yaml | json
+
+based on key value
+
+username: test
+password: testpass
+
+username: test1
+password: testpass1
+
+username: test2
+password: testpass2
+
+key: value
+
+reference object- address, employee, student, disk
+
+address:
+  house no: b6
+  city: pune
+  state: MH
+  country: IN
+employee:
+  name:
+  empid:
+  joining date:
+  manager:
+  tenure:
+------------
+disks:
+- disk1:
+    total size:
+    current usase:
+    free space:
+- disk2:
+    total size:
+    current usase:
+    free space:
+- disk3:
+    total size:
+    current usase:
+    free space:
+
+path-
+disks[2].disk3.total size=
+
+-------------
+get a dry-run of pod creation in yaml
+kind: deployments
+kind: pod
+kind: service
+--------- Typical k8s manifest file -------
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.24
+kubectl run test --image nginx:1.24 --dry-run -o yaml > pod.yaml
+
+excercise: 
+
+create two pods from manifest file as :
+1st pod:  name tcspod1, image nginx:1.24
+2nd pod:  name tcsweb, image consul:latest
+
+----- multi container pod -----
+in one pod, deployment definition if we create 2 container.
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.24
+    - name: consul
+      image: consul:latest
+excercise:
+  create a multicontainer pod name as mymulti from images 1) nginx:1.24 2) consul:latest
+
+excercise:
+Create a container name as webapp with image nginx:1.24 in namespace dev
+create a multi container name as webapp with image consul:latest & nginx:1.24 in namespace as prod
+
+kubectl create ns  <name>  : creates defined namespace in k8s
+
+------------------------------
+controller managed deployment
+
+KIND:deployment------->replicaset--------->POD
+
+     webapp-------->webapp-jkjdf7-------->webapp-jkjdf7-kdmkljirt
+
+kubectl create deploy <name> --image <image-name> 
+
+kubectl create deploy webapp --image nginx:1.24 
+
+kubectl get deploy,rs,pod
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
