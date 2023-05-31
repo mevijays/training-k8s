@@ -1,0 +1,118 @@
+Day-8
+
+pod architecture
+Deployment replicas - redundancy 
+Logs, events, describe
+metric server
+pod status
+
+-------------
+kubectl run
+kubectl create deploy
+
+pod -        : created with no controller. pod deltion brings down the pod fully.
+deployment - : its template pod controlled by replicaset controller  and pod deletion will bring up pod again 
+statfulset   : controller itself, manages the pod mainly being use for statefull type workload
+daemonset    : controller itself, works with host storage and host network.
+
+-------------
+Init container      - 2 containers but one container come before other and it perform some initilization task then die, or handover things to second container.
+Side Card container - 2 containers in one pod running togather throughout the life cycle of the pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app.kubernetes.io/name: MyApp
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox:1.28
+    command: ['sh', '-c', 'echo The app is running! && sleep 3600']
+  initContainers:
+  - name: init-myservice
+    image: busybox:1.28
+    command: ['sh', '-c', "until nslookup myservice.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
+```
+kubectl apply -f init.yaml
+kubectl run myservice --image nginx:1.24
+kubectl expose pod myservice --port=80
+
+watch kubectl get po
+
+
+
+
+pod status :
+1) Init:0/1         : init container is still running and condition could not met.
+2) running          : healthy container
+3) pending          : some unknown condition not met yet to run the pod as healthy
+4) imagepullbackoff : when the image reference is wrong or image does not exist.
+5) crashloopbackof  : Application code have issues and failing with liveness readiness probe.
+
+--------------------------
+CIDR or network
+
+POD network | pod CIDR - is a overlay private network span across k8s nodes
+svc network | svc CIDR   | 
+
+
+problems with only pod network
+1- pods are immutable and can go away in this case new pod gets new IP
+2- one deployment may have multiple replica pod for redundancy they needs an ip to load balance.
+
+action item:
+1- every pod for communication internally i.e. pod to pod we need static ip address
+internal pod replica load balancer static ip requirement.
+
+
+Excercise:
+create a deployment name as appdeploy from image nginx:1.24 . container port is 80
+expose a service for this deployment on port 8080.
+
+kubectl create deploy <name> <image>
+kubectl expose deploy <deployName> --port=<servicePort>  --target-port=<containerPort>
+
+validation commands
+  - kubectl get deploy,rs,pod,svc
+
+
+
+Excercise: create a deployment name as testdeploy from image sharmavijay86/hello-k8s:v1 . port is 8080
+           expose the service for this deployment on port 9090
+
+validation: kubectl get svc,pod -o wide
+
+kubectl create deploy testdeploy --image=sharmavijay86/hello-k8s:v1
+kubectl expose deploy testdeploy --port=9090 --target-port=8080
+
+
+Excercise: 
+delete the svc and deployment of testdeploy and -
+create a deployment name as testdeploy from image sharmavijay86/hello-k8s:v1 . port is 8080 create 3 replicas pods 
+           expose the service for this deployment on port 9090
+
+kubectl delete deploy testdeploy
+kubectl delete svc testdeploy
+kubectl create deploy testdeploy --image=sharmavijay86/hello-k8s:v1 --replicas=3
+kubectl expose deploy testdeploy --port=9090 --target-port=8080
+
+validation: kubectl get svc,pod -o wide
+
+-----troubleshooting & metric ---
+
+kubectl describe po errpod - 
+scaling replica command: kubectl scale deploy testdeploy --replicas=1
+Excercise: scale the replica of deploy testdeploy up to 1
+
+to get the evntes namespace level: kubectl get events
+to get events for a resource : kubectl describe <resource> <resourceName>
+to get events cluster wide i.e. all namespace: kubectl get ev -A
+
+to check logs of a pod: kubectl logs <podname> -n <namespace>
+
+---metric
+to check cpu memory status of a pod   : kubectl top pod
+to check cpu memory status of a node  : kubectl top node
