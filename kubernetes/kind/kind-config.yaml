@@ -35,5 +35,5 @@ nodes:
           node-labels: "ingress-ready=true"
 networking:
   kubeProxyMode: "ipvs"
-  apiServerAddress: "192.168.1.2"
+  apiServerAddress: "127.0.0.1"
   apiServerPort: 6443
