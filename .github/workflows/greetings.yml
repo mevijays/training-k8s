@@ -3,16 +3,17 @@ name: Greetings
 on: workflow_dispatch
 
 jobs:
-  greeting:
+  triage:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
+      contents: read
       pull-requests: write
     steps:
-     - name: greeting to world
-       id: my-script
-       run: |
-         echo '======================================'
-         printenv
-         echo '======================================'
-         
+      - uses: actions/labeler@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: testing env
+        run: |
+          echo '============================='
+          printenv
+          echo '=============================='
