@@ -11,7 +11,9 @@ jobs:
     steps:
      - name: greeting to world
        id: my-script
-       run: Write-Host 'Hello, World!'
+       run: |
+         Write-Host 'Hello, World!'
+         echo '======================================'
+         printenv
+         echo '======================================'
          
-     #- run: echo "${{ steps.my-script.outputs.result }}"
-       
