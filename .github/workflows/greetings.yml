@@ -12,7 +12,6 @@ jobs:
      - name: greeting to world
        id: my-script
        run: |
-         Write-Host 'Hello, World!'
          echo '======================================'
          printenv
          echo '======================================'
