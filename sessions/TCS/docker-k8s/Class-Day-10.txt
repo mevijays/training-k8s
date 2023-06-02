@@ -1,0 +1,103 @@
+Class-Day-10
+Autoscaling
+CMD args
+jobs cronjobs
+env 
+secrets configmaps
+Quota limitrange
+
+-----------------
+
+Autoscalling - 
+
+Manual scale
+kubectl create deploy scaleapp --image nginx:1.24 --replicas=30 --dry-run=client -o yaml
+kubectl scale deploy scaleapp --replicas=3
+
+automatic scale
+we need a threshold on resource (CPU)
+min && max limit of max and min within which autoscaling can happen.
+
+kubectl autoscale deploy <deploy name>  --min=1 --max=10 --cpu-percent=0.5
+this autoscaling process being carried out by a controller we called it as HPA - horizontal pod autoscaler .
+min      1
+max      10
+default  2
+Excercise:
+    kubectl create deploy scaleapp --image nginx:1.24 --replicas=30 --dry-run=client -o yaml
+    kubectl expose deploy scaleapp --port=80 --target-port=80
+    kubectl autoscale deploy <deploy name>  --min=1 --max=10 --cpu-percent=1
+    kubectl run -it load-generator --rm --image=busybox:1.28 --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://scaleapp; done"
+
+stateless  --- configuration,data remains same throughoput the life cycle of the pod  - deployment
+statefull  --- configuration, data gets change over the time.                         - statefulset - db
+
+data persistancy
+
+volume
+  storage
+configuration
+   configfile
+
+nginx webserver with configuration variable from a file nginx.conf
+
+secret   - the data/file having sensitive information i.e. passwords, keys . informations are base64 encoded
+configmap- the data/file having plaintext information
+
+diff bw encode and encryption
+encode dont need external key
+encryption needs an encryption key
+example of database string
+  config.php
+   hosts: dbdev.hcl.com
+   user:
+   password:
+
+  config.php
+   hosts: dbprod.hcl.com
+   user:
+   password:
+----------------------------------------------------
+Excercise:
+    create a configmap name as indexcm with data as <h1>Hello TCS,/h1>
+    create deployment name as nginxpod, mount the CM on /usr/share/nginx/html/
+    create service on port 9090
+    create an ingress hostname mylab.lan for the service and access this.
+
+Solution:
+    reference  https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/configmaps/cm.yaml
+    kubectl expose deploy --port=  --terget-port=
+    kubectl create ingress webcm --rule=mylab.lan/*=webcm:80
+
+Excercise:
+   Incorporate all the above steps in a single file and perform deployment and deletion.
+
+kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/configmaps/tcs-cm-index-svc-deploy.yaml
+
+Secret
+  - generic
+  - tls
+  - dockersecret
+
+index.html
+1- Create Configmap from file and with CMD
+    kubectl create cm webcm --from-file=index.html --dry-run -o yaml
+2- Create Secret from file and with CMD
+    kubectl create secret generic nginxsec --from-file=index.html --dry-run -o yaml
+
+kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/secrets/secret-deploy-svc-ing.yaml
+
+env variable ---- 
+
+docker -e 
+
+--------------------------------------
+NameSpace - 
+Quota
+
+Excercise: create a namespace name as myns 
+           apply a quota on 2 pod and 2 service.
+           try creating 3 pods in that namespace and see if you able to create.
+Limit range
+
+

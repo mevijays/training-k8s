@@ -1,0 +1,81 @@
+Class-Day-9.txt
+------------------
+KInd installation
+
+Ports and configs in k8s 
+
+6443    - API
+80,443, - Ingress
+
+
+Service types
+clusterIP   - internal expose
+NodePort    - external expose  - 30000,30001,30002
+LoadBalancer  - mainly works in cloud   - externaly expose
+
+ingress - externaly expose
+
+--NodePort-----
+excercise:
+  Create a deployment named as frontapp from image nginx:1.24
+  expose the deployment with port as 8080 and nodeport as 30000 where in container are running with port 80
+
+CMD:
+    kubectl create deploy <deployName> --image <imagename>
+    kubectl expose deploy <deploymentName> --port=<svcPort> --target-port=<podPort> --type=NodePort --dry-run -o yaml > nodeport-svc.yaml
+    add nodePort: 30000 save and exit
+    kubectl apply -f nodeport-svc.yaml
+
+validation: from browser or curl .. http://<lab machine ip>:30000
+
+
+Problem LAB:
+  Create deployment name as hello-k8s use image sharmavijay86/hello-k8s:v1 ( port of container is 8080 )
+  expose this deployment to make accessible on node port 30001
+Solution:
+kubectl create deploy hello-k8s --image sharmavijay86/hello-k8s:v1
+
+----ingress--
+routing rules:
+   host based :  
+         1- abc.com----->svcA
+         2- xyz.com----->svcB
+   path based :
+         1-  abc.com/ui------>svcA
+         2-  abc.com/api----->svcB
+
+ingress is the routing rule object we create for each of the service that we want to expose for our users
+where in ingress controller is the deployment which respect the routing rules and route the traffic to correct service
+
+kubectl create ingress NAME --rule=host/path=service:port
+
+kubectl create ingress NAME --rule=abc.com/*=hello-k8s:80
+kubectl create ingress NAME1 --rule=xyz.com/*=app-k8s:8080
+
+kubectl create ingress NAME --rule=abc.com/ui=hello-k8s:80
+kubectl create ingress NAME --rule=abc.com/api=app-k8s:80
+
+Excercise:
+  delete svc hello-k8s, create svc as cluster ip and expose on svc port 80
+  create ingress with hostname as mylab.lan point to hello-k8s svc and port
+
+Ingress deployment :
+
+  kubectl create deploy hello-k8s --image sharmavijay86/hello-k8s:v1
+  kubectl expose deploy hello-k8s --port=8080 --target-port=8080
+  kubectl create ingress hello-k8s --rule=mylab.lan/*=hello-k8s:8080
+
+-- execute command in pod..
+
+docker exec 
+kubectl exec -it podname command
+
+kubectl exec svc/hello-k8s -- pwd
+
+inside pod: kubectl exec -it svc/hello-k8s -- bash
+
+---------------------------------------------------------------------------
+env variable 
+configmap secret
+storage,
+
