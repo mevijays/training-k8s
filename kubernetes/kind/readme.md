@@ -37,7 +37,7 @@ Preapre a file with required configuration. Bellow config is a sample which usag
 
 File content
 
-```
+```yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -118,7 +118,7 @@ You see we have exposed nodeport to host machine NIC interface, that is why you 
 
 This just need a configuration line to put in networking section.
 
-```
+```yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -147,7 +147,7 @@ networking:
 
 - Check the services nginx ingress.
 
-```
+```bash
 kubectl create deploy webapp --image=nginx:1.22
 kubectl expose deploy webapp --port=8080 --target-port=80
 kubectl create ingress webapp --class=nginx --rule="abc.lan/*=webappp:80"
@@ -156,7 +156,7 @@ Now make an entry in hosts file for abc.lan and check in browser.
 
 ### Ingress with config map in nginx:1.22
 
-```
+```yaml
 apiVersion: v1
 data:
   index.html: |
@@ -248,23 +248,34 @@ sudo bash get_helm.sh
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add stable https://charts.helm.sh/stable
-helm install prometheus prometheus-community/kube-prometheus-stack
+```
+### Check values yaml and modify
+```
+https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+```   
+Now install
+
+```
+helm install prometheus prometheus-community/kube-prometheus-stack -f values.yaml
+```
+#### For Local install
+```
 kubectl port-forward deployment/prometheus-grafana 3000
 ```
 
 ### Setup Credentials
-
+```bash
 username: admin   
 password: prom-operator
-
+```
 ### Cert manager setup
 
-```
+```bash
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.1/cert-manager.yaml
 ```
 
 ### Issuer    
-```
+```yaml
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
