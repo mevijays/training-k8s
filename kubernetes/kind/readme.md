@@ -254,9 +254,21 @@ kubectl port-forward deployment/prometheus-grafana 3000
 
 ### Setup Credentials
 
-username: admin
+username: admin   
 password: prom-operator
 
+### Cert manager setup
 
+```
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.1/cert-manager.yaml
+```
 
+### Issuer    
+```
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: selfsigned-cluster-issuer
+spec:
+  selfSigned: {}
 ```
