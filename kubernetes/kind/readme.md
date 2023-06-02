@@ -236,3 +236,27 @@ status:
 ```
 ### ETCD backup and restore
 [ETCD Backup and restore process](etcd-bkp-restore.md)
+
+### Setup Helm binary
+```
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+sudo bash get_helm.sh
+```
+
+### Prometheus
+
+```
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add stable https://charts.helm.sh/stable
+helm install prometheus prometheus-community/kube-prometheus-stack
+kubectl port-forward deployment/prometheus-grafana 3000
+```
+
+### Setup Credentials
+
+username: admin
+password: prom-operator
+
+
+
+```
