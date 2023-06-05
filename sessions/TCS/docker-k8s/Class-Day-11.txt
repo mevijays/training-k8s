@@ -1,0 +1,156 @@
+Class-Day-11
+Secret- Dockerfile
+Secret- TLS
+Quota Limit Range
+CMD ARGS
+Jobs CronJobs
+Upgrade and rollout
+storageClass, PV, PVC
+--------------------------
+Secrets:
+  Generic
+  TLS
+  Docker-registry
+
+Docker-registry is a secret with credentials for a private container registry repo.
+kubectl create ns  production
+1- Create docker registry secret
+
+    kubectl create secret docker-registry regcred --docker-server=reg.k8s.mevijay.dev --docker-username=demo --docker-password=Admin@123 -n production
+2- use imagepullsecret option in pod/deployment yaml
+    https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: private-reg
+spec:
+  containers:
+  - name: private-reg-container
+    image: <your-private-image>
+  imagePullSecrets:
+  - name: regcred
+```
+
+Excercise : Create a namespace as securens 
+            Create a pod name as prodapp in the namespace. use image as reg.k8s.mevijay.dev/myrepo/nginx:1.24
+Solution: kubectl create ns securens
+          kubectl create secret docker-registry regcred --docker-server=reg.k8s.mevijay.dev --docker-username=demo --docker-password=Admin@123 -n securens
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: prodapp
+  namespace: securens
+spec:
+  containers:
+  - name: prodapp
+    image: reg.k8s.mevijay.dev/myrepo/nginx:1.24
+  imagePullSecrets:
+  - name: regcred
+```       
+
+Secureing a URL: certificate,  key
+
+Generate SelfSigned: openssl req -subj '/CN=mylab.lan/O=TCS LABs LTD/C=IN' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout ingress.key -out ingress.cert
+
+Create a TLS type secret and use it with ingress
+- kubectl create secret tls mylab-tls --cert=ingress.cert --key=ingress.key
+- kubectl expose pod securepod --port=80 --target-port=80 -n production
+- kubectl create ing secureing --rule="mylab.lan/*=securepod:80,tls=mylab-tls" -n production
+
+Excercise: You have created a prodapp pod in securens. Expose as service, generate certificate and key for domain mylab.lan , create an ingress for domain mylab.lan on 80 and 443 both.
+
+
+----Quota Limitrange-----
+
+QOUTA = ns  resources quota - namespace level
+      kubectl create ns database
+--:   kubectl create quota my-quota --hard=cpu=1,memory=1G,pods=2,services=3 -n database
+
+LimitRange: 
+For all the pod to provide limits and requests as default.
+cpu: 500m
+mem: 128mi
+
+
+
+ request:
+ Limit:
+
+ ```Example
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: prodapp
+  namespace: securens
+spec:
+  containers:
+  - name: prodapp
+    image: reg.k8s.mevijay.dev/myrepo/nginx:1.24
+  imagePullSecrets:
+  - name: regcred
+
+---LimitRange
+https://kubernetes.io/docs/concepts/policy/limit-range/
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-resource-constraint
+spec:
+  limits:
+  - default: 
+      cpu: 500m
+    type: Container
+
+-------cmd arg------
+ls : command
+
+ls -l | -l is argument of ls command
+
+kubectl exec pod -- ls -l 
+JObs   automatic batch process run 
+----------------------
+
+Excercise:
+  kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/pod-example/cmd-args.yaml
+  kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/pod-example/job.yaml
+  kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/pod-example/cronjob.yaml
+
+  job--->pod
+  cronjob---->job--->pod
+
+  --------------------------
+
+  kubectl create deployment prodapp --image nginx:1.22 --dry-run=client -o yaml
+  take a yaml file from above command and apply it .
+  now change image to nginx:1.23 and apply again
+  now change image to nginx:1.24 and apply again.
+to check the history of revision
+    kubectl rollout history deployment/prodapp
+to rollback on specific revision
+    kubectl rollout undo deployment/prodapp --to-revision=1
+to rollback to n-1 
+     kubectl rollout undo deployment/prodapp 
+
+rolling update: 
+blue green:
+
+--Deployment type in k8s--
+     pod
+     deployment
+     statefullset - backend database
+     damenoset
+
+- Generic storage
+   block storage      | example  USBD disk, HDD, SSD , iscsi, fcoe, san LUN
+   filesystem storage | NFS, CIFS  coming from NAS.
+   object storage
+
+Kubernetes: 
+
+PVC - persistent volume claim  | in pod
+PV  - persistent volume
+StorageClass: based on storage type we may have many class. mainly one for block storage and one form file storage.
