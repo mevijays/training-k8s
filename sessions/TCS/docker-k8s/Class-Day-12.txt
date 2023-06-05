@@ -1,0 +1,144 @@
+Class-Day-12
+==========================
+reclaim policy
+
+delete  - when the reference PVC deleted, the volume will also be deleted  default in storageclass and used in deployment
+retain  - when the reerence pvc is deleted still the pv will exist and will be now available to bound with new pvc of the same size, mainly being used for statfullset.
+
+Volumebinding :
+  - wait for consumer
+  - immediate
+
+practice excercise: create a pvc of 2 gb size from stadard storageclaas which is defualt and create a pod from nginx:1.24 and mount this pvc at /app/webdata
+
+https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/pod-example/pvc.yaml
+https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/pod-example/pvc-pod.yaml
+
+Problem excercise:  create pod for mysql:8 with a 3GB pvc attached. now create a database and then delete pod. recreate pod with same pvc and validathe if previously created database is available.
+
+
+query:
+  env 
+  mysql -u -ppassword
+  > create database
+
+Deployment naming conventions
+deployment --->replicaset-------->pod
+hello------> hello-hjhj ----->hello-hjhj-7fji
+
+statefullset naming
+
+hello------>hello-0
+
+Excercise: Create a nginx statfullset wth 1 replicas and pvc cliam as 1gb name of sts is web and pvc is www.
+
+----------------------------
+Helm Chart
+It is a package managment tool for kubernetes.
+It consist of the yaml manifest file for various resources in a helm chart way.
+
+
+chartapp/chart.yaml
+chartapp/values.yaml
+chartapp/templates/deployment.yaml
+chartapp/templates/svc.yaml
+chartapp/templates/cm.yaml
+chartapp/templates/ing.yaml
+
+image: nginx:1.24
+
+image: {{ .values.image }}
+
+
+helm install --set image=redis
+
+values.yaml
+
+image: redis
+
+helm install <name> chart[directory/url]
+
+helm uninstall <name>
+
+helm upgrade <name> chart
+1) create a local dir sample helm chart:
+ helm create web
+2) to deploy local helm chart.
+  helm install web .
+3) to upgrade values.yaml change
+  helm upgrade web .
+4) uninstall helm chart
+  helm uninstall web
+5) list all deployed helm chart in default NS
+  helm ls -n default
+
+Add remote helm chart repository--
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add stable https://charts.helm.sh/stable
+
+6) to search the available helm charts in added repos :
+ helm search repo
+
+prometheus stack:
+
+
+Monitoring is a proactive aproach of problem solving-.
+
+Agent----------------> database--------------->frontend ( visualize )
+
+node-exporter-------->Prometheus-------------->grafana
+
+-) deploy prometheus monitoring stack in any kubernetes with helm chart.
+
+grafana-values.yaml
+```
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - mylab.lan
+```
+helm install prometheus prometheus-community/kube-prometheus-stack -f grafana-values.yaml
+
+
+=========Cert-manager=============
+Deploy cert manager controller
+
+create cluster issuer
+
+define issuer in any ingress to secure
+
+metadata:
+  creationTimestamp: null
+  name: tlsing
+  annotations:
+    cert-manager.io/cluster-issuer: "selfsigned"
+spec:
+
+----------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
