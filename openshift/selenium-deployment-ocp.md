@@ -11,15 +11,15 @@ oc expose service/slnode-firefox
 
 ```
 oc new-app --name slnode-chrome -e SE_EVENT_BUS_HOST=sl-hub -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-chrome:latest
-oc expose service/slnode-chrome
+
 ```
 
 Optional to deploy edge and firefox node as well
 
 ```
 oc new-app --name slnode-firefox -e SE_EVENT_BUS_HOST=sl-hub -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-firefox:latest
-oc expose service/slnode-firefox
+
 
 oc new-app --name slnode-edge -e SE_EVENT_BUS_HOST=sl-hub -e SE_EVENT_BUS_PUBLISH_PORT=4442 -e SE_EVENT_BUS_SUBSCRIBE_PORT=4443 selenium/node-edge:latest
-oc expose service/slnode-edge
+
 ```
