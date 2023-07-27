@@ -4,7 +4,7 @@
 1- Deploy the HUB and expose the service
 ```
 oc new-app --name sl-hub selenium/hub:latest
-oc expose service/slnode-firefox
+oc expose service/sl-hub
 ```
 
 2- Deploy the chrome node
