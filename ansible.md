@@ -21,3 +21,10 @@ sudo apt-get install ansible
   ```
   ssh-copy-id ubuntu02@<ip>
   ```
+  give password if it is asking..
+
+  Then to test password less auth run the command from ubuntu 01
+
+  ```
+  ssh ubuntu02@<ip>
+  ```
