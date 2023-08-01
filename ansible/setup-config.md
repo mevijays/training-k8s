@@ -34,8 +34,8 @@ sudo apt-get install ansible
 ```
 sudo visudo
 ```
-Add sudo user in no-passwd 
-
+Add sudo user in no-passwd   
+find out the %sudo line and add prefix NOPASSWD:  before last ALL option in the same line   
 ```bash
-
+%sudo ALL(ALL:ALL)  NOPASSWD:ALL
 ```
