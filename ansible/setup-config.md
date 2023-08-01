@@ -40,3 +40,12 @@ find out the %sudo line and add prefix NOPASSWD:  before last ALL option in the 
 %sudo ALL(ALL:ALL)  NOPASSWD:ALL
 ```
 close the editor and save the content by pressing . ctrl+x followed by y and Enter
+
+To validate if sudo is working fine without password run this.
+
+```bash
+sudo bash
+
+```
+
+
