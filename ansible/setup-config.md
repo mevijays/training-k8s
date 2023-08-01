@@ -39,3 +39,4 @@ find out the %sudo line and add prefix NOPASSWD:  before last ALL option in the 
 ```bash
 %sudo ALL(ALL:ALL)  NOPASSWD:ALL
 ```
+close the editor and save the content by pressing . ctrl+x followed by y and Enter
