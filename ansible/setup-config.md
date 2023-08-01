@@ -48,4 +48,9 @@ sudo bash
 
 ```
 
+If you see the locale specific error please run this
 
+```bash
+export LC_ALL=en_US.UTF8
+
+```
