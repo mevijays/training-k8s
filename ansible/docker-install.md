@@ -9,7 +9,7 @@
   - name: Update apt cache
     apt: update_cache=yes
   - name: Install packages
-    apt: name={{ item }} state=present
+    apt: name="{{ item }}" state=present
     with_items:
       - apt-transport-https
       - ca-certificates
