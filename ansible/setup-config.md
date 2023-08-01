@@ -1,4 +1,4 @@
-# Installation of ansible
+# Installation of ansible on control machine
 
 ```
 sudo apt-get update 
@@ -28,3 +28,14 @@ sudo apt-get install ansible
   ```
   ssh ubuntu02@<ip>
   ```
+
+# Configuration of remote machine
+
+```
+sudo visudo
+```
+Add sudo user in no-passwd 
+
+```bash
+
+```
