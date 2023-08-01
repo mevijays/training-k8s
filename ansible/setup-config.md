@@ -66,3 +66,35 @@ Adhoc command to validate ansible connectivity
 ```
 ansible -i inventory web -m ping
 ```
+
+
+## Ansible playbook 
+
+Sample playbook.yaml
+```yaml
+name: creating a file on remote machine
+hosts: web
+tasks:
+  - name: create file
+    copy:
+      content: 'Hello from ansiblelab'
+      dest: /home/ubuntu02/lab.txt
+  - name: install git
+    apt:
+       name: apache2
+       state: present
+```
+
+
+Run the playbook
+```
+ansible-playbook -i inventory web playbook.yaml
+
+```
+
+
+
+
+
+
+
