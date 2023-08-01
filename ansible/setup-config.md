@@ -72,9 +72,10 @@ ansible -i inventory web -m ping
 
 Sample playbook.yaml
 ```yaml
-name: creating a file on remote machine
-hosts: web
-tasks:
+- name: creating a file on remote machine
+  hosts: web
+  become: yes
+  tasks:
   - name: create file
     copy:
       content: 'Hello from ansiblelab'
@@ -88,7 +89,7 @@ tasks:
 
 Run the playbook
 ```
-ansible-playbook -i inventory web playbook.yaml
+ansible-playbook -i inventory playbook.yaml
 
 ```
 
