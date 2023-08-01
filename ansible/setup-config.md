@@ -54,3 +54,15 @@ If you see the locale specific error please run this
 export LC_ALL=en_US.UTF8
 
 ```
+# Inventory file
+
+```
+[web]
+192.168.46.129  ansible_user=ubuntu02
+```
+
+Adhoc command to validate ansible connectivity
+
+```
+ansible -i inventory web -m ping
+```
