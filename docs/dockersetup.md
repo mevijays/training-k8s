@@ -11,7 +11,8 @@ ssh vijay@192.168.1.19
 ```
 Now run the command to download docker install script.
 ```
-curl -fsSL https://get.docker.com | sudo bash
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+curl -fsSL https://get.docker.com | sudo sh
 ```
 If you dont have curl command , please get it install with. 
 ```
