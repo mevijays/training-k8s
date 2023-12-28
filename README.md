@@ -6,7 +6,8 @@
 ### Table of training documents 
 - [Docker and Kubernetes Content](docs/docker-k8s.md)
 - [Setup 1 master 1 node k8s practice lab cluster](https://github.com/sharmavijay86/sharmavijay86.github.io/tree/main/blog/k8ssetup/)
-- [Setup Docker in Ubuntu 20](docs/dockersetup.md)
+- [Setup Docker in Ubuntu](docs/dockersetup.md)
+- [Setup 2node Rancher RKE-2 cluster](docs/rke2.md)
 - [Simple **kind** lab setup ](kubernetes/kind/readme.md)
 - [Docker command cheat sheat](docs/dockercheatsheet.md)
 - [ Setup docker container registry2 and ui](docs/setup-registry.md)
