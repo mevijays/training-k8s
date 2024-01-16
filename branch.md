@@ -67,3 +67,21 @@
         checkout main
         commit id:"releasev2" tag:"release-v2" type: REVERSE
  ```
+# helm release  provider for gke
+
+```yaml
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+
+  exec {
+    api_version = "client.authentication.k8s.io/v1beta1"
+    args = ["gcloud", "auth", "application-default", "print-access-token"]
+    env = {
+      GOOGLE_APPLICATION_CREDENTIALS = "/path/to/service-account-key.json"
+    }
+  }
+}
+
+```
