@@ -35,12 +35,39 @@ $ kind version
 ### **Kind config file**
 Preapre a file with required configuration. Bellow config is a sample which usage extra port mapping for ingress controller.
 
-File content
+
+#### File content 1 controlplane as worker as well
+```yaml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+    - containerPort: 80
+      hostPort: 80
+      listenAddress: "0.0.0.0"
+      protocol: TCP
+    - containerPort: 443
+      hostPort: 443
+      listenAddress: "0.0.0.0"
+      protocol: TCP
+    kubeadmConfigPatches:
+    - |
+      kind: InitConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "ingress-ready=true"
+networking:
+  kubeProxyMode: "ipvs"
+```
+#### File content 2 worker 1 master
 
 ```yaml
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
+  - role: worker
+  - role: worker
   - role: control-plane
     extraPortMappings:
     - containerPort: 80
