@@ -56,7 +56,7 @@ Deploy
 
 ```bash
 helm repo add jenkins https://charts.jenkins.io 
-helm install jenkins jenkins/jenkins --namespace public --create-namespace -f jenkins-values.yaml --version 2.426.2
+helm install jenkins jenkins/jenkins --namespace public --create-namespace -f jenkins-values.yaml --version 4.11.1
 ```
 Create a serviceAccount and provide privileges
 ```bash
