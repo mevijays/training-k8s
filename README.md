@@ -18,3 +18,4 @@
 - [Dockerfile components](docs/dockerfile.md)
 - [Kubernetes cheat sheet and shortcuts](kubernetes/k8s-shortcuts-cheat-sheet.md)
 - [Secrets and configmaps](docs/secrets-configmap.md)
+- [Create ingress lab](docs/ingress.md)
