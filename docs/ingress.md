@@ -26,3 +26,21 @@ kubectl create ingress webcm --class=nginx --rule="abc.com/*=webcm:8080,tls=abc-
 ```
 kubectl create ingress webcm --class=nginx --rule=ckatcswebcm.lab/hello*=webcm:80,tls=test-tls --annotation="nginx.ingress.kubernetes.io/rewrite-target=/"
 ```
+### The LE issuer
+```
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: le-issuer
+spec:
+  acme:
+    email: vijay@mevijay.dev
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: le-key
+    solvers:
+    - http01:
+        ingress:
+          ingressClassName: nginx
+
+```
