@@ -56,5 +56,5 @@ Deploy
 
 ```python
 helm repo add jenkins https://charts.jenkins.io 
-helm install jenkins jenkins/jenkins --namespace public --create-namespace -f jenkins-values.yaml
+helm install jenkins jenkins/jenkins --namespace public --create-namespace -f jenkins-values.yaml --version 4.11.1
 ```
