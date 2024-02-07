@@ -3,26 +3,41 @@ The service account we are using in this Jenkinsfile is seperate serviceaccount 
 Values file.
 
 ```python
-#jenkins-valus.yaml
 controller:
-  #  serviceType: LoadBalancer
-  adminPassword: ''
-  #additionalPlugins:
-  #- git:4.11.5
+  adminUser: "admin"
+  adminPassword: "power@123go"
+  installPlugins:
+    - kubernetes:4029.v5712230ccb_f8
+    - workflow-aggregator:596.v8c21c963d92d
+    - git:5.1.0
+    - configuration-as-code:1670.v564dc8b_982d0
+  additionalPlugins: []
   ingress:
     enabled: true
-    paths: []
-    apiVersion: "networking.k8s.io/v1"
-    labels: {}
-    annotations: 
-       kubernetes.io/ingress.class: nginx
-       kubernetes.io/tls-acme: "true"
-       cert-manager.io/cluster-issuer: letsencrypt-staging
+    apiVersion: 'networking.k8s.io/v1'
+    annotations:
+     cert-manager.io/cluster-issuer: le-issuer
+    ingressClassName: nginx
     hostName: jenkins.k8s.mevijay.dev
     tls:
-      - secretName: jenkins-tls
-        hosts:
-          - jenkins.k8s.mevijay.dev
+     - secretName: jenkins-tls
+       hosts:
+         - jenkins.k8s.mevijay.dev
+agent:
+  additionalContainers:
+    - sideContainerName: dind
+      image: docker
+      tag: dind
+      command: dockerd-entrypoint.sh
+      args: ""
+      privileged: true
+      resources:
+        requests:
+          cpu: 500m
+          memory: 1Gi
+        limits:
+          cpu: 1
+          memory: 2Gi
 additionalAgents:
   maven:
     podName: maven
@@ -31,15 +46,9 @@ additionalAgents:
     # sideContainerName: jnlp
     image: jenkins/jnlp-agent-maven
     tag: latest
-  python:
-    podName: python
-    customJenkinsLabels: python
-    sideContainerName: python
-    image: python
-    tag: "3"
-    command: "/bin/sh -c"
-    args: "cat"
-    TTYEnabled: true
+persistence:
+  storageClass: ""
+  size: "8Gi"
 
 ```
 
