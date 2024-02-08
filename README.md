@@ -5,7 +5,7 @@
 ![Your Repository's Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=sharmavijay86&theme=blue-green)
 ### Table of training documents 
 - [Docker and Kubernetes Content](docs/docker-k8s.md)
-- [Setup 1 master 1 node k8s practice lab cluster](https://github.com/sharmavijay86/sharmavijay86.github.io/tree/main/blog/k8ssetup/)
+- [Setup 1 master 1 node k8s practice lab cluster](docs/kubeadm-cluster.md)
 - [Setup Docker in Ubuntu](docs/dockersetup.md)
 - [Setup 2node Rancher RKE-2 cluster](docs/rke2.md)
 - [Simple **kind** lab setup ](kubernetes/kind/readme.md)
