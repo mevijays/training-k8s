@@ -207,14 +207,27 @@ helm upgrade --install kibana kibana --set=resources.requests.cpu=100m,resources
 
 ## Setup monitoring with prometheus and grafana
 
-- Download the hlem chart values.yaml file for both grafana and prometheus.   
+- Clone kubeprometheus repo
 ```
-wget https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.github.io/master/blog/k8ssetup/grafana-values.yaml
-wget https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.github.io/master/blog/k8ssetup/prometheus-values.yaml
+git clone https://github.com/prometheus-operator/kube-prometheus.git
 ```
-- Updates values based on your case. mainly the ingress part and storage part.
-- Run the helm commands to deploy it all.
+- Deploy it!
+```bash
+cd kube-prometheus
+# Create the namespace and CRDs, and then wait for them to be availble before creating the remaining resources
+kubectl create -f manifests/setup
+
+# Wait until the "servicemonitors" CRD is created. The message "No resources found" means success in this context.
+until kubectl get servicemonitors --all-namespaces ; do date; sleep 1; echo ""; done
+
+kubectl create -f manifests/
 ```
-helm install prometheus prometheus --repo=https://prometheus-community.github.io/helm-charts -n prometheus --create-namespace
-helm install grafana grafana --repo=https://grafana.github.io/helm-charts  -f grafana-values.yaml -n prometheus
+- Create ingress to access grafana!
+```
+kubectl create ingress grafana-ui --rule=grafana.k8s.mevijay.dev/*=grafana:3000,tls=grafana-tls -n monitoring --class=nginx --annotation="cert-manager.io/cluster-issuer=le-issuer"
+```
+Now access with user id and password as ``admin/admin``
+- To delete it !
+```
+kubectl delete --ignore-not-found=true -f manifests/ -f manifests/setup
 ```
