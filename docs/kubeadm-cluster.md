@@ -184,13 +184,8 @@ helm install nfsclient nfs-subdir-external-provisioner --repo https://kubernetes
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.0/cert-manager.yaml
 ```
 - Create a selfsigned issuer
-```
-apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
-metadata:
-  name: selfsigned-issuer
-spec:
-  selfSigned: {}
+```bash
+kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/kubernetes/yamls/SS-clusterIssuer.yaml
 ```
 - How to use with ingress?
 ```
