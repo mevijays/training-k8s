@@ -199,8 +199,8 @@ kubectl apply -f https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.g
 
 ```
 kubectl create ns logging
-helm upgrade --install fluent-bit fluent-bit --repo=https://fluent.github.io/helm-charts -n logging
-helm upgrade --install elasticsearch elasticsearch --set=replicas=3,minimumMasterNodes=1,resources.requests.cpu=100m,resources.requests.memory=1Gi,volumeClaimTemplate.resources.requets.storage=5Gi, --repo=https://helm.elastic.co -n logging
+helm upgrade --install fd oci://registry-1.docker.io/bitnamicharts/fluent-bit -n logging
+helm upgrade --install elasticsearch elasticsearch --set=replicas=1,minimumMasterNodes=1,resources.requests.cpu=100m,resources.requests.memory=1Gi,volumeClaimTemplate.resources.requests.storage=5Gi, --repo=https://helm.elastic.co -n logging
 
 helm upgrade --install kibana kibana --set=resources.requests.cpu=100m,resources.requests.memory=500Mi,ingress.enabled=true,ingress.annotations."cert-manager\.io\/cluster-issuer"=letsencrypt-staging,ingress.hosts[0].host=kibana.k8s.mevijay.dev,ingress.hosts[0].paths[0].path=/,ingress.tls[0].secretName=kibana-tls,ingress.tls[0].hosts[0]=kibana.k8s.mevijay.dev --repo=https://helm.elastic.co -n logging
 ```
@@ -231,3 +231,49 @@ Now access with user id and password as ``admin/admin``
 ```
 kubectl delete --ignore-not-found=true -f manifests/ -f manifests/setup
 ```
+# Upgrading kubeadm cluster !
+
+### Upgrade control plane node
+- change the version repository from 27 to 28
+```
+sed -i 's/27/28/g' /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+```
+- Install packages
+```
+sudo apt install  kubeadm kubelet kubectl -y
+```
+- check the upgrade plan
+```
+kubeadm upgrade plan
+```
+- Apply upgrade to target version and wait till success msgs
+```
+kubeadm upgrade apply v1.28.6
+```
+
+### Upgrade worker nodes
+***Note:*** kubectl commands will be run from master
+- Drain the worker node
+```bash
+# replace <node-to-drain> with the name of your node you are draining
+kubectl drain <node-to-drain> --ignore-daemonsets --delete-emptydir-data  --force
+```
+- Installation of kubeadm and kubectl 
+```
+sudo apt install kubelet kubeadm -y
+```
+- upgrade!
+```
+sudo kubeadm upgrade node
+```
+- Restart kubelet 
+```
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+```
+- uncordon node
+```
+kubectl uncordon <node>
+```
+
