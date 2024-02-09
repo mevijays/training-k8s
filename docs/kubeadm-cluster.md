@@ -60,7 +60,7 @@ sudo sysctl --system
 ## Step on master nodes
 - Pull the required container images on node
 ```
-kubeadm config images pull
+sudo kubeadm config images pull
 ```
 We can initialize master node with difrent options:   
 - To install with specific CRI socket, in case cri-o.
