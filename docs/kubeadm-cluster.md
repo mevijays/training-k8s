@@ -257,8 +257,14 @@ sudo kubeadm upgrade apply v1.28.6
 - Drain the worker node
 ```bash
 # replace <node-to-drain> with the name of your node you are draining
-kubectl drain <node-to-drain> --ignore-daemonsets --delete-emptydir-data  --force
+kubectl drain ubuntu02-vitual-machine --ignore-daemonsets --delete-emptydir-data  --force
 ```
+- change the version repository from 27 to 28
+```
+sudo sed -i 's/27/28/g' /etc/apt/sources.list.d/kubernetes.list
+sudo apt update
+```
+
 - Installation of kubeadm and kubectl 
 ```
 sudo apt install kubelet kubeadm -y
@@ -274,6 +280,6 @@ sudo systemctl restart kubelet
 ```
 - uncordon node
 ```
-kubectl uncordon <node>
+kubectl uncordon ubuntu02-vitual-machine 
 ```
 
