@@ -5,7 +5,7 @@ Values file.
 ```yaml
 controller:
   adminUser: "admin"
-  adminPassword: "power@123go"
+  adminPassword: "password"
   installPlugins:
     - kubernetes:4029.v5712230ccb_f8
     - workflow-aggregator:596.v8c21c963d92d
