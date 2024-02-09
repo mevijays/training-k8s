@@ -245,11 +245,11 @@ sudo apt install  kubeadm kubelet kubectl -y
 ```
 - check the upgrade plan
 ```
-kubeadm upgrade plan
+sudo kubeadm upgrade plan
 ```
 - Apply upgrade to target version and wait till success msgs
 ```
-kubeadm upgrade apply v1.28.6
+sudo kubeadm upgrade apply v1.28.6
 ```
 
 ### Upgrade worker nodes
