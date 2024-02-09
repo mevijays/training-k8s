@@ -236,7 +236,7 @@ kubectl delete --ignore-not-found=true -f manifests/ -f manifests/setup
 ### Upgrade control plane node
 - change the version repository from 27 to 28
 ```
-sed -i 's/27/28/g' /etc/apt/sources.list.d/kubernetes.list
+sudo sed -i 's/27/28/g' /etc/apt/sources.list.d/kubernetes.list
 sudo apt update
 ```
 - Install packages
