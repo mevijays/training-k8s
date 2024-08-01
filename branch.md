@@ -1,3 +1,4 @@
+kubectl patch pv <your-pv-name> -p '{"spec":{"nodeAffinity":{"required":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"topology.gke.io/zone","operator":"In","values":["europe-west3-b"]}]}]}}}}'
 
  ```mermaid
  %%{init: { 'logLevel': 'debug', 'theme': 'default' , 'themeVariables': {
