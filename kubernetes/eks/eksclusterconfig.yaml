@@ -15,7 +15,7 @@ metadata:
 iam:
   withOIDC: true
 vpc:
-  cidr: 10.42.0.0/16
+  cidr: 10.10.0.0/16
   clusterEndpoints:
     privateAccess: true
     publicAccess: true
@@ -29,10 +29,10 @@ managedNodeGroups:
     desiredCapacity: 3
     minSize: 3
     maxSize: 6
-    instanceType: m5.large
+    instanceType: t3.medium
     privateNetworking: true
     releaseVersion: "1.30.0-20240625"
     updateConfig:
       maxUnavailablePercentage: 50
     labels:
-      workshop-default: "yes"
+      ekslab: "sfjbs"
