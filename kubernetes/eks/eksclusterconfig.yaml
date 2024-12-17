@@ -1,21 +1,32 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 availabilityZones:
-  - ${AWS_REGION}a
-  - ${AWS_REGION}b
-  - ${AWS_REGION}c
+  - eu-central-1a
+  - eu-central-1b
+  - eu-central-1c
 metadata:
-  name: ${EKS_CLUSTER_NAME}
-  region: ${AWS_REGION}
+  name: "sfjbscluster"
+  region: "eu-central-1"
   version: "1.30"
   tags:
-    karpenter.sh/discovery: ${EKS_CLUSTER_NAME}
-    created-by: eks-workshop-v2
-    env: ${EKS_CLUSTER_NAME}
+    karpenter.sh/discovery: "sfjbscluster"
 iam:
   withOIDC: true
+  podIdentityAssociations:
+  - namespace: "kube-system"
+    serviceAccountName: karpenter
+    roleName: sfjbscluster-karpenter
+    permissionPolicyARNs:
+      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-sfjbscluster
+
+iamIdentityMappings:
+- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-sfjbscluster"
+  username: system:node:{{EC2PrivateDNSName}}
+  groups:
+    - system:bootstrappers
+    - system:nodes
 vpc:
-  cidr: 10.10.0.0/16
+  cidr: 10.42.0.0/16
   clusterEndpoints:
     privateAccess: true
     publicAccess: true
@@ -24,6 +35,7 @@ addons:
     version: 1.16.0
     configurationValues: '{"env":{"ENABLE_PREFIX_DELEGATION":"true", "ENABLE_POD_ENI":"true", "POD_SECURITY_GROUP_ENFORCING_MODE":"standard"},"enableNetworkPolicy": "true", "nodeAgent": {"enablePolicyEventLogs": "true"}}'
     resolveConflicts: overwrite
+  - name: eks-pod-identity-agent
 managedNodeGroups:
   - name: default
     desiredCapacity: 3
@@ -31,8 +43,8 @@ managedNodeGroups:
     maxSize: 6
     instanceType: t3.medium
     privateNetworking: true
-    releaseVersion: "1.30.0-20240625"
+    amiFamily: AmazonLinux2
     updateConfig:
       maxUnavailablePercentage: 50
-    labels:
-      ekslab: "sfjbs"
+    tags:
+      karpenter.sh/discovery: "sfjbscluster"
