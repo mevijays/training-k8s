@@ -1,7 +1,7 @@
 # Ingress in AWS EKS
 ## Deploy nginx ingress controller
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.12.0-beta.0/deploy/static/provider/aws/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/refs/heads/main/kubernetes/eks/ingress/nginx-ingress-controller.yaml
 ```
 
 ## Deploy ingress
