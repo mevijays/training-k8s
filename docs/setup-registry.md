@@ -50,7 +50,7 @@ sudo systemctl restart docker
 http://192.168.1.13
 
 looks like this -
-![Registry UI](img/registry.png "Registry UI")
+![Registry UI](../img/registry.png "Registry UI")
 
 #### Docker search to registry
 ```
