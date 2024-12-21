@@ -1,12 +1,11 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 availabilityZones:
-  - eu-central-1a
-  - eu-central-1b
-  - eu-central-1c
+  - us-east-1a
+  - us-east-1b
 metadata:
   name: "sfjbscluster"
-  region: "eu-central-1"
+  region: "us-east-1"
   version: "1.30"
   tags:
     karpenter.sh/discovery: "sfjbscluster"
@@ -31,16 +30,15 @@ vpc:
     privateAccess: true
     publicAccess: true
 addons:
-  - name: vpc-cni
-    version: 1.16.0
-    configurationValues: '{"env":{"ENABLE_PREFIX_DELEGATION":"true", "ENABLE_POD_ENI":"true", "POD_SECURITY_GROUP_ENFORCING_MODE":"standard"},"enableNetworkPolicy": "true", "nodeAgent": {"enablePolicyEventLogs": "true"}}'
-    resolveConflicts: overwrite
+  - name: aws-ebs-csi-driver
+    version: latest
   - name: eks-pod-identity-agent
+    version: latest
 managedNodeGroups:
   - name: default
-    desiredCapacity: 3
-    minSize: 3
-    maxSize: 6
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
     instanceType: t3.medium
     privateNetworking: true
     amiFamily: AmazonLinux2
