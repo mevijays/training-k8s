@@ -9,8 +9,10 @@ sudo mv /tmp/eksctl /usr/local/bin
 # Instantiate EKS cluster
 Install EKS using bellow.   
 ```bash
-export EKS_CLUSTER_NAME=eks-cluster
-curl -fsSL https://raw.githubusercontent.com/mevijays/training-k8s/refs/heads/main/kubernetes/eks/eksclusterconfig.yaml | envsubst | eksctl create cluster -f -
+eksctl create cluster -n <clustername> -r us-east-1 -t t3.medium -N 1 -m 1 -M 3 --with-oidc --nodegroup-name default --vpc-cidr 192.168.0.0/16 
+
+# enable addon ebs
+eksctl create addon --name aws-ebs-csi-driver -c my-cluster -r us-east-1 
 ```
 
 # Install kubectl
@@ -22,6 +24,5 @@ sudo mv kubectl /usr/local/bin/
 # Clean-up EKS
  You can delete cluster by this.
 ```bash
-eksctl delete cluster $EKS_CLUSTER_NAME --wait
+eksctl delete cluster $EKS_CLUSTER_NAME --region us-east-1
 ```
- 
