@@ -1,0 +1,15 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: fluentbit
+  namespace: default
+spec:
+  interval: 1m0s
+  chart:
+    spec:
+      chart: aws-for-fluent-bit
+      version: 0.1.34
+      sourceRef:
+        kind: HelmRepository
+        name: eks-repo
+        namespace: flux-system
