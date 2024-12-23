@@ -81,8 +81,8 @@ spec:
       k8s:
         resources:
           requests:
-            cpu: 200m
-            memory: 161Mi
+            cpu: "200m"
+            memory: "161Mi"
 ```
 Installing istio on kind
 ```bash
