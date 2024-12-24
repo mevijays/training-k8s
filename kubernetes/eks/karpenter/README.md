@@ -189,7 +189,7 @@ spec:
   amiSelectorTerms:
     - id: "${AMD_AMI_ID}"
 ```
-## Get the API id using :
+## Get the AMI id using :
 ```bash
 aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.30/amazon-linux-2/recommended/image_id --query Parameter.Value --output text
 ```
