@@ -9,54 +9,40 @@ When there are more students (like more apps needing to run), Karpenter sees tha
 ```yaml
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
-availabilityZones:
-  - eu-central-1a
-  - eu-central-1b
-  - eu-central-1c
 metadata:
-  name: "sfjbscluster"
-  region: "eu-central-1"
+  name: "trainereks"    # change
+  region: "us-east-1"   # change
   version: "1.30"
   tags:
-    karpenter.sh/discovery: "sfjbscluster"
+    karpenter.sh/discovery: "trainereks"   # change
 iam:
   withOIDC: true
   podIdentityAssociations:
   - namespace: "kube-system"
     serviceAccountName: karpenter
-    roleName: sfjbscluster-karpenter
+    roleName: trainereks-karpenter
     permissionPolicyARNs:
-      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-sfjbscluster
+      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-trainereks      # change customerid
 
 iamIdentityMappings:
-- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-sfjbscluster"
+- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-trainereks"              # change customer id
   username: system:node:{{EC2PrivateDNSName}}
   groups:
     - system:bootstrappers
     - system:nodes
 vpc:
-  cidr: 10.42.0.0/16
-  clusterEndpoints:
-    privateAccess: true
-    publicAccess: true
+  cidr: 192.168.0.0/16
 addons:
-  - name: vpc-cni
-    version: 1.16.0
-    configurationValues: '{"env":{"ENABLE_PREFIX_DELEGATION":"true", "ENABLE_POD_ENI":"true", "POD_SECURITY_GROUP_ENFORCING_MODE":"standard"},"enableNetworkPolicy": "true", "nodeAgent": {"enablePolicyEventLogs": "true"}}'
-    resolveConflicts: overwrite
   - name: eks-pod-identity-agent
+    version: latest
 managedNodeGroups:
   - name: default
-    desiredCapacity: 3
-    minSize: 3
-    maxSize: 6
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
     instanceType: t3.medium
-    privateNetworking: true
     amiFamily: AmazonLinux2
-    updateConfig:
-      maxUnavailablePercentage: 50
-    tags:
-      karpenter.sh/discovery: "sfjbscluster"
+
 ```
 - Deploy now
 ```bash
@@ -68,11 +54,11 @@ eksctl create cluster -f eksclusterconfig.yaml
 export TEMPOUT="$(mktemp)"
 curl -fsSL https://raw.githubusercontent.com/aws/karpenter-provider-aws/v1.1.0/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml  > "${TEMPOUT}" \
 && aws cloudformation deploy \
-  --stack-name "Karpenter-sfjbscluster" \
+  --stack-name "Karpenter-trainereks" \
   --template-file "${TEMPOUT}" \
   --capabilities CAPABILITY_NAMED_IAM \
-  --region eu-central-1 \
-  --parameter-overrides "ClusterName=sfjbscluster"
+  --region us-east-1 \
+  --parameter-overrides "ClusterName=trainereks"
 ```
 ## Link the role
 ```bash
@@ -86,8 +72,8 @@ aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
 ```Bash
 export KARPENTER_VERSION="1.1.0"
 export KARPENTER_NAMESPACE="kube-system"
-export CLUSTER_NAME="sfjbscluster"
-export AWS_DEFAULT_REGION="eu-central-1"
+export CLUSTER_NAME="trainereks"
+export AWS_DEFAULT_REGION="us-east-1"
 export AWS_ACCOUNT_ID="$(aws sts get-caller-identity --query Account --output text)"
 export TEMPOUT="$(mktemp)"
 export K8S_VERSION="1.30"
@@ -189,13 +175,13 @@ metadata:
   name: default
 spec:
   amiFamily: AL2 # Amazon Linux 2
-  role: "KarpenterNodeRole-sfjbscluster" # replace with your cluster name
+  role: "KarpenterNodeRole-trainereks" # replace with your cluster name
   subnetSelectorTerms:
     - tags:
-        karpenter.sh/discovery: "sfjbscluster" # replace with your cluster name
+        karpenter.sh/discovery: "trainereks" # replace with your cluster name
   securityGroupSelectorTerms:
     - tags:
-        karpenter.sh/discovery: "sfjbscluster" # replace with your cluster name
+        karpenter.sh/discovery: "trainereks" # replace with your cluster name
   amiSelectorTerms:
     - id: "${AMD_AMI_ID}"
 ```
