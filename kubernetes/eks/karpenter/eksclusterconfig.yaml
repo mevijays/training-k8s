@@ -1,37 +1,29 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
-availabilityZones:
-  - us-east-1a
-  - us-east-1b
 metadata:
-  name: "sfjbscluster"
+  name: "trainereks"
   region: "us-east-1"
   version: "1.30"
   tags:
-    karpenter.sh/discovery: "sfjbscluster"
+    karpenter.sh/discovery: "trainereks"
 iam:
   withOIDC: true
   podIdentityAssociations:
   - namespace: "kube-system"
     serviceAccountName: karpenter
-    roleName: sfjbscluster-karpenter
+    roleName: trainereks-karpenter
     permissionPolicyARNs:
-      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-sfjbscluster
+      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-trainereks
 
 iamIdentityMappings:
-- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-sfjbscluster"
+- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-trainereks"
   username: system:node:{{EC2PrivateDNSName}}
   groups:
     - system:bootstrappers
     - system:nodes
 vpc:
-  cidr: 10.42.0.0/16
-  clusterEndpoints:
-    privateAccess: true
-    publicAccess: true
+  cidr: 192.168.0.0/16
 addons:
-  - name: aws-ebs-csi-driver
-    version: latest
   - name: eks-pod-identity-agent
     version: latest
 managedNodeGroups:
@@ -40,9 +32,5 @@ managedNodeGroups:
     minSize: 1
     maxSize: 3
     instanceType: t3.medium
-    privateNetworking: true
     amiFamily: AmazonLinux2
-    updateConfig:
-      maxUnavailablePercentage: 50
-    tags:
-      karpenter.sh/discovery: "sfjbscluster"
+
