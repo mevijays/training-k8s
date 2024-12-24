@@ -4,6 +4,17 @@ EKS is like the land where the school is built.
 Karpenter is like a smart builder who knows when to build more classrooms and when to take some down.
 Nodes are like the classrooms in the school.
 When there are more students (like more apps needing to run), Karpenter sees that and builds a new classroom (a new node). If a classroom is empty for a long time, Karpenter can take it down to save space and money.
+## Prerequisites cloudformation deployment
+```bash
+export TEMPOUT="$(mktemp)"
+curl -fsSL https://raw.githubusercontent.com/aws/karpenter-provider-aws/v1.1.0/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml  > "${TEMPOUT}" \
+&& aws cloudformation deploy \
+  --stack-name "Karpenter-trainereks" \
+  --template-file "${TEMPOUT}" \
+  --capabilities CAPABILITY_NAMED_IAM \
+  --region us-east-1 \
+  --parameter-overrides "ClusterName=trainereks"
+```
 # Install EKS cluster
 - Create the eksctl file 
 ```yaml
@@ -48,18 +59,8 @@ managedNodeGroups:
 ```bash
 eksctl create cluster -f eksclusterconfig.yaml
 ```
-# Install karpenter
-## Prerequisites cloudformation deployment
-```bash
-export TEMPOUT="$(mktemp)"
-curl -fsSL https://raw.githubusercontent.com/aws/karpenter-provider-aws/v1.1.0/website/content/en/preview/getting-started/getting-started-with-karpenter/cloudformation.yaml  > "${TEMPOUT}" \
-&& aws cloudformation deploy \
-  --stack-name "Karpenter-trainereks" \
-  --template-file "${TEMPOUT}" \
-  --capabilities CAPABILITY_NAMED_IAM \
-  --region us-east-1 \
-  --parameter-overrides "ClusterName=trainereks"
-```
+
+
 ## Link the role
 ```bash
 aws iam create-service-linked-role --aws-service-name spot.amazonaws.com || true
@@ -132,10 +133,13 @@ spec:
           values: ["on-demand"]
         - key: karpenter.k8s.aws/instance-category
           operator: In
-          values: ["c", "m", "r"]
+          values: ["t"]
         - key: karpenter.k8s.aws/instance-generation
-          operator: Gt
-          values: ["2"]
+          operator: In
+          values: ["3"]
+        - key: karpenter.k8s.aws/instance-size
+          operator: In
+          values: ["medium"]
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
@@ -184,6 +188,10 @@ spec:
         karpenter.sh/discovery: "trainereks" # replace with your cluster name
   amiSelectorTerms:
     - id: "${AMD_AMI_ID}"
+```
+## Get the API id using :
+```bash
+aws ssm get-parameter --name /aws/service/eks/optimized-ami/1.30/amazon-linux-2/recommended/image_id --query Parameter.Value --output text
 ```
 ### Explanation:
 
