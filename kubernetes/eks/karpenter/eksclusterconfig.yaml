@@ -1,11 +1,11 @@
 apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
-  name: "trainereks"
-  region: "us-east-1"
+  name: "trainereks"    # change
+  region: "us-east-1"   # change
   version: "1.30"
   tags:
-    karpenter.sh/discovery: "trainereks"
+    karpenter.sh/discovery: "trainereks"   # change
 iam:
   withOIDC: true
   podIdentityAssociations:
@@ -13,10 +13,10 @@ iam:
     serviceAccountName: karpenter
     roleName: trainereks-karpenter
     permissionPolicyARNs:
-      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-trainereks
+      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-trainereks      # change customerid
 
 iamIdentityMappings:
-- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-trainereks"
+- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-trainereks"              # change customer id
   username: system:node:{{EC2PrivateDNSName}}
   groups:
     - system:bootstrappers
