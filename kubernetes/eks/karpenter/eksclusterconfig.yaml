@@ -13,10 +13,10 @@ iam:
     serviceAccountName: karpenter
     roleName: trainereks-karpenter
     permissionPolicyARNs:
-      - arn:aws:iam::<customerID>:policy/KarpenterControllerPolicy-trainereks      # change customerid
+      - arn:aws:iam::975050323630:policy/KarpenterControllerPolicy-trainereks      
 
 iamIdentityMappings:
-- arn: "arn:aws:iam::<customerID>:role/KarpenterNodeRole-trainereks"              # change customer id
+- arn: "arn:aws:iam::975050323630:role/KarpenterNodeRole-trainereks"            
   username: system:node:{{EC2PrivateDNSName}}
   groups:
     - system:bootstrappers
@@ -33,4 +33,3 @@ managedNodeGroups:
     maxSize: 3
     instanceType: t3.medium
     amiFamily: AmazonLinux2
-
