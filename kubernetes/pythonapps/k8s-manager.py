@@ -1,14 +1,90 @@
-from flask import Flask, render_template_string, request, redirect, url_for, flash
+from flask import Flask, render_template_string, request, redirect, url_for, flash, session, render_template
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
+from functools import wraps
 import os
 import yaml
 
-# Add flash message support to Flask app
+# Add environment variables for auth
+USERNAME = os.getenv('K8S_MGR_USERNAME', 'admin')
+PASSWORD = os.getenv('K8S_MGR_PASSWORD', 'admin123')
+
+# Add URL prefix to app
 app = Flask(__name__)
+app.config['APPLICATION_ROOT'] = '/k8smgr'
+app.secret_key = os.getenv('FLASK_SECRET_KEY', 'your-secret-key')
+
+# Login template
+LOGIN_TEMPLATE = '''
+<!DOCTYPE html>
+<html>
+<head>
+    <title>K8s Manager Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Kubernetes Cluster Manager</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                        {% endif %}
+                        <form method="POST" action="{{ url_for('login') }}">
+                            <div class="mb-3">
+                                <label>Username</label>
+                                <input type="text" name="username" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+'''
+
+# Authentication decorator
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'logged_in' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+# Update login route to store username
+@app.route('/k8smgr/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] == USERNAME and request.form['password'] == PASSWORD:
+            session['logged_in'] = True
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
+        error = 'Invalid credentials'
+    return render_template_string(LOGIN_TEMPLATE, error=error)
+
+# Logout route
+@app.route('/k8smgr/logout')
+def logout():
+    session.pop('logged_in', None)
+    return redirect(url_for('login'))
+
+# Add flash message support to Flask app
 app.secret_key = 'your-secret-key'  # Required for flash messages
 
-# Update the HTML_TEMPLATE to include flash messages and pod deletion UI
+# Update HTML_TEMPLATE to add logout button and welcome message
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html>
@@ -19,7 +95,13 @@ HTML_TEMPLATE = '''
 </head>
 <body>
     <div class="container mt-4">
-        <h2>Kubernetes Cluster Manager</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Kubernetes Cluster Manager</h2>
+            <div>
+                <span class="me-3">Welcome, {{ session.username }}!</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Logout</a>
+            </div>
+        </div>
         
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -33,7 +115,7 @@ HTML_TEMPLATE = '''
             {% endif %}
         {% endwith %}
 
-        <form method="POST" action="/" class="mb-4">
+        <form method="POST" action="{{ url_for('index') }}" class="mb-4">
             <div class="row">
                 <div class="col-md-4">
                     <select name="kubeconfig" class="form-select" onchange="this.form.submit()">
@@ -95,7 +177,7 @@ HTML_TEMPLATE = '''
                                 <h5 class="modal-title">Scale Deployment: {{ deploy.name }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <form action="/scale" method="POST">
+                            <form action="{{ url_for('scale') }}" method="POST">
                                 <div class="modal-body">
                                     <input type="hidden" name="deployment" value="{{ deploy.name }}">
                                     <input type="hidden" name="namespace" value="{{ selected_namespace }}">
@@ -121,7 +203,7 @@ HTML_TEMPLATE = '''
                             </div>
                             <div class="modal-body">
                                 <h6>Pods:</h6>
-                                <form action="/delete_pods" method="POST" class="mb-3">
+                                <form action="{{ url_for('delete_pods') }}" method="POST" class="mb-3">
                                     <input type="hidden" name="deployment" value="{{ deploy.name }}">
                                     <input type="hidden" name="namespace" value="{{ selected_namespace }}">
                                     <input type="hidden" name="kubeconfig" value="{{ selected_config }}">
@@ -253,6 +335,8 @@ def get_cluster_names():
     return cluster_mapping
 
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/k8smgr/', methods=['GET', 'POST'])
+@login_required
 def index():
     """Main route - should only GET data, no modifications"""
     # Get kubeconfig files and their cluster names
@@ -304,7 +388,8 @@ def load_kubernetes_config(kubeconfig):
     except Exception as e:
         raise Exception(f"Failed to load kubeconfig: {str(e)}")
 
-@app.route('/delete_pods', methods=['POST'])
+@app.route('/k8smgr/delete_pods', methods=['POST'])
+@login_required
 def delete_pods():
     try:
         kubeconfig = request.form.get('kubeconfig')
@@ -340,7 +425,8 @@ def delete_pods():
     return redirect(url_for('index'))
 
 # Update the scale route to include success/error messages
-@app.route('/scale', methods=['POST'])
+@app.route('/k8smgr/scale', methods=['POST'])
+@login_required
 def scale():
     """Only route that should modify replicas"""
     try:
@@ -432,4 +518,6 @@ def get_deployments(apps_v1, core_v1, namespace):
     return deployments
 
 if __name__ == '__main__':
+    app.config['APPLICATION_ROOT'] = '/k8smgr'
+    app.config['PREFERRED_URL_SCHEME'] = 'http'
     app.run(debug=True)
