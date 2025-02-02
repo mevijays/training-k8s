@@ -1,9 +1,11 @@
+```
 // First create .npmrc in your home directory (~/.npmrc)
 // This sets up authentication for the private registry
 @mevijay:registry=https://git.mevijay.dev/api/v4/projects/npm/
 //git.mevijay.dev/api/v4/projects/npm/:_authToken="your-auth-token"
-
+```
 // package.json
+```
 {
   "name": "@mevijay/my-demo-package",
   "version": "1.0.0",
@@ -19,11 +21,15 @@
     "registry": "https://git.mevijay.dev/api/v4/projects/npm/"
   }
 }
+```
 
 // Create .npmrc in your project directory
+```
 @mevijay:registry=https://git.mevijay.dev/api/v4/projects/npm/
+```
 
 // index.js - Main package file (remains the same)
+```
 function greet(name) {
     return `Hello, ${name}! Welcome to my private demo package.`;
 }
@@ -36,6 +42,7 @@ module.exports = {
     greet,
     add
 };
+```
 
 // README.md
 # @mevijay/my-demo-package
@@ -66,7 +73,10 @@ console.log(demo.add(5, 3));     // 8
 ```
 
 // .gitignore
+```
 node_modules/
 .DS_Store
 *.log
 .npmrc
+
+```
