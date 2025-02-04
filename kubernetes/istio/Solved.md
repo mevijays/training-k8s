@@ -91,6 +91,7 @@ press y+Enter for default profile
 ```
 ### Exam question2
 1. destination rule for two subsets with custom label (https://istio.io/latest/docs/reference/config/networking/destination-rule/)
+2. Use bookinfo sample ``destination-rule-reviews.yaml`` & ``virtual-service-details-v2.yaml``
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
@@ -132,7 +133,7 @@ spec:
 
 gateway creationfor virtual service using ingressgateway  (https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/)
 first deploy a default profile istio with ingressgateway as outof the box. - metallb is required as given above.
-Deploy a workloads - open the httpbin.yaml and change the desired name for deployment if you want.
+Deploy a workloads - open the httpbin.yaml and change the desired name for deployment if you want.  ``Use HTTPbin for this yaml``
 ```bash
 kubectl create ns mondo-ns
 kubectl apply -f istio/samples/httpbin/httpbin.yaml -n mondons
