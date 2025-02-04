@@ -628,7 +628,15 @@ Results in the following error:
 
 Resolve this issue. Make the call succeed. Do not modify any security polites that are already in place.
 
-No solution unless see the error live
+Possible causes:
+Port is not correct in service and deployment 
+```
+check : kubectl exec -n troubleshoot-1 deploy/sleep - curl --head httpbin:8000/headers
+kubectl get svc -n troubleshoot-1 httpbin
+kubectl get deploy -n troubleshoot-1 httpbin -o yaml
+Check DNS: kubectl exec -n troubleshoot-1 deploy/sleep - nslookup httpbin
+Restart pod:
+```
 
 ### Exam question18
 Which mechanism is used in Istio to enable request-level authentication?
