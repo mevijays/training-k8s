@@ -52,9 +52,9 @@ kubectl apply -f lb-config.yaml
 ```
 Download the istio release (https://github.com/istio/istio/releases)
 ```bash
-wget https://github.com/istio/istio/releases/download/1.24.0/istio-1.24.0-linux-amd64.tar.gz
-tar xvf istio-1.24.0-linux-amd64.tar.gz
-mv istio-1.24.0 istio
+wget https://github.com/istio/istio/releases/download/1.18.2/istio-1.18.2-linux-amd64.tar.gz
+tar xvf istio-1.18.2-linux-amd64.tar.gz
+mv istio-1.18.2 istio
 mv istio/bin/istioctl /usr/local/bin/
 ```
 ### Exam question-1
