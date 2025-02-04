@@ -133,7 +133,7 @@ spec:
 
 gateway creationfor virtual service using ingressgateway  (https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/)
 first deploy a default profile istio with ingressgateway as outof the box. - metallb is required as given above.
-Deploy a workloads - open the httpbin.yaml and change the desired name for deployment if you want.  ``Use HTTPbin for this yaml``
+Deploy a workloads - open the httpbin.yaml and change the desired name for deployment if you want.  ``Use HTTPbin for this yaml and file is httpbin-gateway.yaml``
 ```bash
 kubectl create ns mondo-ns
 kubectl apply -f istio/samples/httpbin/httpbin.yaml -n mondons
@@ -184,7 +184,7 @@ Create a gateway resource of istio named oscorp-gateway in ns oscorp-prod as:
 
 2. Use the gateway selector `istio: ingressgateway`.
 
-3. Port is set to `80` and protocol to `HTTP`.
+3. Port is set to `80` and protocol to `HTTP`. ``for this file creation in exam use httpbin httpbin-gateway.yaml, remove destination rule and iterate Gateway``
 
 ```yaml
 apiVersion: networking.istio.io/v1alpha3
