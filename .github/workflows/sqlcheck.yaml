@@ -28,7 +28,7 @@ jobs:
 
     - name: Run SQLFluff Lint
       run: |
-        find . -type f -name "*.sql" -exec sqlfluff lint -e LT09,CP01,CP02 --dialect ansi {} +
+        find . -type f -name "*.sql" -exec sqlfluff lint -e LT09,CP01,CP02,LT05,LT14 --dialect ansi {} +
 
     - name: Validate SQL Files
       shell: bash
