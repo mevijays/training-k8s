@@ -1,5 +1,5 @@
-UPDATE address set age = 34;
---where tenant_id = 'v123';
+UPDATE address set age = 34
+WHERE TENANT_ID = 5345;
 
 -- Adding INSERT statement without WHERE TENANT_ID (should pass validation)
 insert into employees (id, name, salary) values (1, 'John Doe', 50000);
