@@ -19,33 +19,39 @@ error_found=false
 for file in $sql_files; do
     echo "Checking file: $file"
     
-    # Read file and preserve newlines in statements
-    while IFS= read -r -d ';' statement || [ -n "$statement" ]; do
-        # Skip empty or comment-only statements
-        if [[ -z "${statement// }" ]] || [[ "$statement" =~ ^[[:space:]]*-- ]]; then
+    # Read entire file into variable
+    while IFS= read -r line || [ -n "$line" ]; do
+        # Skip liquibase comments and empty lines
+        if [[ "$line" =~ ^--liquibase ]] || [[ "$line" =~ ^--changeset ]] || [[ "$line" =~ ^--comment ]] || [[ "$line" =~ ^--rollback ]] || [[ -z "${line// }" ]]; then
             continue
         fi
         
-        # Normalize statement to single line for checking
-        normalized_stmt=$(echo "$statement" | tr '\n' ' ' | sed 's/[[:space:]]\+/ /g' | sed 's/^ *//;s/ *$//')
+        # Convert to lowercase and remove inline comments
+        line_lower=$(echo "$line" | tr '[:upper:]' '[:lower:]' | sed 's/--.*//g')
         
-        if echo "$normalized_stmt" | grep -Eiq '^[[:space:]]*(DELETE|UPDATE)'; then
-            echo "Checking statement: $normalized_stmt"
-            if ! echo "$normalized_stmt" | grep -Eiq 'WHERE.*TENANT_ID'; then
-                echo "❌ Error in $file:"
-                echo "   Statement missing WHERE TENANT_ID clause:"
-                echo "$statement;"
+        # Store statement lines
+        if [[ "$line_lower" =~ ^[[:space:]]*(update|delete)[[:space:]] ]]; then
+            current_statement="$line_lower"
+            is_dml=true
+        elif [[ $is_dml == true && ! "$line_lower" =~ \; ]]; then
+            current_statement="$current_statement $line_lower"
+        elif [[ $is_dml == true && "$line_lower" =~ \; ]]; then
+            current_statement="$current_statement $line_lower"
+            # Check complete statement
+            echo "Checking statement: $current_statement"
+            if ! [[ "$current_statement" =~ where[[:space:]]+.*tenant_id ]]; then
+                echo "❌ Error: Missing WHERE TENANT_ID clause in:"
+                echo "$current_statement"
                 error_found=true
-            else
-                echo "✅ Valid statement with WHERE TENANT_ID clause"
             fi
+            is_dml=false
         fi
     done < "$file"
 done
 
 if $error_found; then
-    echo "❌ Validation failed: Found statements without TENANT_ID filter"
+    echo "❌ Validation failed"
     exit 1
 else
-    echo "✅ All SQL files passed validation"
+    echo "✅ All statements validated successfully"
 fi
