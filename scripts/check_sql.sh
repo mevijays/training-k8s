@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-
+# Change to the GitHub workspace directory
+cd "$GITHUB_WORKSPACE"
 # Find all SQL files recursively in the workspace
 sql_files=$(find . -type f -name "*.sql")
 
