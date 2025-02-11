@@ -1,4 +1,4 @@
-update address set age = 34;
+UPDATE address set age = 34;
 --where tenant_id = 'v123';
 
 -- Adding INSERT statement without WHERE TENANT_ID (should pass validation)
