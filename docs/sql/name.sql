@@ -8,4 +8,4 @@ insert into employees (id, name, salary) values (1, 'John Doe', 50000);
 insert into employees (id, name, salary, tenant_id)
 select id, name, salary, 1234 as tenant_id
 from temp_employees
-where tenant_id = 1234;
+--where tenant_id = 1234;
