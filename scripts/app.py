@@ -1,7 +1,8 @@
 from flask import Flask, render_template_string, request, redirect, url_for
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from datetime import datetime, date
 
 app = Flask(__name__)
 
@@ -16,6 +17,14 @@ class User(Base):
     name = Column(String(50))
     email = Column(String(50))
     role = Column(String(20))
+    date_of_birth = Column(Date)
+    
+    def calculate_age(self):
+        if self.date_of_birth:
+            today = date.today()
+            age = today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
+            return age
+        return None
 
 # Create tables
 Base.metadata.create_all(engine)
@@ -43,6 +52,7 @@ HTML_TEMPLATE = '''
                     <input type="text" name="name" placeholder="Name" class="form-control mr-2 mb-2" required>
                     <input type="email" name="email" placeholder="Email" class="form-control mr-2 mb-2" required>
                     <input type="text" name="role" placeholder="Role" class="form-control mr-2 mb-2" required>
+                    <input type="date" name="date_of_birth" class="form-control mr-2 mb-2" required>
                     <button type="submit" class="btn btn-primary mb-2">Add User</button>
                 </form>
             </div>
@@ -61,6 +71,8 @@ HTML_TEMPLATE = '''
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Date of Birth</th>
+                                <th>Age</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -71,6 +83,8 @@ HTML_TEMPLATE = '''
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.email }}</td>
                                 <td><span class="badge badge-info">{{ user.role }}</span></td>
+                                <td>{{ user.date_of_birth.strftime('%Y-%m-%d') if user.date_of_birth else 'Not provided' }}</td>
+                                <td>{{ user.calculate_age() if user.calculate_age() is not none else 'N/A' }}</td>
                                 <td>
                                     <a href="{{ url_for('edit_user', id=user.id) }}" class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i> Edit
@@ -124,6 +138,10 @@ EDIT_TEMPLATE = '''
                         <label>Role</label>
                         <input type="text" name="role" value="{{ user.role }}" class="form-control" required>
                     </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" name="date_of_birth" value="{{ user.date_of_birth.strftime('%Y-%m-%d') if user.date_of_birth else '' }}" class="form-control" required>
+                    </div>
                     <button type="submit" class="btn btn-primary">Update</button>
                     <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Users List</a>
                 </form>
@@ -145,10 +163,15 @@ def index():
 @app.route('/add_user', methods=['POST'])
 def add_user():
     session = Session()
+    date_of_birth = None
+    if request.form['date_of_birth']:
+        date_of_birth = datetime.strptime(request.form['date_of_birth'], '%Y-%m-%d').date()
+
     new_user = User(
         name=request.form['name'],
         email=request.form['email'],
-        role=request.form['role']
+        role=request.form['role'],
+        date_of_birth=date_of_birth
     )
     session.add(new_user)
     session.commit()
@@ -164,6 +187,12 @@ def edit_user(id):
         user.name = request.form['name']
         user.email = request.form['email']
         user.role = request.form['role']
+        
+        date_of_birth = None
+        if request.form['date_of_birth']:
+            date_of_birth = datetime.strptime(request.form['date_of_birth'], '%Y-%m-%d').date()
+        user.date_of_birth = date_of_birth
+        
         session.commit()
         session.close()
         return redirect(url_for('index'))
@@ -184,9 +213,12 @@ def add_sample_data():
     session = Session()
     if session.query(User).count() == 0:
         sample_users = [
-            User(name='John Doe', email='john@example.com', role='Admin'),
-            User(name='Jane Smith', email='jane@example.com', role='User'),
-            User(name='Bob Wilson', email='bob@example.com', role='Manager')
+            User(name='John Doe', email='john@example.com', role='Admin', 
+                 date_of_birth=datetime.strptime('1985-05-15', '%Y-%m-%d').date()),
+            User(name='Jane Smith', email='jane@example.com', role='User', 
+                 date_of_birth=datetime.strptime('1990-10-20', '%Y-%m-%d').date()),
+            User(name='Bob Wilson', email='bob@example.com', role='Manager', 
+                 date_of_birth=datetime.strptime('1982-03-30', '%Y-%m-%d').date())
         ]
         session.add_all(sample_users)
         session.commit()
