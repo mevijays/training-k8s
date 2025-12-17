@@ -13,3 +13,4 @@ I want to create my own python flask based platform and kubernetes status monito
 - create two all in one files, 1) k8sapi.py 2) main.py
 - use tailwind css to style modern.
 - use streamlit, apache echarts for chart creation of platform overall status and k8s overall status.
+list view and detail view
