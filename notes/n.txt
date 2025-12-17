@@ -1,0 +1,15 @@
+I want to create my own python flask based platform and kubernetes status monitoring application.
+# architecture of application:
+- one python fast api and kubernetes based agent for kubernetes which will expose the status of all deployments, their details like images tags replicas , pod names, pod status config maps , pvcs and their details everything for a given namespace only. This single page main.py application will run as container on any of the k8s  with a given kubernetes SA which would have readonly access to all the resources
+- one python flask, htmx, apache echarts, tailwind cdn css, streamlit, flask , flask authentication , postgresql driver based UI.
+# feature in Ui application
+- a homepage with modern elegent Ui using tailwind css and other dynamic components to display tabulor status of kubernetes resources and with hyperlink i can nevigate more to the resources inside like cluster namespace status--> all deployments detail-->click deployment name to go to pod and replicas details and status etc.
+- UI should have option for nonkubernetes platform status as well.
+- feature for non kubernetes platform, /admin after login , admin user should be able to add kubernetes agent api url and other platform components url using tcp and http https based status monitoring.
+- /admin feature, user and their profile , password managment system. all the platform monitoring added and k8s api agent url managment option.
+- postgresql will be used to store data of user and platform etc.
+
+# instructions to copilot
+- create two all in one files, 1) k8sapi.py 2) main.py
+- use tailwind css to style modern.
+- use streamlit, apache echarts for chart creation of platform overall status and k8s overall status.
