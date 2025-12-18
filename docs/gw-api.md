@@ -5,6 +5,8 @@
 ```bash
 kubectl kustomize "https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard?ref=v2.2.2" \
   | kubectl apply -f -
+
+# Expected output
 customresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io created
 customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io created
 customresourcedefinition.apiextensions.k8s.io/grpcroutes.gateway.networking.k8s.io created
@@ -15,6 +17,8 @@ customresourcedefinition.apiextensions.k8s.io/referencegrants.gateway.networking
 2. Install NGF ( nginx gateway fabric controller)
 ```bash
 $ kubectl apply --server-side -f https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v2.2.2/deploy/crds.yaml
+
+# Expected output
 customresourcedefinition.apiextensions.k8s.io/clientsettingspolicies.gateway.nginx.org serverside-applied
 customresourcedefinition.apiextensions.k8s.io/nginxgateways.gateway.nginx.org serverside-applied
 customresourcedefinition.apiextensions.k8s.io/nginxproxies.gateway.nginx.org serverside-applied
@@ -23,6 +27,9 @@ customresourcedefinition.apiextensions.k8s.io/snippetsfilters.gateway.nginx.org 
 customresourcedefinition.apiextensions.k8s.io/upstreamsettingspolicies.gateway.nginx.org serverside-applied
 
 $ apply -f https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v2.2.2/deploy/default/deploy.yaml
+
+
+# Expected output
 namespace/nginx-gateway created
 serviceaccount/nginx-gateway created
 serviceaccount/nginx-gateway-cert-generator created
