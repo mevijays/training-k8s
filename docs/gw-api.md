@@ -184,3 +184,9 @@ EOF
 
 kubectl apply -f routes.yaml
 ```
+8. Access services
+```bash
+curl http://<EXTERNAL-IP>/coffee
+curl http://<EXTERNAL-IP>/tea
+```
+Done!!
