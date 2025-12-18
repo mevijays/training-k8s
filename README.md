@@ -20,3 +20,4 @@
 - [Secrets and configmaps](docs/secrets-configmap.md)
 - [Create ingress lab](docs/ingress.md)
 - [Setup ELK stack on managed kubernetes or KIND](docs/setup-ELK.md)
+- [Kubernetes Gatway API based ingress](docs/gw-api.md) as nginx ingress to ingress support is in obsolate path by k8s community.
