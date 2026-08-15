@@ -98,7 +98,148 @@ NOTE: There can only be one CMD instruction in a Dockerfile. If you want to li
 CMD ["bin/ping", "localhost"]
 ```
     
-### COPY
+### HEALTHCHECK
+```
+HEALTHCHECK [OPTIONS] CMD command
+```
+The HEALTHCHECK instruction allows you to define a command that will be run inside the container to check its health status. This is useful for container orchestration systems to determine if a container is healthy and should be restarted.
+
+```
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 CMD curl -f http://localhost/ || exit 1
+```
+
+### USER
+```
+USER <username|UID>
+```
+Switch to a specific user or UID for subsequent instructions. Best practice is to run containers as non-root user for security.
+
+```
+USER nginx
+```
+
+### EXPOSE (with protocol)
+```
+EXPOSE <port> [<protocol>]
+```
+Specify the protocol (TCP or UDP). Default is TCP if not specified.
+
+```
+EXPOSE 80/tcp
+EXPOSE 53/udp
+```
+
+### Multi-Stage Builds
+Multi-stage builds allow you to create smaller, more secure images by using multiple builds in a single Dockerfile.
+
+```dockerfile
+# Stage 1: Build stage
+FROM golang:1.21 AS builder
+WORKDIR /app
+COPY . .
+RUN go build -o main .
+
+# Stage 2: Runtime stage
+FROM alpine:3.18
+RUN apk --no-cache add ca-certificates
+WORKDIR /root/
+COPY --from=builder /app/main .
+EXPOSE 8080
+CMD ["./main"]
+```
+
+### Best Practices
+1. **Use `.dockerignore`**: Exclude unnecessary files from build context
+```
+.git
+*.md
+.env
+node_modules/
+```
+
+2. **Pin image versions**: Use specific versions instead of `latest`
+```dockerfile
+FROM nginx:1.25.3  # Not FROM nginx:latest
+```
+
+3. **Use multi-stage builds**: Reduce final image size
+
+4. **Run as non-root**: Improve security
+```dockerfile
+RUN useradd -m appuser
+USER appuser
+```
+
+5. **Add health checks**: Enable container orchestration
+```dockerfile
+HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost/ || exit 1
+```
+
+6. **Minimize layers**: Combine RUN commands, use `.dockerignore`
+
+7. **Use appropriate base images**: Consider distroless or scratch for minimal images
+
+8. **Scan for vulnerabilities**: Use tools like Trivy, Clair, or Docker Scan
+
+### COPY vs ADD
+| Feature | COPY | ADD |
+|---------|------|-----|
+| Copy files | ✅ | ✅ |
+| Extract tar archives | ❌ | ✅ (automatic) |
+| URL download | ❌ | ✅ (automatic, discouraged) |
+| Ownership preservation | ❌ | ✅ |
+
+**Use COPY for most cases. Use ADD only when you need automatic extraction or URL download.**
+
+### Complete Example
+```dockerfile
+# Official base image
+FROM node:18-alpine AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy source code
+COPY . .
+
+# Build application
+RUN npm run build
+
+# Production stage
+FROM node:18-alpine
+
+# Add non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
+# Set working directory
+WORKDIR /app
+
+# Copy built files from builder stage
+COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nodejs:nodejs /app/package*.json ./
+
+# Switch to non-root user
+USER nodejs
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s \
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/ || exit 1
+
+# Start command
+CMD ["node", "dist/index.js"]
+```
+
+Done!
 
 COPY has two forms:
 ```

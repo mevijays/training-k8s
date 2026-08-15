@@ -1,9 +1,12 @@
 # Create ingress
+
 ### Creating nginx ingress rule for hostname abc.com and service webcm on port 8080 without ssl.
 
 ```
-kubectl create ingress webcm --class=nginx --rule="abc.com/*=webcm:8080"
+kubectl create ingress webcm --rule="abc.com/*=webcm:8080"
 ```
+
+**Note**: The `--class=nginx` flag is deprecated. Use `--ingress-class=nginx` or specify `ingressClassName: nginx` in the YAML manifest instead.
 #### Creating nginx ingress rule for hostname abc.com and service webcm on port 8080. using selfsigned certificate.   
 - generate certificate
 ```
@@ -15,11 +18,11 @@ kubectl create secret tls abc-tls --cert=cert.pem --key=cert.key
 ```
 - create ingress with secret
 ```
-kubectl create ingress webcm --class=nginx --rule="abc.com/*=webcm:8080,tls=abc-tls"
+kubectl create ingress webcm --rule="abc.com/*=webcm:8080,tls=abc-tls"
 ```
 ### Creating nginx ingress rule for hostname abc.com and service webcm on port 8080. using letsencrypt TLS cluster issuer.
 ```
-kubectl create ingress webcm --class=nginx --rule="abc.com/*=webcm:8080,tls=abc-tls" --annotation="cert-manager.io/cluster-issuer=le-issuer
+kubectl create ingress webcm --rule="abc.com/*=webcm:8080,tls=abc-tls" --annotation="cert-manager.io/cluster-issuer: le-issuer"
 ```
 
 ### Creating ingress with selfsigned tls and rewrite path

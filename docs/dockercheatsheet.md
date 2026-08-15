@@ -77,9 +77,7 @@ Create an image from a Dockerfile:
 ```
 docker build [URL]
 ```
-docker build -t – builds an image from a Dockerfile in the 
-
-current directory and tags the image
+`docker build -t` – builds an image from a Dockerfile in the current directory and tags the image
 
 Pull an image from a registry:
 ```
@@ -149,7 +147,7 @@ docker diff [CONTAINER]
 ```
 List all images that are locally stored with the docker engine:
 ```
-docke image ls
+docker image ls
 ```
 Show the history of an image:
 ```
@@ -178,3 +176,90 @@ Disconnect a container from a network:
 ```
 docker network disconnect [NETWORK] [CONTAINER]
 ```
+
+## Volumes
+Manage Docker volumes for persistent data storage:
+
+List volumes:
+```
+docker volume ls
+```
+Inspect a volume:
+```
+docker volume inspect [VOLUME_NAME]
+```
+Remove a volume:
+```
+docker volume rm [VOLUME_NAME]
+```
+Prune all unused volumes:
+```
+docker volume prune
+```
+
+## Docker Compose Commands
+Manage multi-container applications:
+
+Start services in detached mode:
+```
+docker compose up -d
+```
+Stop services:
+```
+docker compose stop
+```
+Restart services:
+```
+docker compose restart
+```
+Remove services and volumes:
+```
+docker compose down
+```
+Build images:
+```
+docker compose build
+```
+View logs:
+```
+docker compose logs
+```
+Execute command in container:
+```
+docker compose exec [SERVICE_NAME] [COMMAND]
+```
+
+## Docker System Maintenance
+Clean up unused resources:
+
+Prune unused containers:
+```
+docker container prune
+```
+Prune unused networks:
+```
+docker network prune
+```
+Prune all unused resources (images, containers, networks, volumes):
+```
+docker system prune
+```
+Prune with volume data removal (WARNING: deletes all unused data):
+```
+docker system prune -a --volumes
+```
+
+Show disk usage:
+```
+docker system df
+```
+
+## Best Practices
+1. Always use `.dockerignore` to exclude unnecessary files from builds
+2. Use multi-stage builds to reduce image size
+3. Pin image versions (e.g., `nginx:1.25.3` not `nginx:latest`)
+4. Run containers as non-root users
+5. Use health checks for production containers
+6. Scan images for vulnerabilities before deployment
+
+Done!

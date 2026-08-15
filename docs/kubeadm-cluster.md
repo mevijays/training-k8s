@@ -164,16 +164,16 @@ kubectl create -f https://raw.githubusercontent.com/rancher/local-path-provision
 helm install nfsclient nfs-subdir-external-provisioner --repo https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner \
     --namespace=kube-system \
     --set storageClass.archiveOnDelete=false \
-    --set nfs.server=172.10.10.144 \
+    --set nfs.server=<NFS_SERVER_IP> \
     --set nfs.path=/nfs
 ```
    
  If you wish to set the storage class as default as well Then upgrade the chart
 ```
 helm install nfsclient nfs-subdir-external-provisioner --repo https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner \
-    --namespace=kube-system \
+    --namespace kube-system \
     --set storageClass.archiveOnDelete=false \
-    --set nfs.server=172.10.10.144 \
+    --set nfs.server=<NFS_SERVER_IP> \
     --set nfs.path=/nfs  \
     --set storageClass.defaultClass=true
  ```
@@ -189,14 +189,178 @@ kubectl apply -f https://raw.githubusercontent.com/mevijays/training-k8s/main/ku
 ```
 - How to use with ingress?
 ```
-kubectl create ingress webcm --class=nginx --rule="abc.com/*=webcm:8080,tls=abc-tls" --annotation="cert-manager.io/cluster-issuer=selfsigned-issuer"
+kubectl create ingress webcm --rule="abc.com/*=webcm:8080,tls=abc-tls" --annotation="cert-manager.io/cluster-issuer: selfsigned-issuer"
 ```
+
 ## Setup metrics-server  
 ```
-kubectl apply -f https://raw.githubusercontent.com/sharmavijay86/sharmavijay86.github.io/master/blog/k8ssetup/components.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.6.1/components.yaml
 ```
-## Setup the EFK (elastic search fluentbit & kibana) stack with helm chart
 
+## Setup the EFK Stack (Elasticsearch, Fluent Bit, Kibana)
+
+### Prerequisites
+Ensure network connectivity between services:
+```bash
+kubectl get pods -n logging
+kubectl get svc -n logging
+```
+
+### 1. Install Elasticsearch
+```bash
+helm upgrade --install elasticsearch elasticsearch \
+  --set replicas=1 \
+  --set minimumMasterNodes=1 \
+  --set resources.requests.cpu=100m \
+  --set resources.requests.memory=1Gi \
+  --set volumeClaimTemplate.resources.requests.storage=5Gi \
+  --set elasticsearch.password='redhat123' \
+  --repo https://helm.elastic.co \
+  -n logging \
+  --create-namespace
+```
+
+### 2. Install Logstash
+Create `logstash.yaml`:
+```yaml
+persistence:
+  enabled: true
+
+logstashConfig:
+  logstash.yml: |
+    http.host: 0.0.0.0
+
+logstashPipeline:
+  logstash.conf: |
+    input {
+      beats {
+        port => 5044
+      }
+    }
+    output {
+      elasticsearch {
+        hosts => ["https://elasticsearch-master:9200"]
+        manage_template => false
+        ssl_certificate_verification => false
+        index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+        user => "elastic"
+        password => "redhat123"
+      }
+    }
+
+service:
+  type: ClusterIP
+  ports:
+    - name: beats
+      port: 5044
+      protocol: TCP
+      targetPort: 5044
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+```
+
+Install Logstash:
+```bash
+helm upgrade --install logstash logstash \
+  --set replicas=1 \
+  --set resources.requests.cpu=100m \
+  --set resources.requests.memory=1Gi \
+  --repo https://helm.elastic.co \
+  -f logstash.yaml \
+  -n logging
+```
+
+### 3. Install Kibana
+```bash
+helm upgrade --install kibana kibana \
+  --set resources.requests.cpu=100m \
+  --set resources.requests.memory=500Mi \
+  --repo https://helm.elastic.co \
+  -n logging
+```
+
+### 4. Install Filebeat
+Create `filebeat.yaml`:
+```yaml
+daemonset:
+  filebeatConfig:
+    filebeat.yml: |
+      filebeat.inputs:
+        - type: container
+          paths:
+            - /var/log/containers/*.log
+          processors:
+            - add_kubernetes_metadata:
+                host: ${NODE_NAME}
+                matchers:
+                  - logs_path:
+                      logs_path: "/var/log/containers/"
+
+      output.logstash:
+        hosts: ["logstash-logstash:5044"]
+```
+
+Install Filebeat:
+```bash
+helm upgrade --install filebeat filebeat \
+  --set resources.requests.cpu=100m \
+  --set resources.requests.memory=500Mi \
+  --repo https://helm.elastic.co \
+  -f filebeat.yaml \
+  -n logging
+```
+
+### 5. Expose Kibana
+Create `svc-kibana.yaml`:
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kibana
+    release: kibana
+  name: kibana-kibana-public
+  namespace: logging
+spec:
+  ports:
+    - name: http
+      port: 5601
+      protocol: TCP
+      targetPort: 5601
+  selector:
+    app: kibana
+    release: kibana
+  type: LoadBalancer
+```
+
+Apply and access:
+```bash
+kubectl apply -f svc-kibana.yaml -n logging
+kubectl get svc -n logging
+```
+
+Access Kibana at `http://<LOADBALANCER-IP>:5601` with:
+- Username: `elastic`
+- Password: Extract using:
+```bash
+kubectl get secrets --namespace=logging elasticsearch-master-credentials -o jsonpath='{.data.password}' | base64 -d
+```
+
+### Verification
+```bash
+# Check Elasticsearch
+curl https://elasticsearch-master:9200
+
+# Check Logstash
+kubectl logs -n logging -l release=logstash
+
+# Check Kibana
+kubectl get pods -n logging -l release=kibana
+
+# Check Filebeat
+kubectl get pods -n logging -l release=filebeat
 ```
 kubectl create ns logging
 helm upgrade --install fd oci://registry-1.docker.io/bitnamicharts/fluent-bit -n logging

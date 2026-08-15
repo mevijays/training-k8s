@@ -189,4 +189,70 @@ kubectl apply -f routes.yaml
 curl http://<EXTERNAL-IP>/coffee
 curl http://<EXTERNAL-IP>/tea
 ```
+
+### 9. Create TLSRoute (Optional - for HTTPS)
+```bash
+cat <<'EOF' > tlsroute.yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: TLSRoute
+metadata:
+  name: cafe-tlsroute
+spec:
+  parentRefs:
+  - name: cafe-gw
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /coffee
+    backendRefs:
+    - name: coffee
+      port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: TLSRoute
+metadata:
+  name: tea-tlsroute
+spec:
+  parentRefs:
+  - name: cafe-gw
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /tea
+    backendRefs:
+    - name: tea
+      port: 80
+EOF
+
+kubectl apply -f tlsroute.yaml
+```
+
+### 10. Verify Gateway API Resources
+```bash
+kubectl get gateways
+kubectl get httproutes
+kubectl get tlsroutes
+kubectl get gatewayclasses
+```
+
+### Cleanup / Rollback
+To remove all Gateway API resources:
+```bash
+kubectl delete -f cafe.yaml
+kubectl delete -f gateway.yaml
+kubectl delete -f routes.yaml
+kubectl delete -f tlsroute.yaml
+```
+
+### Key Differences: Gateway API vs Ingress
+| Feature | Ingress | Gateway API |
+|---------|---------|-------------|
+| Version | networking.k8s.io/v1 | gateway.networking.k8s.io/v1 |
+| Resource | Ingress | Gateway + HTTPRoute |
+| TLS | Ingress TLS spec | Separate TLSRoute resource |
+| Standards | Kubernetes-specific | CNCF Gateway API (RFC compliant) |
+| Advanced Routing | Limited | Full support (path, query, headers, etc.) |
+
 Done!!

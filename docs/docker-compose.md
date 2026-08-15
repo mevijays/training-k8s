@@ -69,6 +69,73 @@ docker-compose down
 ```
 docker volume prune
 ```
+
+### Health Checks
+Add health checks to ensure containers are running properly:
+
+```yaml
+services:
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 80:80
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+```
+
+### Service Dependencies
+Use `depends_on` to define service startup order:
+
+```yaml
+services:
+  db:
+    image: mariadb:10.6.4-focal
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+```
+
+### Environment Files
+Use `.env` files to manage environment variables securely:
+
+1. Create `.env` file in the same directory as `docker-compose.yml`:
+```
+MYSQL_ROOT_PASSWORD=your_secure_password
+WORDPRESS_DB_PASSWORD=your_db_password
+```
+
+2. Reference in docker-compose.yml:
+```yaml
+services:
+  wordpress:
+    environment:
+      - WORDPRESS_DB_PASSWORD=${WORDPRESS_DB_PASSWORD}
+```
+
+### Docker Compose Version
+- `docker-compose` (standalone CLI tool) - v1.x
+- `docker compose` (built-in Docker CLI plugin) - v2.x
+
+**Recommendation**: Use `docker compose` (v2.x) as it's the future direction from Docker.
  - Example Mysql with Adminer
 ```
 version: '3.7'
