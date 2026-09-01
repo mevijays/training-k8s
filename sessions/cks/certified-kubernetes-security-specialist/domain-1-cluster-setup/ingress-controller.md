@@ -1,25 +1,33 @@
+<!-- NAV-TOP -->
+# Reference - Ingress Controller and Name-Based Routing
+
+[&larr; Reference - Ingress Resource Rules](./ingress.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+---
+<!-- /NAV-TOP -->
+
 #### Documentation Referred:
 
 https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/
 
 https://kubernetes.github.io/ingress-nginx/deploy/
 
-### Step 1 - Create 2 Pods for Example Service and Kplabs Service
+### Step 1 - Create 2 Pods for Example Service and Demo Service
 ```sh
 kubectl run example-pod --image=nginx
-kubectl run kplabs-pod --image=httpd
+kubectl run demo-pod --image=httpd
 ```
 ### Step 2 - Create Service for Both the pods
 ```sh
 kubectl expose pod example-pod --name example-service --port=80 --target-port=80
 
-kubectl expose pod kplabs-pod --name kplabs-service --port=80 --target-port=80
+kubectl expose pod demo-pod --name demo-service --port=80 --target-port=80
 
 kubectl get service
 ```
 ### Step 3 - Create Ingress Resource with 2 Rules
 ```sh
-kubectl create ingress main-ingress --class=nginx --rule="example.internal/*=example-service:80" --rule="kplabs.internal/*=kplabs-service:80" 
+kubectl create ingress main-ingress --class=nginx --rule="example.internal/*=example-service:80" --rule="demo.internal/*=demo-service:80" 
 
 kubectl describe ingress main-ingress
 ```
@@ -39,7 +47,7 @@ Verify if a new load balancer is created in Digital Ocean.
 #### Step 6: Verify the Setup
 ```sh
 curl -H "Host: example.internal" <LB-IP>
-curl -H "Host: kplabs.internal" <LB-IP>
+curl -H "Host: demo.internal" <LB-IP>
 ```
 
 #### Step 7: Delete All Resource
@@ -50,7 +58,16 @@ kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/con
 kubectl delete ingress main-ingress
 
 kubectl delete service example-service
-kubectl delete service kplabs-service
+kubectl delete service demo-service
 kubectl delete pod example-pod
-kubectl delete pod kplabs-pod
+kubectl delete pod demo-pod
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Reference - Ingress Resource Rules](./ingress.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

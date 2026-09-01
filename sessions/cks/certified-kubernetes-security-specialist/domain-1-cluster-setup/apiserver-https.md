@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Transport Security for API Server
+
+[&larr; Configuring API Server](./configure-apiserver.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Static Token Authentication &rarr;](./token-authentication.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Step 1 - Verify Certificate Details
 ```sh
 openssl s_client -showcerts -connect localhost:6443 2>/dev/null | openssl x509 -inform pem -noout -text
@@ -59,3 +67,12 @@ openssl s_client -showcerts -connect localhost:6443 2>/dev/null | openssl x509 -
 
 curl -k https://localhost:6443
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Configuring API Server](./configure-apiserver.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Static Token Authentication &rarr;](./token-authentication.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

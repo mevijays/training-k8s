@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Practical - AppArmor
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [AppArmor and Kubernetes &rarr;](./apparmor-k8s.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Check status of apparmor:
 ```sh
 systemctl status apparmor
@@ -47,3 +55,12 @@ ln -s /etc/apparmor.d/root.apparmor.app.sh /etc/apparmor.d/disable/
 
 apparmor_parser -R /etc/apparmor.d/root.apparmor.app.sh
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [AppArmor and Kubernetes &rarr;](./apparmor-k8s.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

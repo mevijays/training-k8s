@@ -1,5 +1,12 @@
+<!-- NAV-TOP -->
+# Structure of a Network Policy
 
-### Manifest File Used in Video
+[&larr; Ingress Annotation - SSL Redirect](./ingress-ssl-annotation.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Network Policies &rarr;](./netpol-practical.md)
+
+---
+<!-- /NAV-TOP -->
+
+### Manifest File Used
 
 first-netpol.yaml
 
@@ -34,3 +41,12 @@ kubectl describe netpol demo-network-policy
 ```sh
 kubectl delete -f first-netpol.yaml
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Ingress Annotation - SSL Redirect](./ingress-ssl-annotation.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Network Policies &rarr;](./netpol-practical.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

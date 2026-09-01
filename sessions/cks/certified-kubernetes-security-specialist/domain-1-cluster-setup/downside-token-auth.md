@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Downsides - Static Token Authentication
+
+[&larr; Static Token Authentication](./token-authentication.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Implementing X509 Client Authentication &rarr;](./certificate-auth-k8s.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Step 1 Remove Token for BOB user
 
 From the below file, remove the line associated with the Bob user
@@ -24,3 +32,12 @@ Remove the --token-auth option
 systemctl daemon-reload
 systemctl restart kube-apiserver
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Static Token Authentication](./token-authentication.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Implementing X509 Client Authentication &rarr;](./certificate-auth-k8s.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

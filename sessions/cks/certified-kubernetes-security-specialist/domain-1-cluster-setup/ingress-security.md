@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Practical - Ingress with TLS
+
+[&larr; Verifying Platform Binaries](./verify-binaries.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Ingress Annotation - SSL Redirect &rarr;](./ingress-ssl-annotation.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Referred:
 
 https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -14,7 +22,7 @@ kubectl describe service example-service
 ```
 ### Step 2 - Configure Nginx Ingress Controller
 ```sh
-kubectl create -f https://raw.githubusercontent.com/zealvora/certified-kubernetes-security-specialist/refs/heads/main/domain-1-cluster-setup/nginx-controller.yaml
+kubectl create -f https://raw.githubusercontent.com/mevijays/training-k8s/refs/heads/main/sessions/cks/certified-kubernetes-security-specialist/domain-1-cluster-setup/nginx-controller.yaml
 
 kubectl get pods -n ingress-nginx
 
@@ -52,15 +60,24 @@ Add the `/etc/hosts` entry for mapping before running this command
 curl -kv https://example.internal:31893
 ```
 
-## Don't delete the resources created for this practical. We will need it in the next video. 
+## Don't delete the resources created for this practical. We will need it in the next section. 
 ### Step 8 - Delete All Resources 
 
-ALERT: Don't delete the resources created in this practical. It will be used in the next video.
+ALERT: Don't delete the resources created in this practical. It will be used in the next section.
 ```sh
 kubectl delete pod nginx-pod
 kubectl delete service example-service
 kubectl delete ingress demo-ingress
 kubectl delete secret tls-certificate
 
-kubectl delete -f https://raw.githubusercontent.com/zealvora/certified-kubernetes-security-specialist/refs/heads/main/domain-1-cluster-setup/nginx-controller.yaml
+kubectl delete -f https://raw.githubusercontent.com/mevijays/training-k8s/refs/heads/main/sessions/cks/certified-kubernetes-security-specialist/domain-1-cluster-setup/nginx-controller.yaml
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Verifying Platform Binaries](./verify-binaries.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Ingress Annotation - SSL Redirect &rarr;](./ingress-ssl-annotation.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

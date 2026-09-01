@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Implementing Auditing
+
+[&larr; Encryption Providers](./encryption-provider.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Setting up a kubeadm Cluster &rarr;](./kubeadm-install.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Reference Websites:
 
 https://jsonformatter.curiousconcept.com/#
@@ -34,3 +42,12 @@ kubectl get secret --server=https://127.0.0.1:6443 --client-certificate /root/ce
 cd /var/log
 grep -i bob api-audit.log
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Encryption Providers](./encryption-provider.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Setting up a kubeadm Cluster &rarr;](./kubeadm-install.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

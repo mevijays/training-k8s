@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Audit Logging
+
+[&larr; Introduction to Sysdig](./sysdig.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Falco Installation from Packages &rarr;](./falco-install.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Step 1 Create a directory for storing audit logs and audit policy:
 ```sh
@@ -46,3 +53,12 @@ rules:
     - group: ""
       resources: ["secrets"]
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Introduction to Sysdig](./sysdig.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Falco Installation from Packages &rarr;](./falco-install.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Practical - Docker Daemon Socket over TLS
+
+[&larr; Securing the Docker Daemon](./docker-security.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [SBOM Practical &rarr;](./sbom.md)
+
+---
+<!-- /NAV-TOP -->
 
 ### Generate CA Key and Certificate
 ```sh
@@ -12,7 +19,7 @@ openssl req -new -x509 -days 365 -key ca-key.pem -subj "/CN=MyDockerCA" -out ca.
 ```sh
 openssl genpkey -algorithm RSA -out server-key.pem
 
-openssl req -new -key server-key.pem -subj "/CN=kplabs.docker.internal" -out server.csr
+openssl req -new -key server-key.pem -subj "/CN=demo.docker.internal" -out server.csr
 
 openssl x509 -req -in server.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -days 365 -out server-cert.pem
 ```
@@ -71,8 +78,17 @@ nano /etc/hosts
 ```
 Add following line
 ```sh
-127.0.0.1 kplabs.docker.internal
+127.0.0.1 demo.docker.internal
 ```
 ```sh
-curl --cert /etc/docker/certs/client-cert.pem --key /etc/docker/certs/client-key.pem --cacert /etc/docker/certs/ca.pem https://kplabs.docker.internal:2376/version
+curl --cert /etc/docker/certs/client-cert.pem --key /etc/docker/certs/client-key.pem --cacert /etc/docker/certs/ca.pem https://demo.docker.internal:2376/version
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Securing the Docker Daemon](./docker-security.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [SBOM Practical &rarr;](./sbom.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Reference - Falco Installation from Packages
+
+[&larr; Audit Logging](./audit-log-detailed.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Custom Falco Rule Examples &rarr;](./custom-falco-rules.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Referenced:
 
 https://falco.org/docs/setup/packages/
@@ -27,6 +35,10 @@ systemctl status falco
 ```
 
 
+<!-- NAV-BOTTOM -->
+---
 
+[&larr; Audit Logging](./audit-log-detailed.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Custom Falco Rule Examples &rarr;](./custom-falco-rules.md)
 
-
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

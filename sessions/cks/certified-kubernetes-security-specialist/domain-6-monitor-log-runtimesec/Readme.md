@@ -1,28 +1,33 @@
-# Domain - Core Concepts
+# Domain 6 - Monitoring, Logging and Runtime Security
 
-The code mentioned in this document are used in the Certified Kubernetes Security Specialist 2026 video course.
+Detecting what happens at runtime: installing and configuring Falco, writing custom rules and macros, Sysdig basics and detailed API server audit logging.
 
+[&#8962; Back to All Domains](../README.md)
 
-# Video-Document Mapper
+---
 
-| Sr No | Document Link |
-| ------ | ------ |
-| 1 | [Installing Falco][PlDa] |
-| 1 | [Falco - Practical][PlDb] |
-| 1 | [Writing Custom Falco Rules and Macros][PlDc] |
-| 1 | [Falco Rule for /dev/mem][PlDd] |
-| 1 | [Falco Configuration File][PlDe] |
-| 2 | [Introduction to Sysdig][PlDf] |
-| 5 | [Audit Logging][PlDg] |
+## Documents
 
+| # | Topic | Link |
+| :--- | :--- | :--- |
+| 1 | Installing Falco | [Read](./install-falco.md) |
+| 2 | Falco - Practical | [Read](./falco-practical.md) |
+| 3 | Writing Custom Falco Rules and Macros | [Read](./writing-falco-rules.md) |
+| 4 | Falco Rule for /dev/mem | [Read](./falco-mem-rule.md) |
+| 5 | Falco Configuration File | [Read](./falco-config-file.md) |
+| 6 | Introduction to Sysdig | [Read](./sysdig.md) |
+| 7 | Audit Logging | [Read](./audit-log-detailed.md) |
 
+## Additional References
 
+Supporting notes and alternate walkthroughs that live in this domain.
 
-   [PlDa]: <./install-falco.md>
-   [PlDb]: <./falco-practical.md>
-   [PlDc]: <./writing-falco-rules.md>
-   [PlDd]: <./falco-mem-rule.md>   
-   [PlDe]: <./falco-config-file.md>   
-   [PlDf]: <./sysdig.md>
-   [PlDg]: <./audit-log-detailed.md>
+| # | Topic | Link |
+| :--- | :--- | :--- |
+| 8 | Reference - Falco Installation from Packages | [Read](./falco-install.md) |
+| 9 | Reference - Custom Falco Rule Examples | [Read](./custom-falco-rules.md) |
+| 10 | Reference - Falco from an Exam Perspective | [Read](./falco-exam-perspective.md) |
 
+---
+
+Every document above links to the previous and next topic, so you can read this domain straight through starting with [Installing Falco](./install-falco.md).

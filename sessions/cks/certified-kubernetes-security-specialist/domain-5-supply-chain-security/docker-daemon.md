@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Reference - Running the Docker Daemon Manually
+
+[&larr; SBOM Practical](./sbom.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+---
+<!-- /NAV-TOP -->
+
 ### Run Docker through CLI
 ```sh
 systemctl stop docker
@@ -43,3 +51,12 @@ docker exec -it nginx3 bash
 
 cat /etc/resolv.conf
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; SBOM Practical](./sbom.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

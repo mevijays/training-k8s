@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Configure Certificate Authority
+
+[&larr; Configure etcd Binaries](./install-etcd.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Workflow - Issuance of Signed Certificates &rarr;](./certificate-workflow.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Step 1 - Creating a private key for Certificate Authority:
 ```sh
 mkdir /root/certificates
@@ -23,3 +31,12 @@ rm -f ca.csr
 ```sh
 openssl x509 -in ca.crt -text -noout
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Configure etcd Binaries](./install-etcd.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Workflow - Issuance of Signed Certificates &rarr;](./certificate-workflow.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

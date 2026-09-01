@@ -1,6 +1,14 @@
+<!-- NAV-TOP -->
+# Reference - systemd Unit Files for etcd
+
+[&larr; Network Policies - Except, Port and Protocol](./netpol-02.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - kubeadm Installation Steps &rarr;](./kubeadm.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Create env variable:
 ```sh
-export SERVER_IP=172.31.54.201
+export SERVER_IP=<IP-ADDRESS>
 ```
 #### systemd file for etcd:
 ```sh
@@ -65,3 +73,12 @@ journalctl -u kube-apiserver
 
 journalctl -u etcd --since "10 minutes ago"
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Network Policies - Except, Port and Protocol](./netpol-02.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - kubeadm Installation Steps &rarr;](./kubeadm.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

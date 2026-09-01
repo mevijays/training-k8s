@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Falco Configuration File
+
+[&larr; Falco Rule for /dev/mem](./falco-mem-rule.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Introduction to Sysdig &rarr;](./sysdig.md)
+
+---
+<!-- /NAV-TOP -->
 
 ### Documentation Referred:
 
@@ -42,3 +49,12 @@ systemctl restart falco
 
 cat /etc/shadow
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Falco Rule for /dev/mem](./falco-mem-rule.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Introduction to Sysdig &rarr;](./sysdig.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

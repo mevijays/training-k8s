@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Configuring containerd and runc
+
+[&larr; AppArmor and Kubernetes](./apparmor-k8s.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Container Runtime Interface &rarr;](./kubeadm-containerd.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation:
 
 https://kubernetes.io/docs/setup/production-environment/container-runtimes/
@@ -56,3 +64,12 @@ Modify the config.yaml to include the name of nginx-rootfs
 ```sh
 runc run mycontainer
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; AppArmor and Kubernetes](./apparmor-k8s.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Container Runtime Interface &rarr;](./kubeadm-containerd.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

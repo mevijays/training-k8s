@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Practical - Network Policies
+
+[&larr; Structure of a Network Policy](./netpol-structure.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Network Policies - Except, Port and Protocol &rarr;](./netpol-02.md)
+
+---
+<!-- /NAV-TOP -->
 
 ### Base Network Policy
 
@@ -224,3 +231,11 @@ kubectl delete ns production
 kubectl delete ns security
 ```
 
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Structure of a Network Policy](./netpol-structure.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Network Policies - Except, Port and Protocol &rarr;](./netpol-02.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

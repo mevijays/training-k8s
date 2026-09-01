@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Practical - Upgrade Control Plane Node
+
+[&larr; Setup Environment for Upgrading Clusters](./kubeadm-automate.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Upgrade Worker Node &rarr;](./upgrade-kubeadm-worker.md)
+
+---
+<!-- /NAV-TOP -->
+
 Documentation Referenced:
 
 https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
@@ -51,5 +59,10 @@ kubectl get nodes
 ```
 
 
+<!-- NAV-BOTTOM -->
+---
 
+[&larr; Setup Environment for Upgrading Clusters](./kubeadm-automate.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Upgrade Worker Node &rarr;](./upgrade-kubeadm-worker.md)
 
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

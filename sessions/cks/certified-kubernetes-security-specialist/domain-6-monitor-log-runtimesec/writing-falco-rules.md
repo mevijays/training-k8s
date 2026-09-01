@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Writing Custom Falco Rules and Macros
+
+[&larr; Falco - Practical](./falco-practical.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Falco Rule for /dev/mem &rarr;](./falco-mem-rule.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Refernced:
 https://falco.org/docs/concepts/rules/basic-elements/
 
@@ -79,3 +87,12 @@ systemctl restart falco
 ```sh
 echo "Hi" /tmp/sensitive.txt
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Falco - Practical](./falco-practical.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Falco Rule for /dev/mem &rarr;](./falco-mem-rule.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

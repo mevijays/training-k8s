@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Reference - Custom Falco Rule Examples
+
+[&larr; Reference - Falco Installation from Packages](./falco-install.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Falco from an Exam Perspective &rarr;](./falco-exam-perspective.md)
+
+---
+<!-- /NAV-TOP -->
 
 ### Documentation:
 
@@ -43,3 +50,12 @@ https://falco.org/docs/rules/supported-fields/
   priority: ERROR
   tags: [demo]
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Reference - Falco Installation from Packages](./falco-install.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Falco from an Exam Perspective &rarr;](./falco-exam-perspective.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Reference - Deploying an Ingress Controller
+
+[&larr; Reference - kubeadm Install with a Specific Version](./kubeadm-version.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+---
+<!-- /NAV-TOP -->
 
 #### Step 1 - Create Nginx Pod:
 ```sh
@@ -52,3 +59,12 @@ nano /etc/hosts
 ```sh
 curl http://example.internal:30429
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Reference - kubeadm Install with a Specific Version](./kubeadm-version.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

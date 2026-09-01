@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Reference - Network Policies Practical
+
+[&larr; Implementing RuntimeClass - gVisor](./gvisor.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Network Policies Practical (Variant) &rarr;](./netpol-01.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Create base setup:
 ```sh
 kubectl create ns external
@@ -144,3 +152,12 @@ kubectl exec -it pod-1 -- ping google.com
 ```sh
 kubectl delete -f netpol.yaml
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Implementing RuntimeClass - gVisor](./gvisor.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Network Policies Practical (Variant) &rarr;](./netpol-01.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

@@ -1,10 +1,18 @@
+<!-- NAV-TOP -->
+# Kubelet Security
+
+[&larr; Revising Taints and Tolerations](./taint-toleration.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Verifying Platform Binaries &rarr;](./verify-binaries.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Step 1: Access Worker Node Kubelet from Control Plane Node
 ```sh
 cd /etc/kubernetes/pki
 ```
 Change the IP address in below command to that of Worker Node IP
 ```sh
-curl -k --cert apiserver-kubelet-client.crt --key apiserver-kubelet-client.key https://143.244.140.236:10250/pods
+curl -k --cert apiserver-kubelet-client.crt --key apiserver-kubelet-client.key https://<IP-ADDRESS>:10250/pods
 ```
 #### Step 2 Make a request to Kubelet API (Worker Node)
 ```sh
@@ -53,3 +61,12 @@ kubeletctl run "whoami" --all-pods -i
 ```sh
 openssl s_client -showcerts -connect 127.0.0.1:10250 2>/dev/null | openssl x509 -inform pem -noout -text
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Revising Taints and Tolerations](./taint-toleration.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Verifying Platform Binaries &rarr;](./verify-binaries.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

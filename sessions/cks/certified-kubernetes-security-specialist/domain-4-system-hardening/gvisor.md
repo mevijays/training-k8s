@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Implementing RuntimeClass - gVisor
+
+[&larr; Container Runtime Interface](./kubeadm-containerd.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Network Policies Practical &rarr;](./netpol.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation:
 
 https://kubernetes.io/docs/concepts/containers/runtime-class/
@@ -47,10 +55,10 @@ chmod +x /usr/local/bin/kubectl
 
 #### Step 3 - Create a New user for testing
 ```sh
-useradd -m -s /bin/bash -G sudo,docker zeal
-visudo -f /etc/sudoers.d/zeal
-zeal ALL=(ALL) NOPASSWD:ALL
-su - zeal
+useradd -m -s /bin/bash -G sudo,docker devuser
+visudo -f /etc/sudoers.d/devuser
+devuser ALL=(ALL) NOPASSWD:ALL
+su - devuser
 ```
 
 ####  Step 4: Start Minikube:
@@ -120,3 +128,12 @@ dmesg
 uname -r
 logout
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Container Runtime Interface](./kubeadm-containerd.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Network Policies Practical &rarr;](./netpol.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

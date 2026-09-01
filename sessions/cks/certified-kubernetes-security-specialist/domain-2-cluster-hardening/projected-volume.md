@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Overview of Projected Volumes
+
+[&larr; Practical - Upgrade Worker Node](./upgrade-kubeadm-worker.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Mounting Service Accounts using Projected Volumes &rarr;](./sa-projectedvolume.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Referred:
 
 https://kubernetes.io/docs/concepts/storage/projected-volumes/
@@ -49,3 +57,11 @@ kubectl exec -it volume-test -- sh
 
 cd /projected-volume
 
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - Upgrade Worker Node](./upgrade-kubeadm-worker.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Mounting Service Accounts using Projected Volumes &rarr;](./sa-projectedvolume.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

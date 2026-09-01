@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Practical - Upgrade Worker Node
+
+[&larr; Practical - Upgrade Control Plane Node](./upgrade-kubeadm-master.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Overview of Projected Volumes &rarr;](./projected-volume.md)
+
+---
+<!-- /NAV-TOP -->
+
 Documentation Referenced:
 
 https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
@@ -53,3 +61,12 @@ RUN the below command CONTROL PLANE NODE. Replace `node01` with appropriate work
 kubectl uncordon node01 
 kubectl get nodes
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - Upgrade Control Plane Node](./upgrade-kubeadm-master.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Overview of Projected Volumes &rarr;](./projected-volume.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

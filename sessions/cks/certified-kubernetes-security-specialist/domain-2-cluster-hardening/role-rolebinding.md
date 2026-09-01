@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Practical - Role and RoleBinding
+
+[&larr; Creating a Token for RBAC Practicals](./user-rbac.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - ClusterRole and ClusterRoleBinding &rarr;](./clusterrole.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation / Websites Referenced:
 
 https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.32/
@@ -57,3 +65,12 @@ kubectl delete role pod-reader
 
 kubectl delete rolebinding test-rolebinding
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Creating a Token for RBAC Practicals](./user-rbac.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - ClusterRole and ClusterRoleBinding &rarr;](./clusterrole.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

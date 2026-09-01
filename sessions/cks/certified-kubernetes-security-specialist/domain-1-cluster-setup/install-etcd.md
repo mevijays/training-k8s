@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Configure etcd Binaries
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Configure Certificate Authority &rarr;](./configure-ca.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Step 1: Create the Base Binaries Directory
 
@@ -29,3 +36,12 @@ etcdctl put key1 "value1"
 ```sh
  etcdctl get key1
  ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Configure Certificate Authority &rarr;](./configure-ca.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

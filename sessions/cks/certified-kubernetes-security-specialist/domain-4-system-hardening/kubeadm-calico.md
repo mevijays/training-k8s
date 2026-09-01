@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Reference - kubeadm Cluster with Calico
+
+[&larr; Reference - Network Policies Practical (Variant)](./netpol-01.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+---
+<!-- /NAV-TOP -->
 
 ##### Step 1: Setup containerd
 ```sh
@@ -84,3 +91,12 @@ kubectl get nodes
 kubectl run nginx --image=nginx
 kubectl get pods
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Reference - Network Policies Practical (Variant)](./netpol-01.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; _End of domain_ &rarr;
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

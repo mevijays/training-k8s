@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Practical - ClusterRole and ClusterRoleBinding
+
+[&larr; Practical - Role and RoleBinding](./role-rolebinding.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Overview of Service Accounts &rarr;](./service-account.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Create ClusterRole
 ```sh
@@ -23,3 +30,11 @@ curl -k https://38140ecd-e8d7-4fff-be52-24629c40cdac.k8s.ondigitalocean.com/api/
 curl -k https://38140ecd-e8d7-4fff-be52-24629c40cdac.k8s.ondigitalocean.com/api/v1/namespaces/kube-system/pods --header "Authorization: Bearer %TOKEN%"
 ```
 
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - Role and RoleBinding](./role-rolebinding.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Overview of Service Accounts &rarr;](./service-account.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

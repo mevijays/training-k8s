@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# AppArmor and Kubernetes
+
+[&larr; Practical - AppArmor](./apparmor.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Configuring containerd and runc &rarr;](./oci.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Create a Sample Profile:
 ```sh
 apparmor_parser -q <<EOF
@@ -49,3 +57,12 @@ kubectl apply -f hello-armor.yaml
 kubectl exec -it hello-apparmor -- sh
 touch /tmp/file.txt
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - AppArmor](./apparmor.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Configuring containerd and runc &rarr;](./oci.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

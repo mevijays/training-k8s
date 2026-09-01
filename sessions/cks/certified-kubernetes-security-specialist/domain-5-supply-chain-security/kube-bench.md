@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Scanning K8s Clusters for Security Best Practices
+
+[&larr; Scan Images for Known Vulnerabilities](./trivy.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Static Analysis &rarr;](./static-analysis.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation:
 
 https://github.com/aquasecurity/kube-bench#download-and-install-binaries
@@ -13,3 +21,12 @@ sudo apt install ./kube-bench_0.3.1_linux_amd64.deb -f
 ```sh
 kube-bench
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Scan Images for Known Vulnerabilities](./trivy.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Static Analysis &rarr;](./static-analysis.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

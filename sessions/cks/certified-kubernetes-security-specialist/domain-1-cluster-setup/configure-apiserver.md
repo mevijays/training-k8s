@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Configuring API Server
+
+[&larr; Integrating systemd with etcd](./etcd-systemd.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Transport Security for API Server &rarr;](./apiserver-https.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Step 1: Download Kubernetes Server Binaries
 ```sh
 cd /root/binaries
@@ -39,7 +47,7 @@ openssl x509 -req -in service-account.csr -CA ca.crt -CAkey ca.key -CAcreateseri
 ```
 #### Step 4 - Start kube-apiserver:
 ```sh
-/usr/local/bin/kube-apiserver --advertise-address=159.65.147.161 --etcd-cafile=/root/certificates/ca.crt --etcd-certfile=/root/certificates/api-etcd.crt --etcd-keyfile=/root/certificates/api-etcd.key --service-cluster-ip-range 10.0.0.0/24 --service-account-issuer=https://127.0.0.1:6443 --service-account-key-file=/root/certificates/service-account.crt --service-account-signing-key-file=/root/certificates/service-account.key --etcd-servers=https://127.0.0.1:2379
+/usr/local/bin/kube-apiserver --advertise-address=<IP-ADDRESS> --etcd-cafile=/root/certificates/ca.crt --etcd-certfile=/root/certificates/api-etcd.crt --etcd-keyfile=/root/certificates/api-etcd.key --service-cluster-ip-range 10.0.0.0/24 --service-account-issuer=https://127.0.0.1:6443 --service-account-key-file=/root/certificates/service-account.crt --service-account-signing-key-file=/root/certificates/service-account.key --etcd-servers=https://127.0.0.1:2379
 ```
 #### Step 5 - Verify
 
@@ -60,7 +68,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/kube-apiserver \
---advertise-address=165.22.212.16 \
+--advertise-address=<IP-ADDRESS> \
 --etcd-cafile=/root/certificates/ca.crt \
 --etcd-certfile=/root/certificates/api-etcd.crt \
 --etcd-keyfile=/root/certificates/api-etcd.key \
@@ -81,3 +89,12 @@ systemctl start kube-apiserver
 
 systemctl status kube-apiserver
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Integrating systemd with etcd](./etcd-systemd.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Transport Security for API Server &rarr;](./apiserver-https.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

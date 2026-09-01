@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Setting up a kubeadm Cluster
+
+[&larr; Implementing Auditing](./audit-logs.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Revising Taints and Tolerations &rarr;](./taint-toleration.md)
+
+---
+<!-- /NAV-TOP -->
 
 ### Control Plane Node Configuration
 
@@ -96,7 +103,7 @@ Run Step 1 to Step 3 from Master Node configuration in worker node as well
 Use the `kubeadm join` command that was generated in your Control Plane Node server. The below command is just for reference.
 
 ```sh
-kubeadm join 209.38.120.248:6443 --token 9vxoc8.cji5a4o82sd6lkqa \
+kubeadm join <IP-ADDRESS>:6443 --token 9vxoc8.cji5a4o82sd6lkqa \
         --discovery-token-ca-cert-hash sha256:1818dc0a5bad05b378dd3dcec2c048fd798e8f6ff69b396db4f5352b63414baf
 ```
 Run the following command in Mater node to ensure that worker node is in Ready status.
@@ -104,3 +111,12 @@ Run the following command in Mater node to ensure that worker node is in Ready s
 ```sh
 kubectl get nodes
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Implementing Auditing](./audit-logs.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Revising Taints and Tolerations &rarr;](./taint-toleration.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

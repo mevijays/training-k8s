@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Implementing X509 Client Authentication
+
+[&larr; Downsides - Static Token Authentication](./downside-token-auth.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Authorization &rarr;](./authorization.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Referred:
 
 https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/
@@ -27,3 +35,12 @@ systemctl restart kube-apiserver
 ```sh
 kubectl get secret --server=https://127.0.0.1:6443 --client-certificate /root/certificates/alice.crt --certificate-authority /root/certificates/ca.crt --client-key /root/certificates/alice.key
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Downsides - Static Token Authentication](./downside-token-auth.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Authorization &rarr;](./authorization.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Installing Falco
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Falco - Practical &rarr;](./falco-practical.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Falco Documentation:
 
 https://falco.org/docs/getting-started/installation/
@@ -22,3 +30,12 @@ kubectl exec -it nginx -- bash
 mkdir /bin/tmp-dir
 cat /etc/shadow
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Falco - Practical &rarr;](./falco-practical.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

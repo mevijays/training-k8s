@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Reference - Exploring API Groups and RBAC Roles
+
+[&larr; Mounting Service Accounts using Projected Volumes](./sa-projectedvolume.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - kubeadm Install with a Specific Version &rarr;](./kubeadm-version.md)
+
+---
+<!-- /NAV-TOP -->
+
   #### Explore the API Groups:
 ```sh
 kubectl proxy --port 8085
@@ -67,3 +75,12 @@ kubectl exec -it john-pod -- bash
 kubectl auth can-i create deployments
 kubectl auth can-i create pods
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Mounting Service Accounts using Projected Volumes](./sa-projectedvolume.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - kubeadm Install with a Specific Version &rarr;](./kubeadm-version.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

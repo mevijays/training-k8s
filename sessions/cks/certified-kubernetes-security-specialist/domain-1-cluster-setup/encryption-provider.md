@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Encryption Providers
+
+[&larr; Authorization](./authorization.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Implementing Auditing &rarr;](./audit-logs.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Documentation Referred:
 
 https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/
@@ -77,3 +85,12 @@ ETCDCTL_API=3 etcdctl --endpoints=https://127.0.0.1:2379 --insecure-skip-tls-ver
 cd /var/lib/etcd
 grep -R "dbpasswd" .
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Authorization](./authorization.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Implementing Auditing &rarr;](./audit-logs.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

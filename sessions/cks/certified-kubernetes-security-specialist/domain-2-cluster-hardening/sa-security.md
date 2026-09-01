@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Service Account Security
+
+[&larr; Service Accounts - Points to Note](./sa-pointers.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Setup Environment for Upgrading Clusters &rarr;](./kubeadm-automate.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Referred:
 
 https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
@@ -65,3 +73,12 @@ cat /var/run/secrets/kubernetes.io/serviceaccount/token
 ```sh
 kubectl delete pods --all
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Service Accounts - Points to Note](./sa-pointers.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Setup Environment for Upgrading Clusters &rarr;](./kubeadm-automate.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

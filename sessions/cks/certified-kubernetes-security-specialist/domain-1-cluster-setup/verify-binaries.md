@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Verifying Platform Binaries
+
+[&larr; Kubelet Security](./kubelet-security.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Ingress with TLS &rarr;](./ingress-security.md)
+
+---
+<!-- /NAV-TOP -->
+
   #### Kubernetes GitHub Repository:
 
   https://github.com/kubernetes/kubernetes/releases
@@ -11,3 +19,12 @@
   ```sh
   sha512sum kubernetes-server-linux-amd64.tar.gz
   ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Kubelet Security](./kubelet-security.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Ingress with TLS &rarr;](./ingress-security.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

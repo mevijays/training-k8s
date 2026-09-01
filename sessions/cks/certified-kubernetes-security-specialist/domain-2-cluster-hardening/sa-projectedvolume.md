@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Mounting Service Accounts using Projected Volumes
+
+[&larr; Overview of Projected Volumes](./projected-volume.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Exploring API Groups and RBAC Roles &rarr;](./rbac.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Documentation Referred:
 
 https://kubernetes.io/docs/concepts/storage/projected-volumes/#serviceaccounttoken
@@ -113,3 +121,12 @@ cat /service-account/token
 ```sh
 kubectl delete ns test-ns
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Overview of Projected Volumes](./projected-volume.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Exploring API Groups and RBAC Roles &rarr;](./rbac.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

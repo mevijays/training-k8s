@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Integrating systemd with etcd
+
+[&larr; Practical - Mutual TLS Authentication](./mutual-tls.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Configuring API Server &rarr;](./configure-apiserver.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Step 1: Create Data Directory for etcd
 
@@ -44,3 +51,12 @@ systemctl status etcd
 ```sh
 journalctl -u etcd
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - Mutual TLS Authentication](./mutual-tls.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Configuring API Server &rarr;](./configure-apiserver.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

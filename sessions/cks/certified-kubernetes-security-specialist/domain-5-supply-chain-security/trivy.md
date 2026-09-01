@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Scan Images for Known Vulnerabilities
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Scanning K8s Clusters for Security Best Practices &rarr;](./kube-bench.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Official Repository:
 
 https://github.com/aquasecurity/trivy
@@ -14,3 +22,12 @@ https://hub.docker.com/_/nginx
 ```sh
 trivy image nginx:1.19.5
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+&larr; _Start of domain_ &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Scanning K8s Clusters for Security Best Practices &rarr;](./kube-bench.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

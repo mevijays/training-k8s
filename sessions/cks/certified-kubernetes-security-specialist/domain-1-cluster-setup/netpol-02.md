@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Network Policies - Except, Port and Protocol
+
+[&larr; Practical - Network Policies](./netpol-practical.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - systemd Unit Files for etcd &rarr;](./systemd.md)
+
+---
+<!-- /NAV-TOP -->
 
 ### Example 1 - Except Field
 
@@ -49,3 +56,12 @@ spec:
 ```sh
 kubectl create -f port-proto.yaml
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - Network Policies](./netpol-practical.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - systemd Unit Files for etcd &rarr;](./systemd.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

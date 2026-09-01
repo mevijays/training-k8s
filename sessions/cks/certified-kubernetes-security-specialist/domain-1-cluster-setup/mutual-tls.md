@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Practical - Mutual TLS Authentication
+
+[&larr; etcd - Transport Security with HTTPS](./etcd-https.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Integrating systemd with etcd &rarr;](./etcd-systemd.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Step 1 - Generate Client Certificate and Client Key:
 ```sh
@@ -24,3 +31,12 @@ etcdctl --endpoints=https://127.0.0.1:2379 --cacert=ca.crt --cert=client.crt --k
 
 etcdctl --endpoints=https://127.0.0.1:2379 --cacert=ca.crt --cert=client.crt --key=client.key get key1
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; etcd - Transport Security with HTTPS](./etcd-https.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Integrating systemd with etcd &rarr;](./etcd-systemd.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

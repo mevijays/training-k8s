@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Reference - kubeadm Install with a Specific Version
+
+[&larr; Reference - Exploring API Groups and RBAC Roles](./rbac.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Deploying an Ingress Controller &rarr;](./deploying-ingress.md)
+
+---
+<!-- /NAV-TOP -->
+
 ##### Documentation Link:
 
 https://kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/
@@ -86,3 +94,12 @@ kubeadm upgrade apply 1.23.0
 systemctl daemon-reload
 systemctl restart kubelet
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Reference - Exploring API Groups and RBAC Roles](./rbac.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Deploying an Ingress Controller &rarr;](./deploying-ingress.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

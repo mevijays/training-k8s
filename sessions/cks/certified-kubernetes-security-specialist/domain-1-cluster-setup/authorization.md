@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Authorization
+
+[&larr; Implementing X509 Client Authentication](./certificate-auth-k8s.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Encryption Providers &rarr;](./encryption-provider.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Step 1 - Enable AlwaysDeny Authorization Mode
 
@@ -42,3 +49,12 @@ openssl x509 -req -in bob.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out bob.
 ```sh
 kubectl get secret --server=https://127.0.0.1:6443 --client-certificate /root/certificates/bob.crt --certificate-authority /root/certificates/ca.crt --client-key /root/certificates/bob.key
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Implementing X509 Client Authentication](./certificate-auth-k8s.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Encryption Providers &rarr;](./encryption-provider.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

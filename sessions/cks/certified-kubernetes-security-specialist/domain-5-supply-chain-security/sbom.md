@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# SBOM Practical
+
+[&larr; Practical - Docker Daemon Socket over TLS](./docker-tls.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Running the Docker Daemon Manually &rarr;](./docker-daemon.md)
+
+---
+<!-- /NAV-TOP -->
+
 #### Pages Referred:
 
 https://github.com/kubernetes-sigs/bom
@@ -44,3 +52,12 @@ trivy image --format cyclonedx --output nginx-cyclone.json nginx:latest
 
 trivy sbom nginx-spdx.json
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Practical - Docker Daemon Socket over TLS](./docker-tls.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Reference - Running the Docker Daemon Manually &rarr;](./docker-daemon.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

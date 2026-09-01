@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Dockerfile - Security Best Practices
+
+[&larr; Static Analysis](./static-analysis.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Securing the Docker Daemon &rarr;](./docker-security.md)
+
+---
+<!-- /NAV-TOP -->
+
 ```sh
 nano app.sh
 ```
@@ -83,3 +91,12 @@ docker images
 
 docker run myapp:v3
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Static Analysis](./static-analysis.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Securing the Docker Daemon &rarr;](./docker-security.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

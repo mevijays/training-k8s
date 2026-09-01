@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Falco Rule for /dev/mem
+
+[&larr; Writing Custom Falco Rules and Macros](./writing-falco-rules.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Falco Configuration File &rarr;](./falco-config-file.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Verify /dev/mem access
 ```sh
 kubectl run nginx-pod --image=nginx
@@ -36,3 +44,12 @@ cat /dev/mem
  nano pods.json
 ```
  Search using `CTRL+W` and add container ID
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Writing Custom Falco Rules and Macros](./writing-falco-rules.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Falco Configuration File &rarr;](./falco-config-file.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

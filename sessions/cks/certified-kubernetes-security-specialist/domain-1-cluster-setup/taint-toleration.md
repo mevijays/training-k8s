@@ -1,4 +1,12 @@
-### Documentation Refernced in Video
+<!-- NAV-TOP -->
+# Revising Taints and Tolerations
+
+[&larr; Setting up a kubeadm Cluster](./kubeadm-install.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Kubelet Security &rarr;](./kubelet-security.md)
+
+---
+<!-- /NAV-TOP -->
+
+### Documentation Referenced
 
 https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 
@@ -70,3 +78,12 @@ kubectl taint node worker-01 key=value:NoSchedule-
 
 kubectl taint node worker-01 key=value:NoExecute-
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Setting up a kubeadm Cluster](./kubeadm-install.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Kubelet Security &rarr;](./kubelet-security.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

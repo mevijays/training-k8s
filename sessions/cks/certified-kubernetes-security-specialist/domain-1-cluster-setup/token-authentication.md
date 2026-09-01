@@ -1,3 +1,10 @@
+<!-- NAV-TOP -->
+# Static Token Authentication
+
+[&larr; Transport Security for API Server](./apiserver-https.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Downsides - Static Token Authentication &rarr;](./downside-token-auth.md)
+
+---
+<!-- /NAV-TOP -->
 
 #### Format of Static Token File:
 ```sh
@@ -32,3 +39,12 @@ kubectl get secret --server=https://localhost:6443 --token Dem0Passw0rd# --insec
 kubectl create secret generic my-secret --server=https://localhost:6443 --token Dem0Passw0rd# --insecure-skip-tls-verify
 kubectl delete secret my-secret --server=https://localhost:6443 --token Dem0Passw0rd# --insecure-skip-tls-verify
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Transport Security for API Server](./apiserver-https.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Downsides - Static Token Authentication &rarr;](./downside-token-auth.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->

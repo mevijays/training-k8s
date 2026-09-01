@@ -1,3 +1,11 @@
+<!-- NAV-TOP -->
+# Securing the Docker Daemon
+
+[&larr; Dockerfile - Security Best Practices](./dockerfile-best-practice.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Docker Daemon Socket over TLS &rarr;](./docker-tls.md)
+
+---
+<!-- /NAV-TOP -->
+
 ### Install Docker in Ubuntu
 
 ```sh
@@ -107,3 +115,12 @@ docker rm <container-name>
 docker images
 docker rmi <image-names>
 ```
+
+
+<!-- NAV-BOTTOM -->
+---
+
+[&larr; Dockerfile - Security Best Practices](./dockerfile-best-practice.md) &nbsp;&nbsp;|&nbsp;&nbsp; [**Domain Home**](./Readme.md) &nbsp;&nbsp;|&nbsp;&nbsp; [Practical - Docker Daemon Socket over TLS &rarr;](./docker-tls.md)
+
+[&#8962; All Domains](../README.md)
+<!-- /NAV-BOTTOM -->
