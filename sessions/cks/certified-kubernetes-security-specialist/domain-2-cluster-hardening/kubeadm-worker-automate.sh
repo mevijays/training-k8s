@@ -56,14 +56,14 @@ echo "[Step 3] Adding Kubernetes repository and installing kubeadm, kubelet, kub
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
 # Add Kubernetes GPG key
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.33/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
 # Add Kubernetes APT repository
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.33/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 # Install kubeadm, kubelet, kubectl
 sudo apt-get update
-sudo apt-get install -y kubelet=1.31.6-1.1 kubeadm=1.31.6-1.1 kubectl=1.31.6-1.1 cri-tools=1.31.1-1.1
+sudo apt-get install -y kubelet=1.33.13-1.1 kubeadm=1.33.13-1.1 kubectl=1.33.13-1.1 cri-tools=1.33.0-1.1
 sudo apt-mark hold kubelet kubeadm kubectl
 
 # Enable kubelet

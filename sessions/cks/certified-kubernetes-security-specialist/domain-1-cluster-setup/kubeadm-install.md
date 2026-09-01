@@ -59,20 +59,20 @@ sudo sysctl --system
 sudo apt-get update
 apt-get install -y apt-transport-https ca-certificates curl gpg
 
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.34/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.34/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
 ```
 ```sh
 sudo apt-get update
- apt-get install -y kubelet=1.32.0-1.1 kubeadm=1.32.0-1.1 kubectl=1.32.0-1.1 cri-tools=1.32.0-1.1
+ apt-get install -y kubelet=1.34.11-1.1 kubeadm=1.34.11-1.1 kubectl=1.34.11-1.1 cri-tools=1.34.0-1.1
 sudo apt-mark hold kubelet kubeadm kubectl
 systemctl enable --now kubelet
 ```
 
 #### Step 4 - Initialize Cluster with kubeadm:
 ```sh
-kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.32.0
+kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.34.11
 ```
 ```sh
 mkdir -p $HOME/.kube

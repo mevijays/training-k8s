@@ -8,7 +8,7 @@
 
 ### Documentation / Websites Referenced:
 
-https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.32/
+https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.34/
 
 #### Check Resources as part of specific API Group
 ```sh

@@ -10,7 +10,7 @@
 ```sh
 cd /root/binaries
 
-wget https://dl.k8s.io/v1.32.1/kubernetes-server-linux-amd64.tar.gz
+wget https://dl.k8s.io/v1.34.11/kubernetes-server-linux-amd64.tar.gz
 
 tar -xzvf kubernetes-server-linux-amd64.tar.gz
 
