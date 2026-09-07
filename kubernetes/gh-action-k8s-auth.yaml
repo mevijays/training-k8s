@@ -1,0 +1,65 @@
+name: 'K8s Authentication'
+description: 'Setup kubeconfig for K8s cluster authentication'
+
+inputs:
+  cluster-url:
+    description: 'Kubernetes cluster API URL'
+    required: true
+  ca-cert:
+    description: 'Base64-encoded CA certificate'
+    required: true
+  sa-token:
+    description: 'Service account token'
+    required: true
+  cluster-name:
+    description: 'Cluster name for kubeconfig'
+    required: false
+    default: 'k8s-cluster'
+  context-name:
+    description: 'Context name for kubeconfig'
+    required: false
+    default: 'k8s-context'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup kubeconfig
+      shell: bash
+      run: |
+        mkdir -p /tmp/.kube
+        
+        # Decode CA cert and create kubeconfig
+        KUBECONFIG_FILE="/tmp/.kube/config"
+        
+        cat > "${KUBECONFIG_FILE}" <<EOF
+        apiVersion: v1
+        kind: Config
+        clusters:
+        - cluster:
+            certificate-authority-data: ${{ inputs.ca-cert }}
+            server: ${{ inputs.cluster-url }}
+          name: ${{ inputs.cluster-name }}
+        contexts:
+        - context:
+            cluster: ${{ inputs.cluster-name }}
+            user: github-actions
+          name: ${{ inputs.context-name }}
+        current-context: ${{ inputs.context-name }}
+        users:
+        - name: github-actions
+          user:
+            token: ${{ inputs.sa-token }}
+        EOF
+        
+        chmod 600 "${KUBECONFIG_FILE}"
+        
+        # Export for subsequent steps
+        echo "KUBECONFIG=${KUBECONFIG_FILE}" >> $GITHUB_ENV
+        
+        # Verify connection
+        kubectl cluster-info
+        kubectl auth can-i get pods --all-namespaces
+
+    - name: Verify helm
+      shell: bash
+      run: helm version
