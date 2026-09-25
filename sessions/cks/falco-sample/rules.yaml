@@ -1,0 +1,28 @@
+# /etc/falco/falco_rules.local.yaml  (package install)  - your own rules live here
+# Never edit /etc/falco/falco_rules.yaml; it is replaced on upgrade.
+
+# Rule 1 - read of /dev/mem inside a container (slides 567-570)
+- rule: Read /dev/mem in container
+  desc: A process inside a container opened /dev/mem (host physical memory)
+  condition: open_read and container and fd.name = /dev/mem
+  output: >
+    /dev/mem opened in container (user=%user.name command=%proc.cmdline
+    container=%container.name image=%container.image.repository
+    pod=%k8s.pod.name ns=%k8s.ns.name)
+  priority: CRITICAL
+  tags: [container, host, cks]
+
+# Rule 2 - shell spawned in a container, exam-style output format
+- rule: Shell spawned in container
+  desc: An interactive shell was started inside a container
+  condition: spawned_process and container and proc.name in (bash, sh, zsh, ash)
+  output: >
+    %evt.time,%user.name,%container.id,%container.name,%k8s.pod.name,%proc.cmdline
+  priority: WARNING
+  tags: [container, shell, cks]
+
+# Rule 3 - changing only the output of a built-in rule (Falco 0.37+ override syntax)
+- rule: Terminal shell in container
+  output: "Shell in container (time=%evt.time user=%user.name container=%container.name cmd=%proc.cmdline)"
+  override:
+    output: replace
