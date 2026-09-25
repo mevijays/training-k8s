@@ -1,0 +1,137 @@
+# .github/workflows/build-sbom-verify.yml
+# Build image -> push to private Artifactory (custom-CA TLS) -> generate SPDX SBOM with bom
+# -> scan SBOM with Trivy -> attach SBOM as a signed cosign attestation -> verify it.
+#
+# Runs on a self-hosted runner, because GitHub-hosted runners cannot reach a private Artifactory.
+#
+# Secrets needed:
+#   ARTIFACTORY_USER, ARTIFACTORY_TOKEN   - registry login
+#   ARTIFACTORY_CA                        - PEM of your custom CA (root/intermediate)
+#   COSIGN_PRIVATE_KEY, COSIGN_PASSWORD   - from `cosign generate-key-pair`
+# Repo file needed:
+#   cosign.pub                            - public key, committed to the repo
+
+name: build-sbom-verify
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: artifactory.lab.local            # your Artifactory host
+  REPO: docker-local/addressbook             # <docker repo key>/<image name>
+  TAG: ${{ github.sha }}
+  BOM_VERSION: v0.6.0                        # pin to the latest release you have verified
+  TRIVY_VERSION: v0.56.2                     # pin to the latest release you have verified
+
+jobs:
+  build-sbom-sign:
+    runs-on: [self-hosted, linux]
+    outputs:
+      image: ${{ steps.push.outputs.image }}   # registry/repo@sha256:...
+    steps:
+      - uses: actions/checkout@v4
+
+      # 1. Trust the custom CA for docker AND for Go tools (bom, cosign) and trivy
+      - name: Trust Artifactory CA
+        run: |
+          echo "${{ secrets.ARTIFACTORY_CA }}" | sudo tee /usr/local/share/ca-certificates/artifactory-ca.crt >/dev/null
+          sudo update-ca-certificates
+          # docker reads per-registry CAs from here, no daemon restart needed
+          sudo mkdir -p /etc/docker/certs.d/${REGISTRY}
+          sudo cp /usr/local/share/ca-certificates/artifactory-ca.crt /etc/docker/certs.d/${REGISTRY}/ca.crt
+          # If the registry is plain HTTP / you truly want "insecure" mode instead, use
+          # "insecure-registries": ["artifactory.lab.local"] in /etc/docker/daemon.json (daemon restart)
+          # and add --allow-insecure-registry to the cosign commands below.
+
+      - name: Install bom, trivy, cosign
+        run: |
+          sudo curl -sSfL -o /usr/local/bin/bom \
+            https://github.com/kubernetes-sigs/bom/releases/download/${BOM_VERSION}/bom-amd64-linux
+          sudo chmod +x /usr/local/bin/bom
+          curl -sSfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh \
+            | sudo sh -s -- -b /usr/local/bin ${TRIVY_VERSION}
+      - uses: sigstore/cosign-installer@v3
+
+      - name: Login to Artifactory
+        run: echo "${{ secrets.ARTIFACTORY_TOKEN }}" | docker login ${REGISTRY} -u "${{ secrets.ARTIFACTORY_USER }}" --password-stdin
+
+      # 2. Build and push, then capture the immutable digest (never sign/attest a tag)
+      - name: Build and push
+        id: push
+        run: |
+          docker build -t ${REGISTRY}/${REPO}:${TAG} .
+          docker push ${REGISTRY}/${REPO}:${TAG}
+          IMAGE=$(docker inspect --format='{{index .RepoDigests 0}}' ${REGISTRY}/${REPO}:${TAG})
+          echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
+          echo "Pushed ${IMAGE}"
+
+      # 3. Generate the SBOM from the pushed image (SPDX JSON)
+      - name: Generate SBOM with bom
+        run: |
+          bom generate --image "${{ steps.push.outputs.image }}" --format json --output sbom.spdx.json
+          jq '.packages | length' sbom.spdx.json
+
+      # 4. Scan the SBOM, fail the pipeline on CRITICAL vulnerabilities
+      - name: Scan SBOM with Trivy
+        run: trivy sbom --severity CRITICAL --exit-code 1 sbom.spdx.json
+
+      # 5. Attach the SBOM to the image as a signed attestation (stored in Artifactory
+      #    next to the image as sha256-<digest>.att). tlog-upload=false: no public Rekor.
+      - name: Attest SBOM with cosign
+        env:
+          COSIGN_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        run: |
+          cosign attest --yes --key env://COSIGN_KEY \
+            --type spdxjson --predicate sbom.spdx.json \
+            --tlog-upload=false \
+            "${{ steps.push.outputs.image }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.spdx.json
+
+  # A separate job acts like the consumer (e.g. a deploy pipeline) checking the image
+  verify-sbom:
+    needs: build-sbom-sign
+    runs-on: [self-hosted, linux]
+    env:
+      IMAGE: ${{ needs.build-sbom-sign.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4          # for cosign.pub
+      - uses: sigstore/cosign-installer@v3
+
+      - name: Trust Artifactory CA and login
+        run: |
+          echo "${{ secrets.ARTIFACTORY_CA }}" | sudo tee /usr/local/share/ca-certificates/artifactory-ca.crt >/dev/null
+          sudo update-ca-certificates
+          echo "${{ secrets.ARTIFACTORY_TOKEN }}" | docker login ${REGISTRY} -u "${{ secrets.ARTIFACTORY_USER }}" --password-stdin
+          sudo curl -sSfL -o /usr/local/bin/bom \
+            https://github.com/kubernetes-sigs/bom/releases/download/${BOM_VERSION}/bom-amd64-linux
+          sudo chmod +x /usr/local/bin/bom
+
+      # Check 1: SBOM exists, was signed by OUR key, and is bound to THIS digest
+      - name: Verify signed SBOM attestation
+        run: |
+          cosign verify-attestation --key cosign.pub --type spdxjson \
+            --insecure-ignore-tlog=true "${IMAGE}" > attestation.json
+          # extract the SBOM (predicate) from the in-toto envelope
+          jq -r '.payload' attestation.json | head -n1 | base64 -d | jq '.predicate' > attested-sbom.json
+          # the attestation subject must be the digest we are about to deploy
+          SUBJECT=$(jq -r '.payload' attestation.json | head -n1 | base64 -d | jq -r '.subject[0].digest.sha256')
+          [ "sha256:${SUBJECT}" = "${IMAGE#*@}" ] || { echo "Digest mismatch"; exit 1; }
+          echo "Attestation OK for ${IMAGE}"
+
+      # Check 2: SBOM content matches what is really inside the image
+      - name: Compare attested SBOM with a fresh SBOM
+        run: |
+          bom generate --image "${IMAGE}" --format json --output fresh-sbom.json
+          pkgs() { jq -r '.packages[] | "\(.name)@\(.versionInfo // "none")"' "$1" | sort -u; }
+          if diff <(pkgs attested-sbom.json) <(pkgs fresh-sbom.json); then
+            echo "SBOM matches image contents"
+          else
+            echo "SBOM does NOT match image contents"; exit 1
+          fi
