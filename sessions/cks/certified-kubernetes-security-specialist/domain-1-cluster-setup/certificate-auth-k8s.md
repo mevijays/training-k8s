@@ -35,7 +35,28 @@ systemctl restart kube-apiserver
 ```sh
 kubectl get secret --server=https://127.0.0.1:6443 --client-certificate /root/certificates/alice.crt --certificate-authority /root/certificates/ca.crt --client-key /root/certificates/alice.key
 ```
+#### Generate kubeconfig (optional)
+```bash
+# Set the cluster
+kubectl config set-cluster my-cluster \
+  --server=https://127.0.0.1:6443 \
+  --certificate-authority=/root/certificates/ca.crt
 
+# Set the credentials
+kubectl config set-credentials alice \
+  --client-certificate=/root/certificates/alice.crt \
+  --client-key=/root/certificates/alice.key
+
+# Set the current context
+kubectl config set-context my-context \
+  --cluster=my-cluster \
+  --user=alice
+
+# Use the context
+kubectl config use-context my-context
+
+# Now you can use kubectl normally (it will use the current kubeconfig)
+```
 
 <!-- NAV-BOTTOM -->
 ---
