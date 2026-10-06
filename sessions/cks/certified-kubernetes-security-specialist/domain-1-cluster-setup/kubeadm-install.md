@@ -69,10 +69,16 @@ sudo apt-get update
 sudo apt-mark hold kubelet kubeadm kubectl
 systemctl enable --now kubelet
 ```
+#### optional - single install script
+```sh
+wget https://raw.githubusercontent.com/mevijays/training-k8s/refs/heads/main/kubernetes/k8s-node-prep.sh
+chmod +x k8s-node-prep.sh
+sudo ./k8s-node-prep.sh
+```
 
 #### Step 4 - Initialize Cluster with kubeadm:
 ```sh
-kubeadm init --pod-network-cidr=192.168.0.0/16 --kubernetes-version=1.34.11
+kubeadm init --pod-network-cidr=192.168.0.0/16 
 ```
 ```sh
 mkdir -p $HOME/.kube
