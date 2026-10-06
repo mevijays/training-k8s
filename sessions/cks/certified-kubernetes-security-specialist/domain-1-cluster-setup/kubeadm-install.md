@@ -85,9 +85,9 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
 #### Step 6 - Install Network Addon (Calico):
 ```sh
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.36.5/manifests/tigera-operator.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v1.33.0/manifests/tigera-operator.yaml
 
-kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.36.5/manifests/custom-resources.yaml
+kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v1.33.0/manifests/custom-resources.yaml
 ```
 ####  7 - Verification:
 ```sh
