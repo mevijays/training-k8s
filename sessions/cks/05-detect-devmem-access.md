@@ -90,30 +90,27 @@ kubectl create -f mem.yaml
 ## Follow the owner chain
 
 ```bash
-POD=<suspect-pod>
-NS=<suspect-namespace>
+ sudo lsof /tmp/fake-dev-mem
+lsof: WARNING: can't stat() fuse.portal file system /run/user/120/doc
+      Output information may be incomplete.
+lsof: WARNING: can't stat() fuse.portal file system /run/user/1000/doc
+      Output information may be incomplete.
+COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF    NODE NAME
+tail    244042 root    3r   REG    8,2       33 6160442 /tmp/fake-dev-mem
 
-kubectl get pod "$POD" -n "$NS" -o wide
-kubectl get pod "$POD" -n "$NS" \
-  -o jsonpath='{.metadata.ownerReferences[0].kind}{" "}{.metadata.ownerReferences[0].name}{"\n"}'
+
+
+ cat /proc/244042/cgroup
+0::/kubepods.slice/kubepods-besteffort.slice/kubepods-besteffort-pod8ded7fbe_e6ec_4044_aa16_103e9ef4d4a7.slice/cri-containerd-7018adeabe2d762516c53cca62ecee8623566952c8960c8d53f578d56fd8bc2b.scope
+
+
+ crictl ps -a | grep 7018adeab
+7018adeabe2d7       f39a77468a52e       4 minutes ago       Running             devmem-reader               0                   fc3f774883387       devmem-test      
+
+
+# if crictl is not available run apt install cri-tools
 ```
 
-If the owner is a ReplicaSet:
-
-```bash
-RS=$(kubectl get pod "$POD" -n "$NS" -o jsonpath='{.metadata.ownerReferences[0].name}')
-kubectl get rs "$RS" -n "$NS" \
-  -o jsonpath='{.metadata.ownerReferences[0].kind}{" "}{.metadata.ownerReferences[0].name}{"\n"}'
-
-DEPLOY=$(kubectl get rs "$RS" -n "$NS" -o jsonpath='{.metadata.ownerReferences[0].name}')
-```
-
-Confirm before changing replicas:
-
-```bash
-kubectl get deployment "$DEPLOY" -n "$NS"
-kubectl scale deployment "$DEPLOY" -n "$NS" --replicas=0
-```
 
 ## Verify
 
