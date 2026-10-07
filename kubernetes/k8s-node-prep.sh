@@ -22,7 +22,7 @@
 
 set -Eeuo pipefail
 
-K8S_VERSION="${K8S_VERSION:-1.36}"
+K8S_VERSION="${K8S_VERSION:-1.34}"
 ROLE="${ROLE:-all}"
 NODE_HOSTNAME="${NODE_HOSTNAME:-}"
 NODE_IP="${NODE_IP:-}"
@@ -142,7 +142,7 @@ if dpkg -s containerd.io >/dev/null 2>&1; then
   log "containerd.io (Docker repo) already installed — reusing it"
 else
   log "installing containerd"
-  "${APT[@]}" install containerd
+  "${APT[@]}" install containerd cri-tools
 fi
 
 mkdir -p /etc/containerd
