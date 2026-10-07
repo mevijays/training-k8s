@@ -54,7 +54,39 @@ Map the container to Kubernetes metadata. Kubernetes-created Docker containers c
 sudo docker inspect <CONTAINER_ID> --format \
   'pod={{ index .Config.Labels "io.kubernetes.pod.name" }} namespace={{ index .Config.Labels "io.kubernetes.pod.namespace" }} container={{ index .Config.Labels "io.kubernetes.container.name" }}'
 ```
+## simulation
+- run this
+```bash
+echo "THIS IS NOT REAL PHYSICAL MEMORY" | sudo tee /tmp/fake-dev-mem
+```
+- create this file `mem.yaml`
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: devmem-test
+  namespace: default
+spec:
+  containers:
+  - name: devmem-reader
+    image: sharmavijay86/cksmem:v1
+    imagePullPolicy: Never
 
+    volumeMounts:
+    - name: fake-devmem
+      mountPath: /dev/mem
+
+  volumes:
+  - name: fake-devmem
+    hostPath:
+      path: /tmp/fake-dev-mem
+      type: File
+
+```
+- apply 
+```
+kubectl create -f mem.yaml
+```
 ## Follow the owner chain
 
 ```bash
