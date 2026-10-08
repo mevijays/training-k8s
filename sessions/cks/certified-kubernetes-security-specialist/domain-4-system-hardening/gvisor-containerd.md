@@ -73,7 +73,10 @@ version = 2
   runtime_type = "io.containerd.runsc.v1"
 EOF
 ```
-
+Restart service containerd as we have changed config
+```sh
+systemctl restart containerd
+```
 #### Step 2: Kernel Parameter Configuration
 ```sh
 cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
