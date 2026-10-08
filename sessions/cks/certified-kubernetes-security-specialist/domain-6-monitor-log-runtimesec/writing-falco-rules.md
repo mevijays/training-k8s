@@ -12,7 +12,15 @@ https://falco.org/docs/concepts/rules/basic-elements/
 https://falco.org/docs/reference/rules/supported-fields/
 
 https://falco.org/docs/reference/rules/default-macros/
-
+### Basic rule structure
+```yaml
+- rule: RULE_NAME
+  desc: Description of what this rule detects
+  condition: CONDITION_EXPRESSION
+  output: ALERT_MESSAGE [PRIORITY]
+  priority: CRITICAL|WARNING|INFO|LOW
+  tags: tag1,tag2,tag3
+```
 ### Create a Simple Falco Rule.
 ```sh
 - rule: Detect curl Execution in Kubernetes Pod
