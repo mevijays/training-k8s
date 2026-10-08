@@ -59,7 +59,7 @@ gpasswd -d test-user docker
 
 gpasswd -d attacker root
 ```
-
+``note`` To avoid this. we should be running rootless docker [Setup steps](./rootless-docker.md)
 ### Expose the Docker API
 ```sh
 nano /usr/lib/systemd/system/docker.service
