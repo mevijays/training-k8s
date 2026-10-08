@@ -9,6 +9,9 @@
 ### Documentation:
 
 https://kubernetes.io/docs/concepts/containers/runtime-class/
+#### Setup for kubeadm
+
+Follow this--> [Kubeadm with gvisor and cilium](./gvisor-containerd.md)
 
 #### Step 1 - Configure Docker:
 ```sh
