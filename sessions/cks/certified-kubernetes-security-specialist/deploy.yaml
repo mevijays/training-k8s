@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insecure-nginx
+  namespace: default
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: insecure-nginx
+
+  template:
+    metadata:
+      labels:
+        app: insecure-nginx
+
+    spec:
+      hostPID: true
+      hostNetwork: true
+
+      containers:
+      - name: nginx
+        image: nginx:latest
+
+        securityContext:
+          privileged: true
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - NET_ADMIN
+
+        volumeMounts:
+        - name: host-root
+          mountPath: /host
+
+      volumes:
+      - name: host-root
+        hostPath:
+          path: /
+          type: Directory
